@@ -87,22 +87,208 @@ def Empresas():
                     res+=1
                     num//=10
                 return res
-        def validarNuevaEmpresa():
+        def validarNuevaEmpresa(): #Valida que la cédula tenga 10 dígitos
             numCedula=datoCedula.get()
             if(contarDigitos(int(numCedula))!=10):
                 error=tk.Label(nuevaEmpresa, text="Error: La cédula debe tener 10 dígitos", font=("Sans Serif", 10), width=30, height=1, fg="red").place(x=200, y=86)
             else:
                 correcto=tk.Label(nuevaEmpresa, text="                                                            ", font=("Sans Serif", 10), width=30, height=1).place(x=200, y=86)
-            
-                
-        nombre=tk.StringVar()
+                if(SeEncuentra("Empresas.txt", numCedula)):
+                    error=tk.Label(nuevaEmpresa, text="Error: La cédula ya se encuentra registrada", font=("Sans Serif", 10), width=32, height=1, fg="red").place(x=194, y=86)
+                else:
+                    Empresa=datoNombre.get()
+                    provincia=provincias.get()
+                    ubicacion=direccion.get("1.0", "end-1c")
+                    f=open("Empresas.txt", "a")
+                    f.write(str(numCedula)+"|"+str(Empresa)+"|"+str(provincia)+", "+str(ubicacion)+"\n")
+                    f.close()
+                    hecho=mb.showinfo(title="Información", message="La empresa se agregó exitosamente")
+                    nuevaEmpresa.destroy()
+                    
+        """
+        SeEncuentra
+        E: un archivo y una palabra para buscarla en el archivo
+        S: Si la palabra se encuentra en el archivo, retornará True, sino False
+        """
+        def SeEncuentra(archivo, palabra):
+            archivo=open(archivo, "r")
+            contexto= archivo.readlines()
+            archivo.close()
+            Datos=contarObjetos(contexto)
+            largoPalabra=contarString(palabra)
+            return buscarAux(palabra, contexto, Datos, largoPalabra)
+        def contarObjetos(lista): #f.readlines convierte el texto a lista
+            n=0
+            while lista!=[]:
+                n+=1
+                lista=lista[1:]
+            return n
+        def contarString(texto):
+            res=0
+            while texto!="":
+                res+=1
+                texto=texto[1:]
+            return res
+        def buscarAux(palabra, contexto, Datos, largoPalabra):
+            if Datos==0:
+                return False
+            else:
+                return buscarAux2(palabra, contexto, contexto[0], Datos, largoPalabra, contarString(contexto[0]), contexto[0])
+        def buscarAux2(palabra, contexto, texto, Datos, largoPalabra, i, res):
+            if i<largoPalabra:
+                return buscarAux(palabra, contexto[1:], Datos-1, largoPalabra)
+            else:
+                while palabra!=texto[:largoPalabra]:
+                    return buscarAux2(palabra, contexto, texto[1:], Datos, largoPalabra, i-1, res)
+                return True
+        
         Nombre=tk.Label(nuevaEmpresa, text="Nombre de la empresa", font=("Sans Serif", 12), width=25, height=2). place(x=0, y=120)
-        datoNombre=tk.Entry(nuevaEmpresa, width=14, relief="sunken", textvariable=nombre)
+        datoNombre=tk.Entry(nuevaEmpresa, width=14, relief="sunken")
         datoNombre.place(x=200, y=136)
+        from tkinter import ttk
+        Ubic=tk.Label(nuevaEmpresa, text="-------------Ubicación-------------", font=("Sans Serif", 12), width=35, height= 2).place(x=55, y=170)
+        Provincia=tk.Label(nuevaEmpresa, text= "Provincia", font=("Sans Serif", 12),width=15, height=2).place(x=15,y=210)
+        provincias=ttk.Combobox(nuevaEmpresa)
+        provincias.place(x=155, y=223)
+        provincias["values"]=("San José", "Alajuela","Cartago","Heredia", "Guanacaste", "Puntarenas", "Limón")
+        provincias.current(0)
+        Direccion=tk.Label(nuevaEmpresa, text="Dirección exacta", font=("Sans Serif", 12), width=15, height=2).place(x=150, y=270)
+        direccion=tk.Text(nuevaEmpresa, width=35, height=6, font=("Sans Serif", 12))
+        direccion.place(x=61, y=320)
         validacion=tk.Button(nuevaEmpresa, text="Validar", font=("Sans Serif", 12), width=15, height=2, bg="grey", command=validarNuevaEmpresa).place(x=150, y=500)
         nuevaEmpresa.mainloop()
-        
+    #-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    #-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    """
+    BorrarEmpresas
+    Dada la cédula de una empresa, elimina la empresa que esté vinculada con dicha cédula
+    E: la cédula
+    S: Borra la empresa del archivo 'Empresas.txt'
+    R: No puede borrarse aquella empresa que esté vinculada a un transporte
+    """
+    def BorrarEmpresas():
+        borrarempresa= tk.Tk()
+        borrarempresa.title("Borrar empresa")
+             
+        ancho_pantalla= 400
+        alto_pantalla= 120
+        #Porción de código para centrar la ventana a la pantalla 
+        x_ventana=borrarempresa.winfo_screenwidth() // 2 - ancho_pantalla // 2
+        y_ventana=borrarempresa.winfo_screenheight() // 2 - alto_pantalla // 2
+        posicion=str(ancho_pantalla)+"x"+str(alto_pantalla)+"+"+str(x_ventana)+"+"+str(y_ventana)
             
+        borrarempresa.geometry(posicion)
+        borrarempresa.resizable(0,0)
+        borrarempresa.iconbitmap("img.ico")
+            
+        """
+        buscarPalabra
+        E: un archivo y una palabra para buscarla en el archivo
+        S: Si la palabra se encuentra en el archivo, retornará la línea en la cual está ubicada
+        """
+        def buscarPalabra(archivo,palabra):
+            archivo=open(archivo, "r")
+            contexto= archivo.readlines()
+            archivo.close()
+            Datos=contarObjetos(contexto)
+            largoPalabra=contarString(palabra)
+            return buscarAux(palabra, contexto, Datos, largoPalabra)
+        def contarObjetos(lista): 
+            n=0
+            while lista!=[]:
+                n+=1
+                lista=lista[1:]
+            return n
+        def contarString(texto):
+            res=0
+            while texto!="":
+                res+=1
+                texto=texto[1:]
+            return res
+        def buscarAux(palabra, contexto, Datos, largoPalabra):
+            if Datos==0:
+                return "Sin resultados"
+            else:
+                return buscarAux2(palabra, contexto, contexto[0], Datos, largoPalabra, contarString(contexto[0]), contexto[0])
+        def buscarAux2(palabra, contexto, texto, Datos, largoPalabra, i, res):
+            if i<largoPalabra:
+                return buscarAux(palabra, contexto[1:], Datos-1, largoPalabra)
+            else:
+                while palabra!=texto[:largoPalabra]:
+                    return buscarAux2(palabra, contexto, texto[1:], Datos, largoPalabra, i-1, res)
+                return res
+        """
+        BorrarLinea
+        Dada una palabra clave, borra una linea de un archivo en la cual se encuentra dicha palabra:
+        """
+        def borrarLinea():
+            identif=empresa.get()
+            lineaAborrar=buscarPalabra("Empresas.txt", identif)
+            if lineaAborrar=="Sin resultados":
+                info=mb.showerror(title="Error en entrada", message="No se encontraron coincidencias")
+                borrarempresa.destroy()
+                return BorrarEmpresas()
+            else:
+                f = open("Empresas.txt","r")
+                lineas = f.readlines()
+                f.close()
+                f = open("Empresas.txt","w")
+                while lineas!=[]:
+                    if lineas[0]!=lineaAborrar:
+                        f.write(lineas[0])
+                        lineas=lineas[1:]
+                    else:
+                        lineas=lineas[1:]
+                f.close()
+                info=mb.showinfo(title="Estado", message="La empresa se eliminó exitosamente")
+                borrarempresa.destroy()
+                return Empresas()
+                    
+        label=tk.Label(borrarempresa, text="Digite la cédula de la empresa a borrar", font=("Sans serif", 14)).pack()
+        empresa=tk.Entry(borrarempresa, font="Helvetica 12")
+        empresa.pack()
+        borrar=tk.Button(borrarempresa, text="Borrar", font=("Helvetica",14), bg="#6ee2ff", width="16",height="1",relief="groove", command=borrarLinea, cursor="hand2").pack()
+        borrarempresa.mainloop()
+    #-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    #-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    """
+    MostrarEmpresas
+    Como el nombre lo dice, sirve para mostrar las empresas
+    Entrada:
+        un botón (Mostrar Empresas)
+    Salida:
+        Muestra los datos del archivo'Empresas.txt'
+    """
+    def MostrarEmpresas():
+        f=open("Empresas.txt", "r")
+        info=f.readlines()
+        f.close()
+        if info==[]:
+            mensaje=mb.showinfo(title="Atención", message="No hay empresas registradas")
+            return Empresas()
+        else:
+            verEmpresas=tk.Toplevel()
+            verEmpresas.geometry("400x400")
+            verEmpresas.title("Ver Empresas")
+            verEmpresas.iconbitmap("img.ico")
+            verEmpresas.config(bg="grey")
+            verEmpresas.resizable(0,0)
+            ListaEmpresas=tk.Listbox(verEmpresas, width=150)
+            ListaEmpresas.config(selectforeground="white",selectbackground="blue", selectborderwidth=3, font=("Sans Serif", 10))
+            barra=tk.Scrollbar(verEmpresas, command=ListaEmpresas.yview)
+            barra.place(x=383, y=0, relheight=0.55)
+            ListaEmpresas.config(yscrollcommand=barra)
+            ListaEmpresas.insert(0, info[0])
+            info=info[1:]
+            n=1
+            while info!=[]:
+                ListaEmpresas.insert(n, info[0])
+                info=info[1:]
+                n+=1
+            ListaEmpresas.pack()
+            verEmpresas.mainloop()
+    #-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    #-------------------------------------------------------------------------------------------------------------------------------------------------------------------
     GestionEmpresa.title("BestTraveller: Gestión de viajes")
     GestionEmpresa.iconbitmap("img.ico")
     imagen=tk.PhotoImage(file="f.png")
@@ -110,9 +296,9 @@ def Empresas():
     
     label = tk.Label(GestionEmpresa, text="Gestor de Empresas", font=("Helvetica", 20, "italic", "bold"), bg="#6fafd8" ,relief="sunken").pack()
     IncluirEmp=tk.Button(GestionEmpresa, text="Incluir Empresas", font=("Helvetica",14), bg="#6ee2ff", width="23",height="1",relief="groove", cursor="hand2", command=IncluirEmpresa).place(x=170, y=150)
-    BorrarEmp=tk.Button(GestionEmpresa, text="Borrar Empresas", font=("Helvetica",14), bg="#6ee2ff", width="23",height="1",relief="groove", cursor="hand2").place(x=170, y=200)
+    BorrarEmp=tk.Button(GestionEmpresa, text="Borrar Empresas", font=("Helvetica",14), bg="#6ee2ff", width="23",height="1",relief="groove", cursor="hand2", command=BorrarEmpresas).place(x=170, y=200)
     ModificarEmp=tk.Button(GestionEmpresa, text="Modificar Empresas", font=("Helvetica",14), bg="#6ee2ff", width="23",height="1",relief="groove", cursor="hand2").place(x=170, y=250)
-    MostrarEmp=tk.Button(GestionEmpresa, text="Mostrar Empresas", font=("Helvetica",14), bg="#6ee2ff", width="23",height="1",relief="groove", cursor="hand2").place(x=170, y=300)
+    MostrarEmp=tk.Button(GestionEmpresa, text="Mostrar Empresas", font=("Helvetica",14), bg="#6ee2ff", width="23",height="1",relief="groove", cursor="hand2",command=MostrarEmpresas).place(x=170, y=300)
     Volver=tk.Button(GestionEmpresa, text="Volver", command=GestionEmpresa.destroy, font=("Helvetica",14), bg="#6ee2ff", width="23",height="1",relief="groove", cursor="hand2").place(x=170, y=350)
     
     GestionEmpresa.mainloop()
