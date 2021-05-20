@@ -222,7 +222,6 @@ def Empresas():
         def borrarLinea():
             identif=empresa.get()
             lineaAborrar=buscarPalabra("Empresas.txt", identif)
-            print(lineaAborrar)
             if lineaAborrar=="Sin resultados":
                 info=mb.showerror(title="Error en entrada", message="No se encontraron coincidencias")
                 borrarempresa.destroy()
@@ -238,9 +237,7 @@ def Empresas():
                 f = open("Empresas.txt","w")
                 while lineas!=[]:
                     if lineas[0]!=lineaAborrar:
-                        print("Borrador:",lineaAborrar)
                         f.write(lineas[0])
-                        print(lineas[0])
                         lineas=lineas[1:]
                     else:
                         lineas=lineas[1:]
@@ -310,10 +307,11 @@ def Empresas():
             modifEmpresa.config(bg="grey")
             modifEmpresa.resizable(0,1)
             def modifCamposEmpresa():
-                num=int(emp.get())-1
+                num=int(emp.get())
                 Datos=ListaEmpresas.get(num)
-                Cedulaempresa=Datos[:10]
-                RestoDeDatos=recopilarDatos(Datos[11:])
+                Cedulaempresa=Datos[3:13]
+                RestoDeDatos=recopilarDatos(Datos[14:-4])
+                print(RestoDeDatos)
                 NombreAntiguo=RestoDeDatos[0]
                 UbicAntigua=RestoDeDatos[1]
                 modifEmpresa.destroy()
@@ -330,16 +328,13 @@ def Empresas():
                 datoCedula=tk.Entry(modifEmpresa2, width=14, relief="sunken")
                 datoCedula.place(x=200, y=64)
                 datoCedula.insert(0, Cedulaempresa)
-                print(Cedulaempresa)
                 datoCedula.config(state=tk.DISABLED)
                 def AgregarEmpresaModificada(): #Función para agregar la empresa modificada
                     Cedula=datoCedula.get()
-                    print(Cedula)
                     Empresa=datoNombre.get()
                     provincia=provincias.get()
                     ubicacion=direccion.get("1.0", "end-1c")
                     lineaAmodificar=buscarPalabra("Empresas.txt", Cedula)
-                    print("dato: ",lineaAmodificar)
                     f = open("Empresas.txt","r")
                     lineas = f.readlines()
                     f.close()
@@ -347,7 +342,6 @@ def Empresas():
                     while lineas!=[]:
                         if lineas[0]!=lineaAmodificar:
                             f.write(lineas[0])
-                            print(lineas[0])
                             lineas=lineas[1:]
                         else:
                             f.write(str(Cedula)+"|"+str(Empresa)+"|"+str(provincia)+", "+str(ubicacion))
@@ -430,13 +424,14 @@ def Empresas():
             barraX=tk.Scrollbar(modifEmpresa, command=ListaEmpresas.xview, orient=tk.HORIZONTAL)
             barraX.place(x=0, y=217, relwidth=0.6)
             ListaEmpresas.config(xscrollcommand=barraX)
-            ListaEmpresas.insert(0, info[0])
-            info=info[1:]
+            ListaEmpresas.insert(0, "Cédula jurídica | Empresa | Ubicación     |")
             n=1
+            i=1
             while info!=[]:
-                ListaEmpresas.insert(n, info[0])
+                ListaEmpresas.insert(n, str(i)+") "+info[0]+"____")
                 info=info[1:]
                 n+=1
+                i+=1
             ListaEmpresas.pack()
             Emp=tk.Label(modifEmpresa, text="Empresa #", font=("Sans Serif", 12), bg="grey", width=15, height=2).pack(pady=2)
             dato=tk.IntVar()
@@ -463,7 +458,7 @@ def Empresas():
             return Empresas()
         else:
             verEmpresas=tk.Toplevel()
-            verEmpresas.geometry("400x400")
+            verEmpresas.geometry("410x400")
             verEmpresas.title("Ver Empresas")
             verEmpresas.iconbitmap("img.ico")
             verEmpresas.config(bg="grey")
@@ -471,19 +466,19 @@ def Empresas():
             ListaEmpresas=tk.Listbox(verEmpresas, width=150)
             ListaEmpresas.config(selectforeground="white",selectbackground="blue", selectborderwidth=3, font=("Sans Serif", 10))
             barraY=tk.Scrollbar(verEmpresas, command=ListaEmpresas.yview)
-            barraY.place(x=383, y=0, relheight=0.55)
+            barraY.place(x=393, y=0, relheight=0.55)
             ListaEmpresas.config(yscrollcommand=barraY)
             barraX=tk.Scrollbar(verEmpresas, command=ListaEmpresas.xview, orient=tk.HORIZONTAL)
             barraX.place(x=0, y=217, relwidth=0.6)
             ListaEmpresas.config(xscrollcommand=barraX)
-            
-            ListaEmpresas.insert(0, info[0])
-            info=info[1:]
+            ListaEmpresas.insert(0, "Cédula jurídica | Empresa | Ubicación     |")
             n=1
+            i=1
             while info!=[]:
-                ListaEmpresas.insert(n, info[0])
+                ListaEmpresas.insert(n, str(i)+") "+info[0]+"____")
                 info=info[1:]
                 n+=1
+                i+=1
             ListaEmpresas.pack()
             verEmpresas.mainloop()
     #-------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -552,22 +547,30 @@ def Transportes():
                 return res
         def validarNuevoTransporte(): #Valida que la placa tenga 6 dígitos
             numPlaca=datoPlaca.get()
-            if(contarDigitos(int(numPlaca))!=10):
+            if(contarDigitos(int(numPlaca))!=6):
                 error=tk.Label(nuevoTransporte, text="Error: El número de matrícula debe tener 6 dígitos", font=("Sans Serif", 10), width=41, height=1, fg="red").place(x=140, y=86)
             else:
                 correcto=tk.Label(nuevoTransporte, text="                                                            ", font=("Sans Serif", 10), width=41, height=1).place(x=140, y=86)
                 if(SeEncuentra("Transportes.txt", numPlaca)):
                     error=tk.Label(nuevoTransporte, text="Error: La placa ya se encuentra registrada", font=("Sans Serif", 10), width=32, height=1, fg="red").place(x=194, y=86)
                 else:
+                    placa=str(datoPlaca.get())
+                    tipo=str(datoTipo.get())
+                    Marca=str(marca.get())
+                    Modelo=str(modelo.get())
+                    Año=str(año.get())
+                    empresa=str(ElegirEmpresa.get())
+                    aVIP=str(VIP.get())
+                    aNORMAL=str(NORMAL.get())
+                    aECONOM=str(ECONOM.get())
+                    filas=str(Filas.get())
+                    
                     f=open("Transportes.txt", "a")
-                    f.write(str(1)+"|"+str(0)+"|"+str(1)+", "+str(1)+"\n")
+                    f.write(placa+"|"+tipo+"|"+Marca+"|"+Modelo+"|"+Año+"|"+empresa+"|"+aVIP+"-"+aNORMAL+"-"+aECONOM+"|"+filas+"\n")
                     f.close()
                     f = open ("Asientos.txt",'a')
-                    f.write((Placa+"|"))
+                    f.write(placa+"|"+aVIP+"|"+aNORMAL+"|"+aECONOM+"|"+filas+"\n")
                     f.close()
-                    f = open ("Asientos.txt",'a')
-                    f.write(VIP+"|"+NORMAL+"|"+ECONOM+" \n")
-                    f.close()                    
                     hecho=mb.showinfo(title="Información", message="El transporte se agregó exitosamente")
                     nuevoTransporte.destroy()
                     return Transportes()
@@ -609,7 +612,7 @@ def Transportes():
                 return True
 
         Tipo=tk.Label(nuevoTransporte, text="Tipo de vehículo", font=("Sans Serif", 12), width=25, height=2). place(x=0, y=110)
-        datoTipo=tk.Entry(nuevoTransporte, relief="sunken")
+        datoTipo=tk.Entry(nuevoTransporte, relief="sunken", font=("Sans Serif", 12))
         datoTipo.place(x=200, y=126)
         from tkinter import ttk
         Marca=tk.Label(nuevoTransporte, text= "Marca", font=("Sans Serif", 12),width=25, height=2).place(x=0,y=150)
@@ -618,361 +621,429 @@ def Transportes():
         Modelo=tk.Label(nuevoTransporte, text= "Modelo", font=("Sans Serif", 12),width=25, height=2).place(x=0,y=193)
         modelo=tk.Entry(nuevoTransporte, font=("Sans Serif", 12))
         modelo.place(x=200, y=206)
-        Empresa=tk.Label(nuevoTransporte, text= "Empresa", font=("Sans Serif", 12),width=25, height=2).place(x=0,y=237)
+        Año=tk.Label(nuevoTransporte, text= "Año", font=("Sans Serif", 12),width=25, height=2).place(x=0,y=230) 
+        año=tk.Entry(nuevoTransporte, font=("Sans Serif", 12))
+        año.place(x=200, y=243)
+        Empresa=tk.Label(nuevoTransporte, text= "Empresa", font=("Sans Serif", 12),width=25, height=2).place(x=0,y=268)
         ElegirEmpresa=ttk.Combobox(nuevoTransporte)
-        ElegirEmpresa.place(x=200, y=250)
+        ElegirEmpresa.place(x=200, y=280)
         f=open("Empresas.txt", "r")
         lineas=f.readlines()
         f.close()
-        empresas=[]
-        while lineas!=[]:
-            empresas+=[str(lineas[0])[:10]]
-            lineas=lineas[1:]
-        ElegirEmpresa["values"]=empresas
-        ElegirEmpresa.current(0)
-        Asientos=tk.Label(nuevoTransporte, text="-------------Asientos-------------", font=("Sans Serif", 12), width=35, height= 2).place(x=55, y=274)
-        vip=tk.Label(nuevoTransporte, text="VIP", font=("Sans Serif", 12), width=10, height= 2).place(x=11, y=314)
+        if lineas==[]:
+            error=mb.showerror(title="Error", message="No hay empresas registradas en el sistema\n No se puede proceder")
+            nuevoTransporte.destroy()
+            return Transportes()
+        else:
+            empresas=[]
+            while lineas!=[]:
+                empresas+=[str(lineas[0])[:10]]
+                lineas=lineas[1:]
+            ElegirEmpresa["values"]=empresas
+            ElegirEmpresa.current(0)
+        Asientos=tk.Label(nuevoTransporte, text="-------------Asientos-------------", font=("Sans Serif", 12), width=35, height= 2).place(x=55, y=301)
+        vip=tk.Label(nuevoTransporte, text="VIP", font=("Sans Serif", 12), width=10, height= 2).place(x=11, y=354)
         VIP=tk.Entry(nuevoTransporte, font=("Sans Serif", 12), width=8)
-        VIP.place(x=18, y=350)
-        normal=tk.Label(nuevoTransporte, text="Normales", font=("Sans Serif", 12), width=10, height= 2).place(x=167, y=314)
+        VIP.place(x=18, y=390)
+        normal=tk.Label(nuevoTransporte, text="Normales", font=("Sans Serif", 12), width=10, height= 2).place(x=167, y=354)
         NORMAL=tk.Entry(nuevoTransporte, font=("Sans Serif", 12), width=8)
-        NORMAL.place(x=177, y=350)
-        econom=tk.Label(nuevoTransporte, text="Económicos", font=("Sans Serif", 12), width=10, height= 2).place(x=320, y=314)
+        NORMAL.place(x=177, y=390)
+        econom=tk.Label(nuevoTransporte, text="Económicos", font=("Sans Serif", 12), width=10, height= 2).place(x=320, y=354)
         ECONOM=tk.Entry(nuevoTransporte, font=("Sans Serif", 12), width=8)
-        ECONOM.place(x=330, y=350)
+        ECONOM.place(x=330, y=390)
+        filas=tk.Label(nuevoTransporte, text="Asientos por fila", font=("Sans Serif", 12), width=15, height= 2).place(x=147, y=400)
+        Filas=tk.Entry(nuevoTransporte, font=("Sans Serif", 12), width=8)
+        Filas.place(x=177, y=440)
+        
         validacion=tk.Button(nuevoTransporte, text="Validar", font=("Sans Serif", 12), width=15, height=2, bg="grey", command=validarNuevoTransporte).place(x=150, y=500)
         nuevoTransporte.mainloop()                       
+    #-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    #-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    """
+    BorrarTransportes
+    Dada la cédula de una empresa, elimina la empresa que esté vinculada con dicha cédula
+    E: la cédula
+    S: Borra la empresa del archivo 'Empresas.txt'
+    R: No puede borrarse aquella empresa que esté vinculada a un transporte
+    """
+    def BorrarTransportes():
+        borrartransporte= tk.Tk()
+        borrartransporte.title("Borrar empresa")
+             
+        ancho_pantalla= 400
+        alto_pantalla= 120
+        #Porción de código para centrar la ventana a la pantalla 
+        x_ventana=borrartransporte.winfo_screenwidth() // 2 - ancho_pantalla // 2
+        y_ventana=borrartransporte.winfo_screenheight() // 2 - alto_pantalla // 2
+        posicion=str(ancho_pantalla)+"x"+str(alto_pantalla)+"+"+str(x_ventana)+"+"+str(y_ventana)
+            
+        borrartransporte.geometry(posicion)
+        borrartransporte.resizable(0,1)
+        borrartransporte.iconbitmap("img.ico")
+        """
+        buscarPalabra
+        E: un archivo y una palabra para buscarla en el archivo
+        S: Si la palabra se encuentra en el archivo, retornará la línea en la cual está ubicada
+        """
+        def buscarPalabra(archivo,palabra):
+            archivo=open(archivo, "r")
+            contexto= archivo.readlines()
+            archivo.close()
+            Datos=contarObjetos(contexto)
+            largoPalabra=contarString(palabra)
+            return buscarPalabraAux(palabra, contexto, Datos, largoPalabra)
+        def contarObjetos(lista): 
+            n=0
+            while lista!=[]:
+                n+=1
+                lista=lista[1:]
+            return n
+        def contarString(texto):
+            res=0
+            while texto!="":
+                res+=1
+                texto=texto[1:]
+            return res
+        def buscarPalabraAux(palabra, contexto, Datos, largoPalabra):
+            if Datos==0:
+                return "Sin resultados"
+            else:
+                return buscarPalabraAux2(palabra, contexto, contexto[0], Datos, largoPalabra, contarString(contexto[0]), contexto[0])
+        def buscarPalabraAux2(palabra, contexto, texto, Datos, largoPalabra, i, res):
+            if i<largoPalabra:
+                return buscarPalabraAux(palabra, contexto[1:], Datos-1, largoPalabra)
+            else:
+                while palabra!=texto[:largoPalabra]:
+                    return buscarPalabraAux2(palabra, contexto, texto[1:], Datos, largoPalabra, i-1, res)
+                return res
+        """
+        BorrarLinea
+        Dada una palabra clave, borra una linea de un archivo en la cual se encuentra dicha palabra:
+        """
+        def borrarLinea():
+            identif=transporte.get()
+            lineaAborrar=buscarPalabra("Transportes.txt", identif)
+            AsientosABorrar=buscarPalabra("Asientos.txt", identif)
+            print(lineaAborrar)
+            if lineaAborrar=="Sin resultados":
+                info=mb.showerror(title="Error en entrada", message="No se encontraron coincidencias")
+                borrartransporte.destroy()
+                return BorrarTransportes()
+            if(SeEncuentra("Viajes.txt", identif)):
+                info=mb.showerror(title="Error en entrada", message="No se puede borrar.\nEl transporte se encuentra registrado en un viaje")
+                borrartransporte.destroy()
+                return Transportes()
+            else:
+                f = open("Transportes.txt","r")
+                lineas = f.readlines()
+                f.close()
+                g=open("Asientos.txt", "r")
+                asientos=g.readlines()
+                g.close()
+                f = open("Transportes.txt","w")
+                g=open("Asientos.txt", "w")
+                while lineas!=[]:
+                    if lineas[0]!=lineaAborrar:
+                        g.write(asientos[0])
+                        f.write(lineas[0])
+                        lineas=lineas[1:]
+                        asientos=asientos[1:]
+                    else:
+                        asientos=asientos[1:]
+                        lineas=lineas[1:]
+                f.close()
+                g.close()
+                info=mb.showinfo(title="Estado", message="El transporte se eliminó exitosamente")
+                borrartransporte.destroy()
+                return Transportes()
+        def SeEncuentra(archivo, palabra):
+            archivo=open(archivo, "r")
+            contexto= archivo.readlines()
+            archivo.close()
+            Datos=contarObjetos(contexto)
+            largoPalabra=contarString(palabra)
+            return buscarAux(palabra, contexto, Datos, largoPalabra)
+        def contarObjetos(lista): #f.readlines convierte el texto a lista
+            n=0
+            while lista!=[]:
+                n+=1
+                lista=lista[1:]
+            return n
+        def contarString(texto):
+            res=0
+            while texto!="":
+                res+=1
+                texto=texto[1:]
+            return res
+        def buscarAux(palabra, contexto, Datos, largoPalabra):
+            if Datos==0:
+                return False
+            else:
+                return buscarAux2(palabra, contexto, contexto[0], Datos, largoPalabra, contarString(contexto[0]), contexto[0])
+        def buscarAux2(palabra, contexto, texto, Datos, largoPalabra, i, res):
+            if i<largoPalabra:
+                return buscarAux(palabra, contexto[1:], Datos-1, largoPalabra)
+            else:
+                while palabra!=texto[:largoPalabra]:
+                    return buscarAux2(palabra, contexto, texto[1:], Datos, largoPalabra, i-1, res)
+                return True
+                    
+        label=tk.Label(borrartransporte, text="Digite el número de matrícula a borrar", font=("Sans serif", 14)).pack()
+        transporte=tk.Entry(borrartransporte, font="Helvetica 12")
+        transporte.pack()
+        borrar=tk.Button(borrartransporte, text="Borrar", font=("Helvetica",14), bg="#6ee2ff", width="16",height="1",relief="groove", command=borrarLinea, cursor="hand2").pack()
+        borrartransporte.mainloop()
+    #-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    #-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    """
+    ModificarTransportes
+    Se selecciona un transporte de la lista de transportes, para posteriormente modificar sus campos
+    Entrada:
+        el transporte seleccionada (Se selecciona por posición y se modifican todos sus campos, exceptuando la placa)
+    Salida:
+        Los cambios se registrarán en el archivo 'Transportes.txt'
+    """
+    def modificarTransportes():
+        f=open("Transportes.txt", "r")
+        info=f.readlines()
+        f.close()
+        if info==[]:
+            mensaje=mb.showinfo(title="Atención", message="No hay transportes registrados")
+            return Transportes()
+        else:
+            modifTransporte=tk.Toplevel()
+            modifTransporte.geometry("400x400")
+            modifTransporte.title("Ver Transportes")
+            modifTransporte.iconbitmap("img.ico")
+            modifTransporte.config(bg="grey")
+            modifTransporte.resizable(0,1)
+            def modifCamposTransporte():
+                num=int(trp.get())
+                Datos=ListaTransportes.get(num)
+                print(Datos)
+                PlacaVHC=Datos[3:9]
+                print(PlacaVHC)
+                RestoDeDatos=recopilarDatos(Datos[10:-4])
+                print(RestoDeDatos)
+                TipoAntiguo=RestoDeDatos[0]
+                MarcaAntigua=RestoDeDatos[1]
+                ModeloAntiguo=RestoDeDatos[2]
+                AñoAntiguo=RestoDeDatos[3]
+                VIPAntiguo=RestoDeDatos[5]
+                NormalAntiguo=RestoDeDatos[6]
+                EconomAntiguo=RestoDeDatos[7]
+                modifTransporte.destroy()                
+                return modifCamposTransporteAux(PlacaVHC, TipoAntiguo, MarcaAntigua, ModeloAntiguo, AñoAntiguo, VIPAntiguo, NormalAntiguo, EconomAntiguo)
+            def modifCamposTransporteAux(PlacaVHC, TipoAntiguo, MarcaAntigua, ModeloAntiguo, AñoAntiguo, VIPAntiguo, NormalAntiguo, EconomAntiguo):
+                modifTransporte2=tk.Toplevel()
+                modifTransporte2.geometry("450x600")
+                modifTransporte2.title("Modificar transporte")
+                modifTransporte2.iconbitmap("img.ico")
+                modifTransporte2.resizable(0,1)
+
+                Placa=tk.Label(modifTransporte2, text="N° de matrícula", font=("Sans Serif", 12), width=25, height=2). place(x=0, y=50)
+                datoPlaca=tk.Entry(modifTransporte2, width=14, relief="sunken")
+                datoPlaca.place(x=200, y=64)
+                datoPlaca.insert(0, PlacaVHC)
+                datoPlaca.config(state=tk.DISABLED)
+                def AgregarTransporteModificado(): #Función para agregar el transporte modificado
+                    Placa=str(datoPlaca.get())
+                    tipo=str(datoTipo.get())
+                    Nuevamarca=str(marca.get())
+                    Nuevomodelo=str(modelo.get())
+                    nuevoAño=str(año.get())
+                    NuevaEmp=str(ElegirEmpresa.get())
+                    NuevoVIP=str(VIP.get())
+                    NuevoNormal=str(NORMAL.get())
+                    NuevoEconom=str(ECONOM.get())
+                    filas=str(Filas.get())
+                    lineaAmodificar=buscarPalabra("Transportes.txt", Placa)
+                    asientosAmodificar=buscarPalabra("Asientos.txt", Placa)
+                    f = open("Transportes.txt","r")
+                    lineas = f.readlines()
+                    f.close()
+                    g=open("Asientos.txt", "r")
+                    asientos = g.readlines()
+                    g.close()
+                    f = open("Transportes.txt","w")
+                    g=open("Asientos.txt", "w")
+                    while lineas!=[]:
+                        if lineas[0]!=lineaAmodificar:
+                            f.write(lineas[0])
+                            g.write(asientos[0])
+                            lineas=lineas[1:]
+                            asientos=asientos[1:]
+                        else:
+                            f.write(Placa+"|"+tipo+"|"+Nuevamarca+"|"+Nuevomodelo+"|"+nuevoAño+"|"+NuevaEmp+"|"+NuevoVIP+"-"+NuevoNormal+"-"+NuevoEconom+"|"+filas+"\n")
+                            g.write(Placa+"|"+NuevoVIP+"|"+NuevoNormal+"|"+NuevoEconom+"|"+filas+"\n")
+                            lineas=lineas[1:]
+                            asientos=asientos[1:]
+                    f.close()
+                    g.close()
+                    info=mb.showinfo(title="Estado", message="El transporte se modificó exitosamente")
+                    modifTransporte2.destroy()
+                    return Transportes()
+                
+                def buscarPalabra(archivo,palabra):
+                    archivo=open(archivo, "r")
+                    contexto= archivo.readlines()
+                    archivo.close()
+                    Datos=contarObjetos(contexto)
+                    largoPalabra=contarString(palabra)
+                    return buscarPalabraAux(palabra, contexto, Datos, largoPalabra)
+                def contarObjetos(lista): 
+                    n=0
+                    while lista!=[]:
+                        n+=1
+                        lista=lista[1:]
+                    return n
+                def contarString(texto):
+                    res=0
+                    while texto!="":
+                        res+=1
+                        texto=texto[1:]
+                    return res
+                def buscarPalabraAux(palabra, contexto, Datos, largoPalabra):
+                    if Datos==0:
+                        return "Sin resultados"
+                    else:
+                        return buscarPalabraAux2(palabra, contexto, contexto[0], Datos, largoPalabra, contarString(contexto[0]), contexto[0])
+                def buscarPalabraAux2(palabra, contexto, texto, Datos, largoPalabra, i, res):
+                    if i<largoPalabra:
+                        return buscarPalabraAux(palabra, contexto[1:], Datos-1, largoPalabra)
+                    else:
+                        while palabra!=texto[:largoPalabra]:
+                            return buscarPalabraAux2(palabra, contexto, texto[1:], Datos, largoPalabra, i-1, res)
+                        return res
+                Tipo=tk.Label(modifTransporte2, text="Tipo de vehículo", font=("Sans Serif", 12), width=25, height=2). place(x=0, y=110)
+                datoTipo=tk.Entry(modifTransporte2, relief="sunken", font=("Sans Serif", 12))
+                datoTipo.place(x=200, y=126)
+                datoTipo.insert(0, TipoAntiguo)
+                from tkinter import ttk
+                Marca=tk.Label(modifTransporte2, text= "Marca", font=("Sans Serif", 12),width=25, height=2).place(x=0,y=150)
+                marca=tk.Entry(modifTransporte2, font=("Sans Serif", 12))
+                marca.place(x=200, y=166)
+                marca.insert(0, MarcaAntigua)
+                Modelo=tk.Label(modifTransporte2, text= "Modelo", font=("Sans Serif", 12),width=25, height=2).place(x=0,y=193)
+                modelo=tk.Entry(modifTransporte2, font=("Sans Serif", 12))
+                modelo.place(x=200, y=206)
+                modelo.insert(0, ModeloAntiguo)
+                Año=tk.Label(modifTransporte2, text= "Año", font=("Sans Serif", 12),width=25, height=2).place(x=0,y=230) 
+                año=tk.Entry(modifTransporte2, font=("Sans Serif", 12))
+                año.place(x=200, y=243)
+                año.insert(0, AñoAntiguo)
+                Empresa=tk.Label(modifTransporte2, text= "Empresa", font=("Sans Serif", 12),width=25, height=2).place(x=0,y=268)
+                ElegirEmpresa=ttk.Combobox(modifTransporte2)
+                ElegirEmpresa.place(x=200, y=280)
+                f=open("Empresas.txt", "r")
+                lineas=f.readlines()
+                f.close()
+                empresas=[]
+                while lineas!=[]:
+                    empresas+=[str(lineas[0])[:10]]
+                    lineas=lineas[1:]
+                ElegirEmpresa["values"]=empresas
+                ElegirEmpresa.current(0)
+                Asientos=tk.Label(modifTransporte2, text="-------------Asientos-------------", font=("Sans Serif", 12), width=35, height= 2).place(x=55, y=301)
+                vip=tk.Label(modifTransporte2, text="VIP", font=("Sans Serif", 12), width=10, height= 2).place(x=11, y=354)
+                VIP=tk.Entry(modifTransporte2, font=("Sans Serif", 12), width=8)
+                VIP.place(x=18, y=390)
+                VIP.insert(0, VIPAntiguo)
+                normal=tk.Label(modifTransporte2, text="Normales", font=("Sans Serif", 12), width=10, height= 2).place(x=167, y=354)
+                NORMAL=tk.Entry(modifTransporte2, font=("Sans Serif", 12), width=8)
+                NORMAL.place(x=177, y=390)
+                NORMAL.insert(0, NormalAntiguo)
+                econom=tk.Label(modifTransporte2, text="Económicos", font=("Sans Serif", 12), width=10, height= 2).place(x=320, y=354)
+                ECONOM=tk.Entry(modifTransporte2, font=("Sans Serif", 12), width=8)
+                ECONOM.place(x=330, y=390)
+                ECONOM.insert(0, EconomAntiguo)
+                filas=tk.Label(modifTransporte2, text="Asientos por fila", font=("Sans Serif", 12), width=15, height= 2).place(x=147, y=410)
+                Filas=tk.Entry(modifTransporte2, font=("Sans Serif", 12), width=8)
+                Filas.place(x=177, y=450)
+                validacion=tk.Button(modifTransporte2, text="Modificar", font=("Sans Serif", 12), width=15, height=2, bg="grey", command=AgregarTransporteModificado).place(x=150, y=500)
+                modifTransporte2.mainloop()
+            def recopilarDatos(String): #Cada que la función se encuentre con un " | " o un guión, recopilará lo que esté antes de éste y lo almacena en una lista
+                if isinstance(String, str):
+                    if String=="":
+                        return []
+                    else:
+                        res=[]
+                        sub=""
+                        while String!="":
+                            if String[0]!="|" and String[0]!="-":
+                                sub+=String[0]
+                                String=String[1:]
+                            else:
+                                res+=[sub]
+                                sub=""
+                                String=String[1:]
+                        return res+[sub]
+
+            ListaTransportes=tk.Listbox(modifTransporte, width=150)
+            ListaTransportes.config(selectforeground="white",selectbackground="blue", selectborderwidth=3, font=("Sans Serif", 10))
+            barraY=tk.Scrollbar(modifTransporte, command=ListaTransportes.yview)
+            barraY.place(x=383, y=0, relheight=0.55)
+            ListaTransportes.config(yscrollcommand=barraY)
+            barraX=tk.Scrollbar(modifTransporte, command=ListaTransportes.xview, orient=tk.HORIZONTAL)
+            barraX.place(x=0, y=217, relwidth=0.6)
+            ListaTransportes.config(xscrollcommand=barraX)
+            ListaTransportes.insert(0, " Placa  |  Tipo  | Marca  | Modelo | Año |  Empresa  | Asientos VIP - Normales - Económicos | Asientos por fila    |")
+            n=1
+            i=1
+            while info!=[]:
+                ListaTransportes.insert(n, str(i)+") "+info[0]+"____")
+                info=info[1:]
+                i+=1
+                n+=1
+            ListaTransportes.pack()
+            Trp=tk.Label(modifTransporte, text="Transporte #", font=("Sans Serif", 12), bg="grey", width=15, height=2).pack(pady=2)
+            dato_trp=tk.IntVar()
+            trp=tk.Entry(modifTransporte, font="Helvetica 12", textvariable=dato_trp)
+            trp.pack(pady=2)
+            seleccionar=tk.Button(modifTransporte, text="Seleccionar", font=("Helvetica",14), bg="#6ee2ff", width="16",height="1",relief="groove", command=modifCamposTransporte, cursor="hand2").pack(pady=2)
+            modifTransporte.mainloop()
 ##    #-------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ##    #-------------------------------------------------------------------------------------------------------------------------------------------------------------------
-##    """
-##    BorrarEmpresas
-##    Dada la cédula de una empresa, elimina la empresa que esté vinculada con dicha cédula
-##    E: la cédula
-##    S: Borra la empresa del archivo 'Empresas.txt'
-##    R: No puede borrarse aquella empresa que esté vinculada a un transporte
-##    """
-##    def BorrarEmpresas():
-##        borrarempresa= tk.Tk()
-##        borrarempresa.title("Borrar empresa")
-##             
-##        ancho_pantalla= 400
-##        alto_pantalla= 120
-##        #Porción de código para centrar la ventana a la pantalla 
-##        x_ventana=borrarempresa.winfo_screenwidth() // 2 - ancho_pantalla // 2
-##        y_ventana=borrarempresa.winfo_screenheight() // 2 - alto_pantalla // 2
-##        posicion=str(ancho_pantalla)+"x"+str(alto_pantalla)+"+"+str(x_ventana)+"+"+str(y_ventana)
-##            
-##        borrarempresa.geometry(posicion)
-##        borrarempresa.resizable(0,1)
-##        borrarempresa.iconbitmap("img.ico")
-##            
-##        """
-##        buscarPalabra
-##        E: un archivo y una palabra para buscarla en el archivo
-##        S: Si la palabra se encuentra en el archivo, retornará la línea en la cual está ubicada
-##        """
-##        def buscarPalabra(archivo,palabra):
-##            archivo=open(archivo, "r")
-##            contexto= archivo.readlines()
-##            archivo.close()
-##            Datos=contarObjetos(contexto)
-##            largoPalabra=contarString(palabra)
-##            return buscarPalabraAux(palabra, contexto, Datos, largoPalabra)
-##        def contarObjetos(lista): 
-##            n=0
-##            while lista!=[]:
-##                n+=1
-##                lista=lista[1:]
-##            return n
-##        def contarString(texto):
-##            res=0
-##            while texto!="":
-##                res+=1
-##                texto=texto[1:]
-##            return res
-##        def buscarPalabraAux(palabra, contexto, Datos, largoPalabra):
-##            if Datos==0:
-##                return "Sin resultados"
-##            else:
-##                return buscarPalabraAux2(palabra, contexto, contexto[0], Datos, largoPalabra, contarString(contexto[0]), contexto[0])
-##        def buscarPalabraAux2(palabra, contexto, texto, Datos, largoPalabra, i, res):
-##            if i<largoPalabra:
-##                return buscarPalabraAux(palabra, contexto[1:], Datos-1, largoPalabra)
-##            else:
-##                while palabra!=texto[:largoPalabra]:
-##                    return buscarPalabraAux2(palabra, contexto, texto[1:], Datos, largoPalabra, i-1, res)
-##                return res
-##        """
-##        BorrarLinea
-##        Dada una palabra clave, borra una linea de un archivo en la cual se encuentra dicha palabra:
-##        """
-##        def borrarLinea():
-##            identif=empresa.get()
-##            lineaAborrar=buscarPalabra("Empresas.txt", identif)
-##            print(lineaAborrar)
-##            if lineaAborrar=="Sin resultados":
-##                info=mb.showerror(title="Error en entrada", message="No se encontraron coincidencias")
-##                borrarempresa.destroy()
-##                return BorrarEmpresas()
-##            if(SeEncuentra("Transportes.txt", identif)):
-##                info=mb.showerror(title="Error en entrada", message="No se puede borrar.\nLa empresa está asociada a un transporte")
-##                borrarempresa.destroy()
-##                return Empresas()
-##            else:
-##                f = open("Empresas.txt","r")
-##                lineas = f.readlines()
-##                f.close()
-##                f = open("Empresas.txt","w")
-##                while lineas!=[]:
-##                    if lineas[0]!=lineaAborrar:
-##                        print("Borrador:",lineaAborrar)
-##                        f.write(lineas[0])
-##                        print(lineas[0])
-##                        lineas=lineas[1:]
-##                    else:
-##                        lineas=lineas[1:]
-##                f.close()
-##                info=mb.showinfo(title="Estado", message="La empresa se eliminó exitosamente")
-##                borrarempresa.destroy()
-##                return Empresas()
-##        def SeEncuentra(archivo, palabra):
-##            archivo=open(archivo, "r")
-##            contexto= archivo.readlines()
-##            archivo.close()
-##            Datos=contarObjetos(contexto)
-##            largoPalabra=contarString(palabra)
-##            return buscarAux(palabra, contexto, Datos, largoPalabra)
-##        def contarObjetos(lista): #f.readlines convierte el texto a lista
-##            n=0
-##            while lista!=[]:
-##                n+=1
-##                lista=lista[1:]
-##            return n
-##        def contarString(texto):
-##            res=0
-##            while texto!="":
-##                res+=1
-##                texto=texto[1:]
-##            return res
-##        def buscarAux(palabra, contexto, Datos, largoPalabra):
-##            if Datos==0:
-##                return False
-##            else:
-##                return buscarAux2(palabra, contexto, contexto[0], Datos, largoPalabra, contarString(contexto[0]), contexto[0])
-##        def buscarAux2(palabra, contexto, texto, Datos, largoPalabra, i, res):
-##            if i<largoPalabra:
-##                return buscarAux(palabra, contexto[1:], Datos-1, largoPalabra)
-##            else:
-##                while palabra!=texto[:largoPalabra]:
-##                    return buscarAux2(palabra, contexto, texto[1:], Datos, largoPalabra, i-1, res)
-##                return True
-##                    
-##        label=tk.Label(borrarempresa, text="Digite la cédula de la empresa a borrar", font=("Sans serif", 14)).pack()
-##        empresa=tk.Entry(borrarempresa, font="Helvetica 12")
-##        empresa.pack()
-##        borrar=tk.Button(borrarempresa, text="Borrar", font=("Helvetica",14), bg="#6ee2ff", width="16",height="1",relief="groove", command=borrarLinea, cursor="hand2").pack()
-##        borrarempresa.mainloop()
-##    #-------------------------------------------------------------------------------------------------------------------------------------------------------------------
-##    #-------------------------------------------------------------------------------------------------------------------------------------------------------------------
-##    """
-##    ModificarEmpresas
-##    Se selecciona una empresa de la lista de empresas, para posteriormente modificar sus campos
-##    Entrada:
-##        la empresa seleccionada (se buscará por cédula y se editará los campos de Nombre y ubicación)
-##    Salida:
-##        Los cambios se registrarán en el archivo 'Empresas.txt'
-##    """
-##    def modificarEmpresas():
-##        f=open("Empresas.txt", "r")
-##        info=f.readlines()
-##        f.close()
-##        if info==[]:
-##            mensaje=mb.showinfo(title="Atención", message="No hay empresas registradas")
-##            return Empresas()
-##        else:
-##            modifEmpresa=tk.Toplevel()
-##            modifEmpresa.geometry("400x400")
-##            modifEmpresa.title("Ver Empresas")
-##            modifEmpresa.iconbitmap("img.ico")
-##            modifEmpresa.config(bg="grey")
-##            modifEmpresa.resizable(0,1)
-##            def modifCamposEmpresa():
-##                num=int(emp.get())-1
-##                Datos=ListaEmpresas.get(num)
-##                Cedulaempresa=Datos[:10]
-##                RestoDeDatos=recopilarDatos(Datos[11:])
-##                NombreAntiguo=RestoDeDatos[0]
-##                UbicAntigua=RestoDeDatos[1]
-##                modifEmpresa.destroy()
-##                return modifCamposEmpresaAux(Cedulaempresa, NombreAntiguo, UbicAntigua)
-##            def modifCamposEmpresaAux(Cedulaempresa, NombreAntiguo, UbicAntigua):
-##                modifEmpresa2=tk.Toplevel()
-##                #Porción de código para centrar la ventana a la pantalla 
-##                modifEmpresa2.geometry("450x600")
-##                modifEmpresa2.title("Modificar Empresa")
-##                modifEmpresa2.iconbitmap("img.ico")
-##                modifEmpresa2.resizable(0,1)
-##                
-##                Cedula=tk.Label(modifEmpresa2,text="Cédula Jurídica", font=("Sans Serif", 12), width=25, height=2). place(x=0, y=50)
-##                datoCedula=tk.Entry(modifEmpresa2, width=14, relief="sunken")
-##                datoCedula.place(x=200, y=64)
-##                datoCedula.insert(0, Cedulaempresa)
-##                print(Cedulaempresa)
-##                datoCedula.config(state=tk.DISABLED)
-##                def AgregarEmpresaModificada(): #Función para agregar la empresa modificada
-##                    Cedula=datoCedula.get()
-##                    print(Cedula)
-##                    Empresa=datoNombre.get()
-##                    provincia=provincias.get()
-##                    ubicacion=direccion.get("1.0", "end-1c")
-##                    lineaAmodificar=buscarPalabra("Empresas.txt", Cedula)
-##                    print("dato: ",lineaAmodificar)
-##                    f = open("Empresas.txt","r")
-##                    lineas = f.readlines()
-##                    f.close()
-##                    f = open("Empresas.txt","w")
-##                    while lineas!=[]:
-##                        if lineas[0]!=lineaAmodificar:
-##                            f.write(lineas[0])
-##                            print(lineas[0])
-##                            lineas=lineas[1:]
-##                        else:
-##                            f.write(str(Cedula)+"|"+str(Empresa)+"|"+str(provincia)+", "+str(ubicacion))
-##                            lineas=lineas[1:]
-##                    f.close()
-##                    info=mb.showinfo(title="Estado", message="La empresa se modificó exitosamente")
-##                    modifEmpresa2.destroy()
-##                    return Empresas()
-##                def buscarPalabra(archivo,palabra):
-##                    archivo=open(archivo, "r")
-##                    contexto= archivo.readlines()
-##                    archivo.close()
-##                    Datos=contarObjetos(contexto)
-##                    largoPalabra=contarString(palabra)
-##                    return buscarPalabraAux(palabra, contexto, Datos, largoPalabra)
-##                def contarObjetos(lista): 
-##                    n=0
-##                    while lista!=[]:
-##                        n+=1
-##                        lista=lista[1:]
-##                    return n
-##                def contarString(texto):
-##                    res=0
-##                    while texto!="":
-##                        res+=1
-##                        texto=texto[1:]
-##                    return res
-##                def buscarPalabraAux(palabra, contexto, Datos, largoPalabra):
-##                    if Datos==0:
-##                        return "Sin resultados"
-##                    else:
-##                        return buscarPalabraAux2(palabra, contexto, contexto[0], Datos, largoPalabra, contarString(contexto[0]), contexto[0])
-##                def buscarPalabraAux2(palabra, contexto, texto, Datos, largoPalabra, i, res):
-##                    if i<largoPalabra:
-##                        return buscarPalabraAux(palabra, contexto[1:], Datos-1, largoPalabra)
-##                    else:
-##                        while palabra!=texto[:largoPalabra]:
-##                            return buscarPalabraAux2(palabra, contexto, texto[1:], Datos, largoPalabra, i-1, res)
-##                        return res
-##                                       
-##                Nombre=tk.Label(modifEmpresa2, text="Nombre de la empresa", font=("Sans Serif", 12), width=25, height=2). place(x=0, y=120)
-##                datoNombre=tk.Entry(modifEmpresa2, width=14, relief="sunken")
-##                datoNombre.place(x=200, y=136)
-##                datoNombre.insert(0, NombreAntiguo)
-##                from tkinter import ttk
-##                Ubic=tk.Label(modifEmpresa2, text="-------------Ubicación-------------", font=("Sans Serif", 12), width=35, height= 2).place(x=55, y=170)
-##                Provincia=tk.Label(modifEmpresa2, text= "Provincia", font=("Sans Serif", 12),width=15, height=2).place(x=15,y=210)
-##                provincias=ttk.Combobox(modifEmpresa2)
-##                provincias.place(x=155, y=223)
-##                provincias["values"]=("San José", "Alajuela","Cartago","Heredia", "Guanacaste", "Puntarenas", "Limón")
-##                provincias.current(0)
-##                Direccion=tk.Label(modifEmpresa2, text="Dirección exacta", font=("Sans Serif", 12), width=15, height=2).place(x=150, y=270)
-##                direccion=tk.Text(modifEmpresa2, width=35, height=6, font=("Sans Serif", 12))
-##                direccion.place(x=61, y=320)
-##                direccion.insert("1.0", UbicAntigua)
-##                AgregarModif=tk.Button(modifEmpresa2, text="Modificar", font=("Sans Serif", 12), width=15, height=2, bg="grey", command=AgregarEmpresaModificada).place(x=150, y=500)
-##                modifEmpresa2.mainloop()
-##            def recopilarDatos(String): #Cada que la función se encuentre con un " | ", recopilará lo que esté antes de éste y lo almacena en una lista
-##                if isinstance(String, str):
-##                    if String=="":
-##                        return []
-##                    else:
-##                        res=[]
-##                        sub=""
-##                        while String!="":
-##                            if String[0]!="|":
-##                                sub+=String[0]
-##                                String=String[1:]
-##                            else:
-##                                res+=[sub]
-##                                sub=""
-##                                String=String[1:]
-##                        return res+[sub]
-##                    
-##            ListaEmpresas=tk.Listbox(modifEmpresa, width=150)
-##            ListaEmpresas.config(selectforeground="white",selectbackground="blue", selectborderwidth=3, font=("Sans Serif", 10))
-##            barraY=tk.Scrollbar(modifEmpresa, command=ListaEmpresas.yview)
-##            barraY.place(x=383, y=0, relheight=0.55)
-##            ListaEmpresas.config(yscrollcommand=barraY)
-##            barraX=tk.Scrollbar(modifEmpresa, command=ListaEmpresas.xview, orient=tk.HORIZONTAL)
-##            barraX.place(x=0, y=217, relwidth=0.6)
-##            ListaEmpresas.config(xscrollcommand=barraX)
-##            ListaEmpresas.insert(0, info[0])
-##            info=info[1:]
-##            n=1
-##            while info!=[]:
-##                ListaEmpresas.insert(n, info[0])
-##                info=info[1:]
-##                n+=1
-##            ListaEmpresas.pack()
-##            Emp=tk.Label(modifEmpresa, text="Empresa #", font=("Sans Serif", 12), bg="grey", width=15, height=2).pack(pady=2)
-##            dato=tk.IntVar()
-##            emp=tk.Entry(modifEmpresa, font="Helvetica 12", textvariable=dato)
-##            emp.pack(pady=2)
-##            seleccionar=tk.Button(modifEmpresa, text="Seleccionar", font=("Helvetica",14), bg="#6ee2ff", width="16",height="1",relief="groove", command=modifCamposEmpresa, cursor="hand2").pack(pady=2)
-##            modifEmpresa.mainloop()
-##    #-------------------------------------------------------------------------------------------------------------------------------------------------------------------
-##    #-------------------------------------------------------------------------------------------------------------------------------------------------------------------
-##    """
-##    MostrarEmpresas
-##    Como el nombre lo dice, sirve para mostrar las empresas
-##    Entrada:
-##        un botón (Mostrar Empresas)
-##    Salida:
-##        Muestra los datos del archivo'Empresas.txt'
-##    """
-##    def MostrarEmpresas():
-##        f=open("Empresas.txt", "r")
-##        info=f.readlines()
-##        f.close()
-##        if info==[]:
-##            mensaje=mb.showinfo(title="Atención", message="No hay empresas registradas")
-##            return Empresas()
-##        else:
-##            verEmpresas=tk.Toplevel()
-##            verEmpresas.geometry("400x400")
-##            verEmpresas.title("Ver Empresas")
-##            verEmpresas.iconbitmap("img.ico")
-##            verEmpresas.config(bg="grey")
-##            verEmpresas.resizable(0,1)
-##            ListaEmpresas=tk.Listbox(verEmpresas, width=150)
-##            ListaEmpresas.config(selectforeground="white",selectbackground="blue", selectborderwidth=3, font=("Sans Serif", 10))
-##            barraY=tk.Scrollbar(verEmpresas, command=ListaEmpresas.yview)
-##            barraY.place(x=383, y=0, relheight=0.55)
-##            ListaEmpresas.config(yscrollcommand=barraY)
-##            barraX=tk.Scrollbar(verEmpresas, command=ListaEmpresas.xview, orient=tk.HORIZONTAL)
-##            barraX.place(x=0, y=217, relwidth=0.6)
-##            ListaEmpresas.config(xscrollcommand=barraX)
-##            
-##            ListaEmpresas.insert(0, info[0])
-##            info=info[1:]
-##            n=1
-##            while info!=[]:
-##                ListaEmpresas.insert(n, info[0])
-##                info=info[1:]
-##                n+=1
-##            ListaEmpresas.pack()
-##            verEmpresas.mainloop()
+    """
+    MostrarTransportes
+    Como el nombre lo dice, sirve para mostrar los transportes
+    Entrada:
+        un botón (Mostrar Transportes)
+    Salida:
+        Muestra los datos del archivo'Transportes.txt'
+    """
+    def MostrarTransportes():
+        f=open("Transportes.txt", "r")
+        info=f.readlines()
+        f.close()
+        if info==[]:
+            mensaje=mb.showinfo(title="Atención", message="No hay transportes registrados")
+            return Transportes()
+        else:
+            verTransportes=tk.Toplevel()
+            verTransportes.geometry("400x400")
+            verTransportes.title("Ver Empresas")
+            verTransportes.iconbitmap("img.ico")
+            verTransportes.config(bg="grey")
+            verTransportes.resizable(0,1)
+            ListaTransportes=tk.Listbox(verTransportes, width=150)
+            ListaTransportes.config(selectforeground="white",selectbackground="blue", selectborderwidth=3, font=("Sans Serif", 10))
+            barraY=tk.Scrollbar(verTransportes, command=ListaTransportes.yview)
+            barraY.place(x=383, y=0, relheight=0.55)
+            ListaTransportes.config(yscrollcommand=barraY)
+            barraX=tk.Scrollbar(verTransportes, command=ListaTransportes.xview, orient=tk.HORIZONTAL)
+            barraX.place(x=0, y=217, relwidth=0.6)
+            ListaTransportes.config(xscrollcommand=barraX)
+            ListaTransportes.insert(0, " Placa  |  Tipo  | Marca  | Modelo | Año |  Empresa  | Asientos VIP - Normales - Económicos | Asientos por fila")
+            n=1
+            i=1
+            while info!=[]:
+                ListaTransportes.insert(n, str(i)+") "+info[0]+"____")
+                info=info[1:]
+                i+=1
+                n+=1
+            ListaTransportes.pack()
+            verTransportes.mainloop()
 ##    #-------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ##    #-------------------------------------------------------------------------------------------------------------------------------------------------------------------
     GestionTransporte.title("BestTraveller: Gestión de viajes")
