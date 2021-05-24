@@ -301,8 +301,8 @@ def Empresas():
             return Empresas()
         else:
             modifEmpresa=tk.Toplevel()
-            ancho_pantalla= 450
-            alto_pantalla= 600
+            ancho_pantalla= 400
+            alto_pantalla= 400
             #Porción de código para centrar la ventana a la pantalla 
             x_ventana=modifEmpresa.winfo_screenwidth() // 2 - ancho_pantalla // 2
             y_ventana=modifEmpresa.winfo_screenheight() // 2 - alto_pantalla // 2
@@ -324,9 +324,8 @@ def Empresas():
             def modifCamposEmpresaAux(Cedulaempresa, NombreAntiguo, UbicAntigua):
                 modifEmpresa2=tk.Toplevel()
                 #Porción de código para centrar la ventana a la pantalla
-                ancho_pantalla= 400
-                alto_pantalla= 400
-                #Porción de código para centrar la ventana a la pantalla 
+                ancho_pantalla= 450
+                alto_pantalla= 600
                 x_ventana=modifEmpresa2.winfo_screenwidth() // 2 - ancho_pantalla // 2
                 y_ventana=modifEmpresa2.winfo_screenheight() // 2 - alto_pantalla // 2
                 posicion=str(ancho_pantalla)+"x"+str(alto_pantalla)+"+"+str(x_ventana)+"+"+str(y_ventana)
@@ -430,7 +429,7 @@ def Empresas():
             ListaEmpresas=tk.Listbox(modifEmpresa, width=150)
             ListaEmpresas.config(selectforeground="white",selectbackground="blue", selectborderwidth=3, font=("Sans Serif", 10))
             barraY=tk.Scrollbar(modifEmpresa, command=ListaEmpresas.yview)
-            barraY.place(x=383, y=0, relheight=0.55)
+            barraY.place(x=683, y=0, relheight=0.55)
             ListaEmpresas.config(yscrollcommand=barraY)
             barraX=tk.Scrollbar(modifEmpresa, command=ListaEmpresas.xview, orient=tk.HORIZONTAL)
             barraX.place(x=0, y=217, relwidth=0.6)
@@ -483,7 +482,7 @@ def Empresas():
             ListaEmpresas=tk.Listbox(verEmpresas, width=150)
             ListaEmpresas.config(selectforeground="white",selectbackground="blue", selectborderwidth=3, font=("Sans Serif", 10))
             barraY=tk.Scrollbar(verEmpresas, command=ListaEmpresas.yview)
-            barraY.place(x=393, y=0, relheight=0.55)
+            barraY.place(x=693, y=0, relheight=0.55)
             ListaEmpresas.config(yscrollcommand=barraY)
             barraX=tk.Scrollbar(verEmpresas, command=ListaEmpresas.xview, orient=tk.HORIZONTAL)
             barraX.place(x=0, y=217, relwidth=0.6)
@@ -545,8 +544,8 @@ def Transportes():
     """
     def IncluirTransporte():
         nuevoTransporte=tk.Toplevel()
-        ancho_pantalla= 400
-        alto_pantalla= 400
+        ancho_pantalla= 450
+        alto_pantalla= 600
         #Porción de código para centrar la ventana a la pantalla 
         x_ventana=nuevoTransporte.winfo_screenwidth() // 2 - ancho_pantalla // 2
         y_ventana=nuevoTransporte.winfo_screenheight() // 2 - alto_pantalla // 2
@@ -835,7 +834,7 @@ def Transportes():
             return Transportes()
         else:
             modifTransporte=tk.Toplevel()
-            ancho_pantalla= 400
+            ancho_pantalla= 700
             alto_pantalla= 400
             #Porción de código para centrar la ventana a la pantalla 
             x_ventana=modifTransporte.winfo_screenwidth() // 2 - ancho_pantalla // 2
@@ -862,8 +861,8 @@ def Transportes():
                 return modifCamposTransporteAux(PlacaVHC, TipoAntiguo, MarcaAntigua, ModeloAntiguo, AñoAntiguo, VIPAntiguo, NormalAntiguo, EconomAntiguo)
             def modifCamposTransporteAux(PlacaVHC, TipoAntiguo, MarcaAntigua, ModeloAntiguo, AñoAntiguo, VIPAntiguo, NormalAntiguo, EconomAntiguo):
                 modifTransporte2=tk.Toplevel()
-                ancho_pantalla= 400
-                alto_pantalla= 400
+                ancho_pantalla= 450
+                alto_pantalla= 600
                 #Porción de código para centrar la ventana a la pantalla 
                 x_ventana=modifTransporte2.winfo_screenwidth() // 2 - ancho_pantalla // 2
                 y_ventana=modifTransporte2.winfo_screenheight() // 2 - alto_pantalla // 2
@@ -1014,7 +1013,7 @@ def Transportes():
             ListaTransportes=tk.Listbox(modifTransporte, width=150)
             ListaTransportes.config(selectforeground="white",selectbackground="blue", selectborderwidth=3, font=("Sans Serif", 10))
             barraY=tk.Scrollbar(modifTransporte, command=ListaTransportes.yview)
-            barraY.place(x=383, y=0, relheight=0.55)
+            barraY.place(x=683, y=0, relheight=0.55)
             ListaTransportes.config(yscrollcommand=barraY)
             barraX=tk.Scrollbar(modifTransporte, command=ListaTransportes.xview, orient=tk.HORIZONTAL)
             barraX.place(x=0, y=217, relwidth=0.6)
@@ -1053,7 +1052,7 @@ def Transportes():
             return Transportes()
         else:
             verTransportes=tk.Toplevel()
-            ancho_pantalla= 400
+            ancho_pantalla= 700
             alto_pantalla= 400
             #Porción de código para centrar la ventana a la pantalla 
             x_ventana=verTransportes.winfo_screenwidth() // 2 - ancho_pantalla // 2
@@ -1067,7 +1066,7 @@ def Transportes():
             ListaTransportes=tk.Listbox(verTransportes, width=150)
             ListaTransportes.config(selectforeground="white",selectbackground="blue", selectborderwidth=3, font=("Sans Serif", 10))
             barraY=tk.Scrollbar(verTransportes, command=ListaTransportes.yview)
-            barraY.place(x=383, y=0, relheight=0.55)
+            barraY.place(x=683, y=0, relheight=0.55)
             ListaTransportes.config(yscrollcommand=barraY)
             barraX=tk.Scrollbar(verTransportes, command=ListaTransportes.xview, orient=tk.HORIZONTAL)
             barraX.place(x=0, y=217, relwidth=0.6)
@@ -1462,7 +1461,7 @@ def Viajes():
             return Viajes()
         else:
             modifViaje=tk.Toplevel()
-            ancho_pantalla= 400
+            ancho_pantalla= 700
             alto_pantalla= 400
             #Porción de código para centrar la ventana a la pantalla 
             x_ventana=modifViaje.winfo_screenwidth() // 2 - ancho_pantalla // 2
@@ -1694,24 +1693,8 @@ def Viajes():
                                 String=String[1:]
                         return res+[sub]
 
-            ListaViajes=tk.Listbox(modifViaje, width=150)
-            ListaViajes.config(selectforeground="white",selectbackground="blue", selectborderwidth=3, font=("Sans Serif", 10))
-            barraY=tk.Scrollbar(modifViaje, command=ListaViajes.yview)
-            barraY.place(x=383, y=0, relheight=0.55)
-            ListaViajes.config(yscrollcommand=barraY)
-            barraX=tk.Scrollbar(modifViaje, command=ListaViajes.xview, orient=tk.HORIZONTAL)
-            barraX.place(x=0, y=217, relwidth=0.6)
-            ListaViajes.config(xscrollcommand=barraX)
-            ListaViajes.insert(0, " Nº Viaje  |  Lugar Salida  | Fecha-Hora Salida | Lugar Llegada  | Fecha-Hora Llegada | Empresa  | Transporte |Montos VIP - Normales - Económicos   |")
-            n=1
-            i=1
-            while info!=[]:
-                ListaViajes.insert(n, str(i)+") "+info[0]+"____")
-                info=info[1:]
-                i+=1
-                n+=1
-            ListaViajes.pack()            
 
+            
             viajenum=tk.Label(modifViaje, text="Viaje #", font=("Sans Serif", 12), bg="grey", width=15, height=2).pack(pady=2)
             dato_trp=tk.IntVar()
             viaje=tk.Entry(modifViaje, font="Helvetica 12", textvariable=dato_trp)
@@ -1737,7 +1720,7 @@ def Viajes():
             return Viajes()
         else:
             verViajes=tk.Toplevel()
-            ancho_pantalla= 400
+            ancho_pantalla= 700
             alto_pantalla= 400
             #Porción de código para centrar la ventana a la pantalla 
             x_ventana=verViajes.winfo_screenwidth() // 2 - ancho_pantalla // 2
@@ -1751,7 +1734,7 @@ def Viajes():
             ListaViajes=tk.Listbox(verViajes, width=150)
             ListaViajes.config(selectforeground="white",selectbackground="blue", selectborderwidth=3, font=("Sans Serif", 10))
             barraY=tk.Scrollbar(verViajes, command=ListaViajes.yview)
-            barraY.place(x=383, y=0, relheight=0.55)
+            barraY.place(x=683, y=0, relheight=0.55)
             ListaViajes.config(yscrollcommand=barraY)
             barraX=tk.Scrollbar(verViajes, command=ListaViajes.xview, orient=tk.HORIZONTAL)
             barraX.place(x=0, y=217, relwidth=0.6)
@@ -1783,6 +1766,238 @@ def Viajes():
     GestionViaje.mainloop()
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+"""
+Estadísticas
+Esta función dará al administrador 2 opciones de estadísticas: de viajes y de empresas
+Entradas:
+    En la primera instancia, se selecciona un viaje de la lista de viajes.
+    En la otra, se selecciona una empresa
+Salidas:
+    En la primera opción:
+        Nº viaje
+        Empresa, transporte
+        Lugar, fecha y hora salida
+        Lugar, fecha y hora llegada
+        Cantidad de asientos reservados y disponibles en cada categoría
+        Costo por boleto VIP, normal y económico
+        Monto total recaudado
+        *Se crea un reporte en un archivo
+    En la segunda:
+        Cédula jurídica
+        Nombre de empresa
+        Cantidad de transporte (Con detalle de matrícula)
+        Cantidad de viajes (Con detalle de identificador)
+        *Se crea un reporte
+"""
+def Estadisticas():
+    Seleccione=tk.Toplevel()
+    ancho_pantalla=400
+    alto_pantalla= 300
+    #Porción de código para centrar la ventana a la pantalla 
+    x_ventana=Seleccione.winfo_screenwidth() // 2 - ancho_pantalla // 2
+    y_ventana=Seleccione.winfo_screenheight() // 2 - alto_pantalla // 2
+    posicion=str(ancho_pantalla)+"x"+str(alto_pantalla)+"+"+str(x_ventana)+"+"+str(y_ventana)
+    Seleccione.geometry(posicion)
+    Seleccione.iconbitmap("img.ico")
+    imagen=tk.PhotoImage(file="f.png")
+    def EstadisticaViaje():
+        pass
+    def EstadisticaEmpresa():
+        f=open("Empresas.txt", "r")
+        info=f.readlines()
+        f.close()
+        if info==[]:
+            mensaje=mb.showinfo(title="Atención", message="No hay empresas registradas")
+            return administrador()
+        else:
+            SelecEmpresa=tk.Toplevel()
+            ancho_pantalla= 400
+            alto_pantalla= 400
+            #Porción de código para centrar la ventana a la pantalla 
+            x_ventana=SelecEmpresa.winfo_screenwidth() // 2 - ancho_pantalla // 2
+            y_ventana=SelecEmpresa.winfo_screenheight() // 2 - alto_pantalla // 2
+            posicion=str(ancho_pantalla)+"x"+str(alto_pantalla)+"+"+str(x_ventana)+"+"+str(y_ventana)
+            SelecEmpresa.geometry(posicion)
+            SelecEmpresa.title("Ver Empresas")
+            SelecEmpresa.iconbitmap("img.ico")
+            SelecEmpresa.config(bg="grey")
+            SelecEmpresa.resizable(0,1)
+            def RecopilarEstadisticaEmpresa():
+                num=int(emp.get())
+                Datos=ListaEmpresas.get(num)
+                Cedulaempresa=Datos[3:13]
+                RestoDeDatos=recopilarDatos(Datos[14:-4])
+                Nombre=RestoDeDatos[0]
+                f=open("Transportes.txt", "r")
+                transportes=f.readlines()
+                f.close()
+                cantTransportes=[]
+                def SeEncuentra(linea, palabra):
+                    largoPalabra=contarString(palabra)
+                    return buscarAux(palabra, linea, largoPalabra, contarString(linea))
+                def contarString(texto):
+                    res=0
+                    while texto!="":
+                        res+=1
+                        texto=texto[1:]
+                    return res
+                def buscarAux(palabra, linea, largoPalabra, i):
+                    if i<largoPalabra:
+                        return False
+                    else:
+                        while palabra!=linea[:largoPalabra]:
+                            return buscarAux(palabra, linea[1:], largoPalabra, i-1)
+                        return True
+                while transportes!=[]:
+                    if SeEncuentra(transportes[0], Cedulaempresa):
+                        cantTransportes+=[transportes[0][:6]]
+                        transportes=transportes[1:]
+                    else:
+                        transportes=transportes[1:]
+                print("este",cantTransportes)
+                f=open("Viajes.txt", "r")
+                viajes=f.readlines()
+                f.close()
+                cantViajes=[]
+                while viajes!=[]:
+                    if SeEncuentra(viajes[0], Cedulaempresa):
+                        cantViajes+=[viajes[0][:4]]
+                        viajes=viajes[1:]
+                    else:
+                        viajes=viajes[1:]
+                return MostrarEstadisticaEmpresa(Cedulaempresa, Nombre, cantTransportes, cantViajes)
+            def recopilarDatos(String): #Cada que la función se encuentre con un " | ", recopilará lo que esté antes de éste y lo almacena en una lista
+                if isinstance(String, str):
+                    if String=="":
+                        return []
+                    else:
+                        res=[]
+                        sub=""
+                        while String!="":
+                            if String[0]!="|":
+                                sub+=String[0]
+                                String=String[1:]
+                            else:
+                                res+=[sub]
+                                sub=""
+                                String=String[1:]
+                        return res+[sub]
+            
+            def MostrarEstadisticaEmpresa(Cedulaempresa, Nombre, cantTransportes, cantViajes):
+                mostrarEstadEmpresa=tk.Toplevel()
+                #Porción de código para centrar la ventana a la pantalla
+                ancho_pantalla= 450
+                alto_pantalla= 600
+                x_ventana=mostrarEstadEmpresa.winfo_screenwidth() // 2 - ancho_pantalla // 2
+                y_ventana=mostrarEstadEmpresa.winfo_screenheight() // 2 - alto_pantalla // 2
+                posicion=str(ancho_pantalla)+"x"+str(alto_pantalla)+"+"+str(x_ventana)+"+"+str(y_ventana)
+                mostrarEstadEmpresa.geometry(posicion)
+                mostrarEstadEmpresa.title("Estadísiticas de la Empresa")
+                mostrarEstadEmpresa.iconbitmap("img.ico")
+                mostrarEstadEmpresa.resizable(0,1)
+                Cedula=tk.Label(mostrarEstadEmpresa,text="Cédula Jurídica", font=("Sans Serif", 12), width=25, height=2). place(x=0, y=50)
+                datoCedula=tk.Label(mostrarEstadEmpresa, text=str(Cedulaempresa),width=14, relief="sunken").place(x=200, y=64)
+                nombre=tk.Label(mostrarEstadEmpresa, text="Nombre de la empresa", font=("Sans Serif", 12), width=25, height=2). place(x=0, y=120)
+                datoNombre=tk.Label(mostrarEstadEmpresa, text=str(Nombre), width=14, relief="sunken").place(x=200, y=136)
+                trp=tk.Label(mostrarEstadEmpresa, text="Transportes de la empresa", font=("Sans Serif", 12), width=25, height=2). place(x=120, y=160)
+                ListaTransportes=tk.Listbox(mostrarEstadEmpresa, width=40, height=4)
+                ListaTransportes.config(selectforeground="white",selectbackground="blue", selectborderwidth=3, font=("Sans Serif", 10))
+                barraY=tk.Scrollbar(mostrarEstadEmpresa, command=ListaTransportes.yview)
+                barraY.place(x=358, y=202, relheight=0.17)
+                ListaTransportes.config(yscrollcommand=barraY)
+                n=0
+                x=1
+                m=cantTransportes
+                while cantTransportes!=[]:
+                    ListaTransportes.insert(n, str(x)+") "+cantTransportes[0])
+                    cantTransportes=cantTransportes[1:]
+                    n+=1
+                    x+=1
+                if n==0:
+                    ListaTransportes.insert(n, "Cantidad de transportes registrados:", 0)
+                else:
+                    ListaTransportes.insert(n, "Cantidad de transportes registrados:", x-1)
+                ListaTransportes.place(x=85, y=205)
+                label=tk.Label(mostrarEstadEmpresa, text="Viajes de la empresa", font=("Sans Serif", 12), width=25, height=2). place(x=120, y=300)
+                ListaViajes=tk.Listbox(mostrarEstadEmpresa, width=40, height=4)
+                ListaViajes.config(selectforeground="white",selectbackground="blue", selectborderwidth=3, font=("Sans Serif", 10))
+                barraY=tk.Scrollbar(mostrarEstadEmpresa, command=ListaViajes.yview)
+                barraY.place(x=358, y=330, relheight=0.17)
+                ListaViajes.config(yscrollcommand=barraY)
+                b=0
+                i=1
+                a=cantViajes
+                while cantViajes!=[]:
+                    ListaViajes.insert(n, str(i)+") "+cantViajes[0])
+                    cantViajes=cantViajes[1:]
+                    n+=1
+                    i+=1
+                if n==0:
+                    ListaViajes.insert(n, "Cantidad de viajes registrados:", 0)
+                else:
+                    ListaViajes.insert(n, "Cantidad de viajes registrados:", i-1)
+                ListaViajes.place(x=85, y=330)
+                def crearReporteEmpresa(): #Función para agregar el reporte de la empresa
+                    f=open(str(Cedulaempresa)+".txt", "w")
+                    f.write("Cédula Empresa: "+str(Cedulaempresa)+"\n"+"Nombre: "+str(Nombre)+"\n"+"Transportes registrados: "+str(x-1)+"\n"+str(m)+"\n"+"Viajes registrados: "+str(i-1)+"\n"+str(a))
+                    print("Cédula Empresa: "+str(Cedulaempresa)+"\n"+"Nombre: "+str(Nombre)+"\n"+"Transportes registrados: "+str(x-1)+"\n"+str(m)+"\n"+"Viajes registrados: "+str(i-1)+"\n"+str(a))
+                    f.close()
+                    ya=mb.showinfo(title="información", message="El reporte ha sido creado")
+                    mostrarEstadEmpresa.destroy()
+                    return administrador()
+                
+                AgregarModif=tk.Button(mostrarEstadEmpresa, text="Crear reporte", font=("Sans Serif", 12), width=15, height=2, bg="grey", command=crearReporteEmpresa).place(x=150, y=500)
+                mostrarEstadEmpresa.mainloop()
+                
+            def recopilarDatos(String): #Cada que la función se encuentre con un " | ", recopilará lo que esté antes de éste y lo almacena en una lista
+                if isinstance(String, str):
+                    if String=="":
+                        return []
+                    else:
+                        res=[]
+                        sub=""
+                        while String!="":
+                            if String[0]!="|":
+                                sub+=String[0]
+                                String=String[1:]
+                            else:
+                                res+=[sub]
+                                sub=""
+                                String=String[1:]
+                        return res+[sub]
+            
+            ListaEmpresas=tk.Listbox(SelecEmpresa, width=150)
+            ListaEmpresas.config(selectforeground="white",selectbackground="blue", selectborderwidth=3, font=("Sans Serif", 10))
+            barraY=tk.Scrollbar(SelecEmpresa, command=ListaEmpresas.yview)
+            barraY.place(x=683, y=0, relheight=0.55)
+            ListaEmpresas.config(yscrollcommand=barraY)
+            barraX=tk.Scrollbar(SelecEmpresa, command=ListaEmpresas.xview, orient=tk.HORIZONTAL)
+            barraX.place(x=0, y=217, relwidth=0.6)
+            ListaEmpresas.config(xscrollcommand=barraX)
+            ListaEmpresas.insert(0, "Cédula jurídica | Empresa | Ubicación     |")
+            n=1
+            i=1
+            while info!=[]:
+                ListaEmpresas.insert(n, str(i)+") "+info[0]+"____")
+                info=info[1:]
+                n+=1
+                i+=1
+            ListaEmpresas.pack()
+            Emp=tk.Label(SelecEmpresa, text="Empresa #", font=("Sans Serif", 12), bg="grey", width=15, height=2).pack(pady=2)
+            dato=tk.IntVar()
+            emp=tk.Entry(SelecEmpresa, font="Helvetica 12", textvariable=dato)
+            emp.pack(pady=2)
+            seleccionar=tk.Button(SelecEmpresa, text="Seleccionar", font=("Helvetica",14), bg="#6ee2ff", width="16",height="1",relief="groove", command=RecopilarEstadisticaEmpresa, cursor="hand2").pack(pady=2)
+            SelecEmpresa.mainloop()
+        
+    fondo=tk.Label(Seleccione, image=imagen).place(x=0, y=0)
+    label=tk.Label(Seleccione, text="Seleccione una de las opciones", bg="#6ee2ff", font=("Sans serif", 14)).pack(pady=4)
+    viaje=tk.Button(Seleccione, cursor="hand2", text="Viajes", font=("Sans Serif", 14), width=10, bg="#c4a660").pack(pady=4)
+    emp=tk.Button(Seleccione, cursor="hand2", text="Empresas", font=("Sans Serif", 14), width=10, bg="#c4a660", command=EstadisticaEmpresa).pack(pady=4)
+    Seleccione.mainloop()
+            
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 "Pantalla del administrador"
 def administrador():
@@ -1802,7 +2017,7 @@ def administrador():
     Transp=tk.Button(admin, text="Gestión de transporte", font=("Helvetica",14), bg="#6ee2ff", width="23",height="1",relief="groove", cursor="hand2", command=Transportes).place(x=555, y=200)
     Viaje=tk.Button(admin, text="Gestión de viajes", font=("Helvetica",14), bg="#6ee2ff", width="23",height="1",relief="groove", cursor="hand2", command=Viajes).place(x=935, y=200)
     Historial=tk.Button(admin, text="Historial de reservas", font=("Helvetica",14), bg="#6ee2ff", width="23",height="1",relief="groove", cursor="hand2").place(x=170, y=250)
-    Estadist=tk.Button(admin, text="Estadísticas de viajes", font=("Helvetica",14), bg="#6ee2ff", width="23",height="1",relief="groove", cursor="hand2").place(x=555, y=250)
+    Estadist=tk.Button(admin, text="Estadísticas", font=("Helvetica",14), bg="#6ee2ff", width="23",height="1",relief="groove", cursor="hand2", command=Estadisticas).place(x=555, y=250)
     avanzado=tk.Button(admin, text="Funciones avanzadas", font=("Helvetica",14), bg="#6ee2ff", width="23",height="1",relief="groove", cursor="hand2", command=FuncAvanzadas).place(x=935, y=250)
     Volver=tk.Button(admin, text="Volver", command=admin.destroy, font=("Helvetica",14), bg="#6ee2ff", width="23",height="1",relief="groove", cursor="hand2").place(x=555, y=300)
     EasterEgg= tk.Label(admin, text="Una colaboración de", font=("Monotype Corsiva", 16, "italic"), bg="#c4a660" ,relief="sunken").place(x=599, y=400)
@@ -1866,6 +2081,483 @@ def FuncAvanzadas():
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#Funciones del usuario
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+"""
+Consulta de viajes
+Esta función le permite al usuario realizar busquedas en la lista de viajes del sistema
+Al dar clic en el botón, aparecerá una pantalla con diferentes filtros de búsqueda.
+"""
+def Filtro1():
+    ventanaX=tk.Toplevel()
+    ancho_pantalla= 400
+    alto_pantalla= 200
+    #Porción de código para centrar la ventana a la pantalla 
+    x_ventana=ventanaX.winfo_screenwidth() // 2 - ancho_pantalla // 2
+    y_ventana=ventanaX.winfo_screenheight() // 2 - alto_pantalla // 2
+    posicion=str(ancho_pantalla)+"x"+str(alto_pantalla)+"+"+str(x_ventana)+"+"+str(y_ventana)
+    ventanaX.geometry(posicion)
+    ventanaX.resizable(0,1)
+    
+    def buscarInfoViaje():
+        dato=str(filtro1.get())
+        f=open("Viajes.txt", "r")
+        info=f.readlines()
+        f.close()
+        if info==[]:
+            mensaje=mb.showinfo(title="Atención", message="No hay viajes registrados")
+            return user()
+        else:
+            resultadosViajes=tk.Toplevel()
+            resultadosViajes.title("Ver viajes")
+            ancho_pantalla= 700
+            alto_pantalla= 270
+            #Porción de código para centrar la ventana a la pantalla 
+            x_ventana=resultadosViajes.winfo_screenwidth() // 2 - ancho_pantalla // 2
+            y_ventana=resultadosViajes.winfo_screenheight() // 2 - alto_pantalla // 2
+            posicion=str(ancho_pantalla)+"x"+str(alto_pantalla)+"+"+str(x_ventana)+"+"+str(y_ventana)
+            resultadosViajes.geometry(posicion)
+            resultadosViajes.resizable(0,1)
+            ListaViajes=tk.Listbox(resultadosViajes, width=150)
+            ListaViajes.config(selectforeground="white",selectbackground="blue", selectborderwidth=3, font=("Sans Serif", 10))
+            barraY=tk.Scrollbar(resultadosViajes, command=ListaViajes.yview)
+            barraY.place(x=683, y=0, relheight=0.55)
+            ListaViajes.config(yscrollcommand=barraY)
+            barraX=tk.Scrollbar(resultadosViajes, command=ListaViajes.xview, orient=tk.HORIZONTAL)
+            barraX.place(x=0, y=217, relwidth=0.6)
+            ListaViajes.config(xscrollcommand=barraX)
+            ListaViajes.insert(0, " Nº Viaje  |  Lugar Salida  | Fecha-Hora Salida | Lugar Llegada  | Fecha-Hora Llegada | Empresa  | Transporte |Montos VIP - Normales - Económicos   |")
+            def SeEncuentra(linea, palabra):
+                largoPalabra=contarString(palabra)
+                return buscarAux(palabra, linea, largoPalabra, contarString(linea))
+            def contarString(texto):
+                res=0
+                while texto!="":
+                    res+=1
+                    texto=texto[1:]
+                return res
+            def buscarAux(palabra, linea, largoPalabra, i):
+                if i<largoPalabra:
+                    return False
+                else:
+                    while palabra!=linea[:largoPalabra]:
+                        return buscarAux(palabra, linea[1:], largoPalabra, i-1)
+                    return True
+            n=1
+            i=1
+            while info!=[]:
+                if SeEncuentra(info[0], dato):
+                    ListaViajes.insert(n, str(i)+") "+info[0]+"____")
+                    info=info[1:]
+                    i+=1
+                    n+=1
+                else:
+                    info=info[1:]
+            ListaViajes.insert(n, "Total de coincidencias:"+str(i-1))
+            ListaViajes.pack()
+            resultadosViajes.mainloop()
+    FiltroElegido=tk.Label(ventanaX, text="Empresa", font=("Helvetica", 12), width=20, height=2).place(x=0, y=50)
+    filtro1=tk.Entry(ventanaX, width=14, relief="sunken")
+    filtro1.place(x=170, y=64)
+    boton2=tk.Button(ventanaX, text="Buscar", width=8, height=1,font=("Helvetica", 12), command=buscarInfoViaje).place(x=155, y=100)
+    ventanaX.mainloop()
+            
+def Filtro2():
+    ventanaX=tk.Toplevel()
+    ancho_pantalla= 400
+    alto_pantalla= 200
+    #Porción de código para centrar la ventana a la pantalla 
+    x_ventana=ventanaX.winfo_screenwidth() // 2 - ancho_pantalla // 2
+    y_ventana=ventanaX.winfo_screenheight() // 2 - alto_pantalla // 2
+    posicion=str(ancho_pantalla)+"x"+str(alto_pantalla)+"+"+str(x_ventana)+"+"+str(y_ventana)
+    ventanaX.geometry(posicion)
+    ventanaX.resizable(0,1)
+    def buscarInfoViaje():
+        dato=str(filtro1.get())
+        f=open("Viajes.txt", "r")
+        info=f.readlines()
+        f.close()
+        if info==[]:
+            mensaje=mb.showinfo(title="Atención", message="No hay viajes registrados")
+            return user()
+        else:
+            resultadosViajes=tk.Toplevel()
+            resultadosViajes.title("Ver viajes")
+            ancho_pantalla= 700
+            alto_pantalla= 270
+            #Porción de código para centrar la ventana a la pantalla 
+            x_ventana=resultadosViajes.winfo_screenwidth() // 2 - ancho_pantalla // 2
+            y_ventana=resultadosViajes.winfo_screenheight() // 2 - alto_pantalla // 2
+            posicion=str(ancho_pantalla)+"x"+str(alto_pantalla)+"+"+str(x_ventana)+"+"+str(y_ventana)
+            resultadosViajes.geometry(posicion)
+            resultadosViajes.resizable(0,1)
+            ListaViajes=tk.Listbox(resultadosViajes, width=150)
+            ListaViajes.config(selectforeground="white",selectbackground="blue", selectborderwidth=3, font=("Sans Serif", 10))
+            barraY=tk.Scrollbar(resultadosViajes, command=ListaViajes.yview)
+            barraY.place(x=683, y=0, relheight=0.55)
+            ListaViajes.config(yscrollcommand=barraY)
+            barraX=tk.Scrollbar(resultadosViajes, command=ListaViajes.xview, orient=tk.HORIZONTAL)
+            barraX.place(x=0, y=217, relwidth=0.6)
+            ListaViajes.config(xscrollcommand=barraX)
+            ListaViajes.insert(0, " Nº Viaje  |  Lugar Salida  | Fecha-Hora Salida | Lugar Llegada  | Fecha-Hora Llegada | Empresa  | Transporte |Montos VIP - Normales - Económicos   |")
+            def SeEncuentra(linea, palabra):
+                largoPalabra=contarString(palabra)
+                return buscarAux(palabra, linea, largoPalabra, contarString(linea))
+            def contarString(texto):
+                res=0
+                while texto!="":
+                    res+=1
+                    texto=texto[1:]
+                return res
+            def buscarAux(palabra, linea, largoPalabra, i):
+                if i<largoPalabra:
+                    return False
+                else:
+                    while palabra!=linea[:largoPalabra]:
+                        return buscarAux(palabra, linea[1:], largoPalabra, i-1)
+                    return True
+            n=1
+            i=1
+            while info!=[]:
+                if SeEncuentra(info[0], dato):
+                    ListaViajes.insert(n, str(i)+") "+info[0]+"____")
+                    info=info[1:]
+                    i+=1
+                    n+=1
+                else:
+                    info=info[1:]
+            ListaViajes.insert(n, "Total de coincidencias:"+str(i-1))
+            ListaViajes.pack()
+            resultadosViajes.mainloop()
+    FiltroElegido=tk.Label(ventanaX, text="Lugar de salida", font=("Helvetica", 12), width=20, height=2).place(x=0, y=50)
+    filtro1=tk.Entry(ventanaX, width=14, relief="sunken")
+    filtro1.place(x=180, y=64)
+    boton2=tk.Button(ventanaX, text="Buscar", width=8, height=1,font=("Helvetica", 12), command=buscarInfoViaje).place(x=155, y=100)
+    ventanaX.mainloop()
+def Filtro4():
+    ventanaX=tk.Toplevel()
+    ancho_pantalla= 400
+    alto_pantalla= 200
+    #Porción de código para centrar la ventana a la pantalla 
+    x_ventana=ventanaX.winfo_screenwidth() // 2 - ancho_pantalla // 2
+    y_ventana=ventanaX.winfo_screenheight() // 2 - alto_pantalla // 2
+    posicion=str(ancho_pantalla)+"x"+str(alto_pantalla)+"+"+str(x_ventana)+"+"+str(y_ventana)
+    ventanaX.geometry(posicion)
+    ventanaX.resizable(0,1)
+    def buscarInfoViaje():
+        dato=str(DiaSalida.get())+"/"+str(MesSalida.get())+"/"+str(AñoSalida.get())
+        f=open("Viajes.txt", "r")
+        info=f.readlines()
+        f.close()
+        if info==[]:
+            mensaje=mb.showinfo(title="Atención", message="No hay viajes registrados")
+            return user()
+        else:
+            resultadosViajes=tk.Toplevel()
+            resultadosViajes.title("Ver viajes")
+            ancho_pantalla= 400
+            alto_pantalla= 270
+            #Porción de código para centrar la ventana a la pantalla 
+            x_ventana=resultadosViajes.winfo_screenwidth() // 2 - ancho_pantalla // 2
+            y_ventana=resultadosViajes.winfo_screenheight() // 2 - alto_pantalla // 2
+            posicion=str(ancho_pantalla)+"x"+str(alto_pantalla)+"+"+str(x_ventana)+"+"+str(y_ventana)
+            resultadosViajes.geometry(posicion)
+            resultadosViajes.resizable(0,1)
+            ListaViajes=tk.Listbox(resultadosViajes, width=150)
+            ListaViajes.config(selectforeground="white",selectbackground="blue", selectborderwidth=3, font=("Sans Serif", 10))
+            barraY=tk.Scrollbar(resultadosViajes, command=ListaViajes.yview)
+            barraY.place(x=683, y=0, relheight=0.55)
+            ListaViajes.config(yscrollcommand=barraY)
+            barraX=tk.Scrollbar(resultadosViajes, command=ListaViajes.xview, orient=tk.HORIZONTAL)
+            barraX.place(x=0, y=217, relwidth=0.6)
+            ListaViajes.config(xscrollcommand=barraX)
+            ListaViajes.insert(0, " Nº Viaje  |  Lugar Salida  | Fecha-Hora Salida | Lugar Llegada  | Fecha-Hora Llegada | Empresa  | Transporte |Montos VIP - Normales - Económicos   |")
+            def SeEncuentra(linea, palabra):
+                largoPalabra=contarString(palabra)
+                return buscarAux(palabra, linea, largoPalabra, contarString(linea))
+            def contarString(texto):
+                res=0
+                while texto!="":
+                    res+=1
+                    texto=texto[1:]
+                return res
+            def buscarAux(palabra, linea, largoPalabra, i):
+                if i<largoPalabra:
+                    return False
+                else:
+                    while palabra!=linea[:largoPalabra]:
+                        return buscarAux(palabra, linea[1:], largoPalabra, i-1)
+                    return True
+            n=1
+            i=1
+            while info!=[]:
+                if SeEncuentra(info[0], dato):
+                    ListaViajes.insert(n, str(i)+") "+info[0]+"____")
+                    info=info[1:]
+                    i+=1
+                    n+=1
+                else:
+                    info=info[1:]
+            ListaViajes.insert(n, "Total de coincidencias:"+str(i-1))
+            ListaViajes.pack()
+            resultadosViajes.mainloop()
+    FiltroElegido=tk.Label(ventanaX, text="Fecha de salida", font=("Helvetica", 12), width=20, height=2).place(x=0, y=50)
+    DiaSalida=tk.Spinbox(ventanaX, from_=1, to=31, relief="raise", font=("Sans Serif", 12), width=2, wrap=True)
+    DiaSalida.place(x=170, y=64)
+    DiaSalida["state"] = "readonly"
+    MesSalida=tk.Spinbox(ventanaX, from_=1, to=12, relief="raise", font=("Sans Serif", 12), width=2, wrap=True)
+    MesSalida.place(x=210, y=64)
+    MesSalida["state"] = "readonly"
+    AñoSalida=tk.Spinbox(ventanaX, from_=2021, to=2030, relief="raise", font=("Sans Serif", 12), width=5, wrap=True)
+    AñoSalida.place(x=250, y=64)
+    AñoSalida["state"] = "readonly"
+    boton2=tk.Button(ventanaX, text="Buscar", width=8, height=1,font=("Helvetica", 12), command=buscarInfoViaje).place(x=155, y=100)
+    ventanaX.mainloop()
+def Filtro3():
+    ventanaX=tk.Toplevel()
+    ancho_pantalla= 400
+    alto_pantalla= 200
+    #Porción de código para centrar la ventana a la pantalla 
+    x_ventana=ventanaX.winfo_screenwidth() // 2 - ancho_pantalla // 2
+    y_ventana=ventanaX.winfo_screenheight() // 2 - alto_pantalla // 2
+    posicion=str(ancho_pantalla)+"x"+str(alto_pantalla)+"+"+str(x_ventana)+"+"+str(y_ventana)
+    ventanaX.geometry(posicion)
+    ventanaX.resizable(0,1)
+    def buscarInfoViaje():
+        dato=str(filtro1.get())
+        f=open("Viajes.txt", "r")
+        info=f.readlines()
+        f.close()
+        if info==[]:
+            mensaje=mb.showinfo(title="Atención", message="No hay viajes registrados")
+            return user()
+        else:
+            resultadosViajes=tk.Toplevel()
+            resultadosViajes.title("Ver viajes")
+            ancho_pantalla= 700
+            alto_pantalla= 270
+            #Porción de código para centrar la ventana a la pantalla 
+            x_ventana=resultadosViajes.winfo_screenwidth() // 2 - ancho_pantalla // 2
+            y_ventana=resultadosViajes.winfo_screenheight() // 2 - alto_pantalla // 2
+            posicion=str(ancho_pantalla)+"x"+str(alto_pantalla)+"+"+str(x_ventana)+"+"+str(y_ventana)
+            resultadosViajes.geometry(posicion)
+            resultadosViajes.resizable(0,1)
+            ListaViajes=tk.Listbox(resultadosViajes, width=150)
+            ListaViajes.config(selectforeground="white",selectbackground="blue", selectborderwidth=3, font=("Sans Serif", 10))
+            barraY=tk.Scrollbar(resultadosViajes, command=ListaViajes.yview)
+            barraY.place(x=683, y=0, relheight=0.55)
+            ListaViajes.config(yscrollcommand=barraY)
+            barraX=tk.Scrollbar(resultadosViajes, command=ListaViajes.xview, orient=tk.HORIZONTAL)
+            barraX.place(x=0, y=217, relwidth=0.6)
+            ListaViajes.config(xscrollcommand=barraX)
+            ListaViajes.insert(0, " Nº Viaje  |  Lugar Salida  | Fecha-Hora Salida | Lugar Llegada  | Fecha-Hora Llegada | Empresa  | Transporte |Montos VIP - Normales - Económicos   |")
+            def SeEncuentra(linea, palabra):
+                largoPalabra=contarString(palabra)
+                return buscarAux(palabra, linea, largoPalabra, contarString(linea))
+            def contarString(texto):
+                res=0
+                while texto!="":
+                    res+=1
+                    texto=texto[1:]
+                return res
+            def buscarAux(palabra, linea, largoPalabra, i):
+                if i<largoPalabra:
+                    return False
+                else:
+                    while palabra!=linea[:largoPalabra]:
+                        return buscarAux(palabra, linea[1:], largoPalabra, i-1)
+                    return True
+            n=1
+            i=1
+            while info!=[]:
+                if SeEncuentra(info[0], dato):
+                    ListaViajes.insert(n, str(i)+") "+info[0]+"____")
+                    info=info[1:]
+                    i+=1
+                    n+=1
+                else:
+                    info=info[1:]
+            ListaViajes.insert(n, "Total de coincidencias:"+str(i-1))
+            ListaViajes.pack()
+            resultadosViajes.mainloop()
+    FiltroElegido=tk.Label(ventanaX, text="Lugar de llegada", font=("Helvetica", 12), width=20, height=2).place(x=0, y=50)
+    filtro1=tk.Entry(ventanaX, width=14, relief="sunken")
+    filtro1.place(x=180, y=64)
+    boton2=tk.Button(ventanaX, text="Buscar", width=8, height=1,font=("Helvetica", 12), command=buscarInfoViaje).place(x=155, y=100)
+    ventanaX.mainloop()
+def Filtro5():
+    ventanaX=tk.Toplevel()
+    ancho_pantalla= 400
+    alto_pantalla= 200
+    #Porción de código para centrar la ventana a la pantalla 
+    x_ventana=ventanaX.winfo_screenwidth() // 2 - ancho_pantalla // 2
+    y_ventana=ventanaX.winfo_screenheight() // 2 - alto_pantalla // 2
+    posicion=str(ancho_pantalla)+"x"+str(alto_pantalla)+"+"+str(x_ventana)+"+"+str(y_ventana)
+    ventanaX.geometry(posicion)
+    ventanaX.resizable(0,1)
+    def buscarInfoViaje():
+        dato=str(DiaSalida.get())+"/"+str(MesSalida.get())+"/"+str(AñoSalida.get())
+        f=open("Viajes.txt", "r")
+        info=f.readlines()
+        f.close()
+        if info==[]:
+            mensaje=mb.showinfo(title="Atención", message="No hay viajes registrados")
+            return user()
+        else:
+            resultadosViajes=tk.Toplevel()
+            resultadosViajes.title("Ver viajes")
+            ancho_pantalla= 700
+            alto_pantalla= 270
+            #Porción de código para centrar la ventana a la pantalla 
+            x_ventana=resultadosViajes.winfo_screenwidth() // 2 - ancho_pantalla // 2
+            y_ventana=resultadosViajes.winfo_screenheight() // 2 - alto_pantalla // 2
+            posicion=str(ancho_pantalla)+"x"+str(alto_pantalla)+"+"+str(x_ventana)+"+"+str(y_ventana)
+            resultadosViajes.geometry(posicion)
+            resultadosViajes.resizable(0,1)
+            ListaViajes=tk.Listbox(resultadosViajes, width=150)
+            ListaViajes.config(selectforeground="white",selectbackground="blue", selectborderwidth=3, font=("Sans Serif", 10))
+            barraY=tk.Scrollbar(resultadosViajes, command=ListaViajes.yview)
+            barraY.place(x=683, y=0, relheight=0.55)
+            ListaViajes.config(yscrollcommand=barraY)
+            barraX=tk.Scrollbar(resultadosViajes, command=ListaViajes.xview, orient=tk.HORIZONTAL)
+            barraX.place(x=0, y=217, relwidth=0.6)
+            ListaViajes.config(xscrollcommand=barraX)
+            ListaViajes.insert(0, " Nº Viaje  |  Lugar Salida  | Fecha-Hora Salida | Lugar Llegada  | Fecha-Hora Llegada | Empresa  | Transporte |Montos VIP - Normales - Económicos   |")
+            def SeEncuentra(linea, palabra):
+                largoPalabra=contarString(palabra)
+                return buscarAux(palabra, linea, largoPalabra, contarString(linea))
+            def contarString(texto):
+                res=0
+                while texto!="":
+                    res+=1
+                    texto=texto[1:]
+                return res
+            def buscarAux(palabra, linea, largoPalabra, i):
+                if i<largoPalabra:
+                    return False
+                else:
+                    while palabra!=linea[:largoPalabra]:
+                        return buscarAux(palabra, linea[1:], largoPalabra, i-1)
+                    return True
+            n=1
+            i=1
+            while info!=[]:
+                if SeEncuentra(info[0], dato):
+                    ListaViajes.insert(n, str(i)+") "+info[0]+"____")
+                    info=info[1:]
+                    i+=1
+                    n+=1
+                else:
+                    info=info[1:]
+            ListaViajes.insert(n, "Total de coincidencias:"+str(i-1))
+            ListaViajes.pack()
+            resultadosViajes.mainloop()
+    FiltroElegido=tk.Label(ventanaX, text="Fecha de llegada", font=("Helvetica", 12), width=20, height=2).place(x=0, y=50)
+    DiaSalida=tk.Spinbox(ventanaX, from_=1, to=31, relief="raise", font=("Sans Serif", 12), width=2, wrap=True)
+    DiaSalida.place(x=170, y=64)
+    DiaSalida["state"] = "readonly"
+    MesSalida=tk.Spinbox(ventanaX, from_=1, to=12, relief="raise", font=("Sans Serif", 12), width=2, wrap=True)
+    MesSalida.place(x=210, y=64)
+    MesSalida["state"] = "readonly"
+    AñoSalida=tk.Spinbox(ventanaX, from_=2021, to=2030, relief="raise", font=("Sans Serif", 12), width=5, wrap=True)
+    AñoSalida.place(x=250, y=64)
+    AñoSalida["state"] = "readonly"
+    boton2=tk.Button(ventanaX, text="Buscar", width=8, height=1,font=("Helvetica", 12), command=buscarInfoViaje).place(x=155, y=100)
+    ventanaX.mainloop()
+def consultaViajes():
+    filtrosParaViajes= tk.Toplevel()
+    #Porción de código para centrar la ventana a la pantalla 
+    width= filtrosParaViajes.winfo_screenwidth()  
+    height= filtrosParaViajes.winfo_screenheight() 
+    filtrosParaViajes.geometry("%dx%d" % (width, height))
+    filtrosParaViajes.resizable(0,1)
+    filtrosParaViajes.title("BestTraveller: Gestión de viajes")
+    filtrosParaViajes.iconbitmap("img.ico")
+    imagen=tk.PhotoImage(file="f.png")
+    fondo=tk.Label(filtrosParaViajes, image=imagen).place(x=0, y=0)
+
+    label = tk.Label(filtrosParaViajes, text="Menú de filtros", font=("Helvetica", 20, "italic", "bold"), bg="#6fafd8" ,relief="sunken").pack()
+    empresa=tk.Button(filtrosParaViajes, text="Empresa", font=("Helvetica",14), bg="#6ee2ff", width="23",height="1",relief="groove", cursor="hand2", command=Filtro1).place(x=170, y=200)
+    lugarSalida=tk.Button(filtrosParaViajes, text="Lugar de salida", font=("Helvetica",14), bg="#6ee2ff", width="23",height="1",relief="groove", cursor="hand2", command=Filtro2).place(x=555, y=200)
+    lugarLlegada=tk.Button(filtrosParaViajes, text="Lugar de llegada", font=("Helvetica",14), bg="#6ee2ff", width="23",height="1",relief="groove", cursor="hand2", command=Filtro3).place(x=935, y=200)
+    volver=tk.Button(filtrosParaViajes, text="Volver", command=filtrosParaViajes.destroy, font=("Helvetica",14), bg="#6ee2ff", width="23",height="1",relief="groove", cursor="hand2").place(x=555, y=250)
+    fechaSalida=tk.Button(filtrosParaViajes, text="Fecha de salida", font=("Helvetica",14), bg="#6ee2ff", width="23",height="1",relief="groove", cursor="hand2", command=Filtro4).place(x=170, y=250)
+    fechaLlegadaSalir=tk.Button(filtrosParaViajes, text="Fecha de llegada", font=("Helvetica",14), bg="#6ee2ff", width="23",height="1",relief="groove", cursor="hand2", command=Filtro5).place(x=935, y=250)
+    
+    filtrosParaViajes.mainloop()
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+"""
+ReservarViaje
+Esta función permite al usuario hacer una reservación en un viaje
+Entradas:
+    El usuario dará los siguientes datos:
+        Seleccionar un viaje de la lista
+        El nombre del usuario
+        La cantidad de asientos VIP, normales y/o económicos a reservar
+Salida:
+    Se le entragará al usuario un comprobante al usuario con los siguientes datos:
+        Id de reserva (autogenerado)
+        Nombre de quien reserva
+        Fecha y hora de reserva (capturadas del sistema)
+        Empresa
+        Transporte
+        Lugar, fecha y hora de salida
+        Lugar, fecha y hora de llegada
+        Cantidad de asientos reservados en clase VIP, normal y económica
+        Monto total de reservación
+    La reserva será registrada en el archivo 'Reservas.txt'
+Restricciones:
+    Deben haber asientos disponibles en el viaje para proceder
+    Debe reservar al menos un asiento
+"""
+def ReservarViaje():
+    f=open("Viajes.txt", "r")
+    info=f.readlines()
+    f.close()
+    if info==[]:
+        mensaje=mb.showinfo(title="Atención", message="No hay viajes registrados")
+        return Viajes()
+    else:
+        Reservas= tk.Toplevel()
+        #Porción de código para centrar la ventana a la pantalla 
+        width= Reservas.winfo_screenwidth()  
+        height= Reservas.winfo_screenheight() 
+        Reservas.geometry("%dx%d" % (width, height))
+        Reservas.resizable(0,1)
+        Reservas.title("BestTraveller: Gestión de viajes")
+        Reservas.iconbitmap("img.ico")
+        imagenUser=tk.PhotoImage(file="f.png")
+        fondoUser=tk.Label(Reservas, image=imagenUser).place(x=0, y=0)
+        label = tk.Label(Reservas, text="Bienvenido al sistema de reservas de BestTraveller", font=("Helvetica", 20, "italic", "bold"), bg="#6fafd8" ,relief="sunken").pack()
+        label2 = tk.Label(Reservas, text="A continuación se le mostrará la lista de viajes registrados en el sistema.", font=("Helvetica", 16, "bold"), bg="#6fafd8" ,relief="sunken").pack(pady=10)
+        ListaViajes=tk.Listbox(Reservas, width=150)
+        ListaViajes.config(selectforeground="white",selectbackground="blue", selectborderwidth=3, font=("Sans Serif", 10))
+        barraY=tk.Scrollbar(Reservas, command=ListaViajes.yview)
+        barraY.place(x=1210, y=88, relheight=0.312)
+        ListaViajes.config(yscrollcommand=barraY)
+        barraX=tk.Scrollbar(Reservas, command=ListaViajes.xview, orient=tk.HORIZONTAL)
+        barraX.place(x=155, y=305, relwidth=0.6)
+        ListaViajes.config(xscrollcommand=barraX)
+        ListaViajes.insert(0, " Nº Viaje  |  Lugar Salida  | Fecha-Hora Salida | Lugar Llegada  | Fecha-Hora Llegada | Empresa  | Transporte |Montos VIP - Normales - Económicos   |")
+        n=1
+        i=1
+        while info!=[]:
+            ListaViajes.insert(n, str(i)+") "+info[0]+"____")
+            info=info[1:]
+            i+=1
+            n+=1
+        ListaViajes.pack()
+        Viaje=tk.Label(Reservas, text="Viaje #", font=("Sans Serif", 12), width=15, height=2).pack(pady=2)
+        dato=tk.IntVar()
+        SelecViaje=tk.Entry(Reservas, font="Helvetica 12", textvariable=dato)
+        SelecViaje.pack(pady=2)
+        seleccionar=tk.Button(Reservas, text="Seleccionar", font=("Helvetica",14), bg="#6ee2ff", width="16", relief="groove", command=None, cursor="hand2").pack(pady=2)
+            
+    Reservas.mainloop()
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 "Pantalla del usuario"
 def usuario():
     ventanaPrincipal.destroy()
@@ -1882,8 +2574,8 @@ def usuario():
 
     label = tk.Label(user, text="Bienvenido a BestTraveller", font=("Helvetica", 20, "italic", "bold"), bg="#6fafd8" ,relief="sunken").pack()
     label = tk.Label(user, text="Una aplicación hecha para su comfort", font=("Helvetica", 16, "bold"), bg="#6fafd8" ,relief="sunken").pack()
-    consulta=tk.Button(user, text="Consulta de viajes", font=("Helvetica",14), bg="#6ee2ff", width="23",height="1",relief="groove", cursor="hand2").place(x=170, y=200)
-    Reserva=tk.Button(user, text="Reservar Viaje", font=("Helvetica",14), bg="#6ee2ff", width="23",height="1",relief="groove", cursor="hand2").place(x=555, y=200)
+    consulta=tk.Button(user, text="Consulta de viajes", font=("Helvetica",14), bg="#6ee2ff", width="23",height="1",relief="groove", cursor="hand2", command=consultaViajes).place(x=170, y=200)
+    Reserva=tk.Button(user, text="Reservar Viaje", font=("Helvetica",14), bg="#6ee2ff", width="23",height="1",relief="groove", cursor="hand2", command=ReservarViaje).place(x=555, y=200)
     CancelReserva=tk.Button(user, text="Cancelar Reserva", font=("Helvetica",14), bg="#6ee2ff", width="23",height="1",relief="groove", cursor="hand2").place(x=935, y=200)
     Salir=tk.Button(user, text="Salir", command=user.destroy, font=("Helvetica",14), bg="#6ee2ff", width="23",height="1",relief="groove", cursor="hand2").place(x=555, y=250)
     EasterEgg=label = tk.Label(user, text="Una colaboración de", font=("Monotype Corsiva", 16, "italic"), bg="#c4a660" ,relief="sunken").place(x=599, y=400)
