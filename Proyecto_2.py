@@ -1,6 +1,7 @@
 "Proyecto programado#2: Kevin Salazar"
 import tkinter as tk
 from tkinter import messagebox as mb
+from tkinter import ttk
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 """
@@ -143,7 +144,6 @@ def Empresas():
         Nombre=tk.Label(nuevaEmpresa, text="Nombre de la empresa", font=("Sans Serif", 12), width=25, height=2). place(x=0, y=120)
         datoNombre=tk.Entry(nuevaEmpresa, width=14, relief="sunken")
         datoNombre.place(x=200, y=136)
-        from tkinter import ttk
         Ubic=tk.Label(nuevaEmpresa, text="-------------Ubicación-------------", font=("Sans Serif", 12), width=35, height= 2).place(x=55, y=170)
         Provincia=tk.Label(nuevaEmpresa, text= "Provincia", font=("Sans Serif", 12),width=15, height=2).place(x=15,y=210)
         provincias=ttk.Combobox(nuevaEmpresa)
@@ -396,7 +396,6 @@ def Empresas():
                 datoNombre=tk.Entry(modifEmpresa2, width=14, relief="sunken")
                 datoNombre.place(x=200, y=136)
                 datoNombre.insert(0, NombreAntiguo)
-                from tkinter import ttk
                 Ubic=tk.Label(modifEmpresa2, text="-------------Ubicación-------------", font=("Sans Serif", 12), width=35, height= 2).place(x=55, y=170)
                 Provincia=tk.Label(modifEmpresa2, text= "Provincia", font=("Sans Serif", 12),width=15, height=2).place(x=15,y=210)
                 provincias=ttk.Combobox(modifEmpresa2)
@@ -468,7 +467,7 @@ def Empresas():
             return Empresas()
         else:
             verEmpresas=tk.Toplevel()
-            ancho_pantalla= 400
+            ancho_pantalla= 500
             alto_pantalla= 400
             #Porción de código para centrar la ventana a la pantalla 
             x_ventana=verEmpresas.winfo_screenwidth() // 2 - ancho_pantalla // 2
@@ -482,7 +481,7 @@ def Empresas():
             ListaEmpresas=tk.Listbox(verEmpresas, width=150)
             ListaEmpresas.config(selectforeground="white",selectbackground="blue", selectborderwidth=3, font=("Sans Serif", 10))
             barraY=tk.Scrollbar(verEmpresas, command=ListaEmpresas.yview)
-            barraY.place(x=693, y=0, relheight=0.55)
+            barraY.place(x=483, y=0, relheight=0.55)
             ListaEmpresas.config(yscrollcommand=barraY)
             barraX=tk.Scrollbar(verEmpresas, command=ListaEmpresas.xview, orient=tk.HORIZONTAL)
             barraX.place(x=0, y=217, relwidth=0.6)
@@ -637,7 +636,6 @@ def Transportes():
         Tipo=tk.Label(nuevoTransporte, text="Tipo de vehículo", font=("Sans Serif", 12), width=25, height=2). place(x=0, y=110)
         datoTipo=tk.Entry(nuevoTransporte, relief="sunken", font=("Sans Serif", 12))
         datoTipo.place(x=200, y=126)
-        from tkinter import ttk
         Marca=tk.Label(nuevoTransporte, text= "Marca", font=("Sans Serif", 12),width=25, height=2).place(x=0,y=150)
         marca=tk.Entry(nuevoTransporte, font=("Sans Serif", 12))
         marca.place(x=200, y=166)
@@ -674,9 +672,9 @@ def Transportes():
         econom=tk.Label(nuevoTransporte, text="Económicos", font=("Sans Serif", 12), width=10, height= 2).place(x=320, y=354)
         ECONOM=tk.Entry(nuevoTransporte, font=("Sans Serif", 12), width=8)
         ECONOM.place(x=330, y=390)
-        filas=tk.Label(nuevoTransporte, text="Asientos por fila", font=("Sans Serif", 12), width=15, height= 2).place(x=147, y=400)
+        filas=tk.Label(nuevoTransporte, text="Asientos por fila", font=("Sans Serif", 12), width=15, height= 2).place(x=147, y=410)
         Filas=tk.Entry(nuevoTransporte, font=("Sans Serif", 12), width=8)
-        Filas.place(x=177, y=440)
+        Filas.place(x=177, y=450)
         
         validacion=tk.Button(nuevoTransporte, text="Validar", font=("Sans Serif", 12), width=15, height=2, bg="grey", command=validarNuevoTransporte).place(x=150, y=500)
         nuevoTransporte.mainloop()                       
@@ -950,7 +948,6 @@ def Transportes():
                 datoTipo=tk.Entry(modifTransporte2, relief="sunken", font=("Sans Serif", 12))
                 datoTipo.place(x=200, y=126)
                 datoTipo.insert(0, TipoAntiguo)
-                from tkinter import ttk
                 Marca=tk.Label(modifTransporte2, text= "Marca", font=("Sans Serif", 12),width=25, height=2).place(x=0,y=150)
                 marca=tk.Entry(modifTransporte2, font=("Sans Serif", 12))
                 marca.place(x=200, y=166)
@@ -1208,8 +1205,6 @@ def Viajes():
             hecho=mb.showinfo(title="Información", message="El viaje se agregó exitosamente")
             nuevoViaje.destroy()
             return Viajes()
-       
-        from tkinter import ttk
         infoSalida=tk.Label(nuevoViaje, text= "-----Datos de Salida-----", font=("Sans Serif", 12),width=35, height=2).place(x=50,y=50)
         Provincia=tk.Label(nuevoViaje, text= "Provincia", font=("Sans Serif", 12),width=20, height=2).place(x=27,y=84)
         provincias=ttk.Combobox(nuevoViaje)
@@ -1560,7 +1555,6 @@ def Viajes():
                         while palabra!=texto[:largoPalabra]:
                             return buscarPalabraAux2(palabra, contexto, texto[1:], Datos, largoPalabra, i-1, res)
                         return res
-                from tkinter import ttk
                 infoSalida=tk.Label(modifViaje2, text= "-----Datos de Salida-----", font=("Sans Serif", 12),width=35, height=2).place(x=50,y=50)
                 Provincia=tk.Label(modifViaje2, text= "Provincia", font=("Sans Serif", 12),width=20, height=2).place(x=27,y=84)
                 provincias=ttk.Combobox(modifViaje2)
@@ -1692,9 +1686,24 @@ def Viajes():
                                 sub=""
                                 String=String[1:]
                         return res+[sub]
-
-
             
+            ListaViajes=tk.Listbox(modifViaje, width=150)
+            ListaViajes.config(selectforeground="white",selectbackground="blue", selectborderwidth=3, font=("Sans Serif", 10))
+            barraY=tk.Scrollbar(modifViaje, command=ListaViajes.yview)
+            barraY.place(x=683, y=0, relheight=0.55)
+            ListaViajes.config(yscrollcommand=barraY)
+            barraX=tk.Scrollbar(modifViaje, command=ListaViajes.xview, orient=tk.HORIZONTAL)
+            barraX.place(x=0, y=217, relwidth=0.6)
+            ListaViajes.config(xscrollcommand=barraX)
+            ListaViajes.insert(0, " Nº Viaje  |  Lugar Salida  | Fecha-Hora Salida | Lugar Llegada  | Fecha-Hora Llegada | Empresa  | Transporte |Montos VIP - Normales - Económicos   |")
+            n=1
+            i=1
+            while info!=[]:
+                ListaViajes.insert(n, str(i)+") "+info[0]+"____")
+                info=info[1:]
+                i+=1
+                n+=1
+            ListaViajes.pack()
             viajenum=tk.Label(modifViaje, text="Viaje #", font=("Sans Serif", 12), bg="grey", width=15, height=2).pack(pady=2)
             dato_trp=tk.IntVar()
             viaje=tk.Entry(modifViaje, font="Helvetica 12", textvariable=dato_trp)
