@@ -25,7 +25,7 @@ def paseAdmin():
     contraseña.iconbitmap("img.ico")
     contraseña.config(bg="#c4a660")
     
-    def validar():
+    def validar(): #Validación de la contaseña
         entrada=contra.get()
         f=open("contraseña.txt", "r")
         codigo=f.read()
@@ -47,7 +47,7 @@ def paseAdmin():
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 #Funciones del administrador
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-def Empresas():
+def Empresas(): #Ventana principal de las funciones de empresas
     GestionEmpresa= tk.Toplevel()
     #Porción de código para centrar la ventana a la pantalla 
     width= GestionEmpresa.winfo_screenwidth()  
@@ -515,7 +515,7 @@ def Empresas():
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-def Transportes():
+def Transportes(): #Ventana principal de las funciones de transportes
     GestionTransporte= tk.Toplevel()
     width= GestionTransporte.winfo_screenwidth()  
     height= GestionTransporte.winfo_screenheight() 
@@ -1097,7 +1097,7 @@ def Transportes():
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-def Viajes():
+def Viajes(): #Ventana principal de las funciones de viajes
     GestionViaje= tk.Toplevel()
     width= GestionViaje.winfo_screenwidth()  
     height= GestionViaje.winfo_screenheight() 
@@ -1776,6 +1776,440 @@ def Viajes():
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 """
+Consultar el historial de reservaciones
+Mediante una busqueda avanzada, el usuario podrá consultar las reservaciones generadas en el sistema
+E: Dependiendo del filtro elegido, podrá consultar por
+    Fecha de Salida
+    Fecha de llegada
+    Fecha de reservación
+    Lugar de Salida/llegada
+S: Por cada reserva se mostrará:
+    Id de reserva
+    Nombre del cliente
+    Nº viaje
+    Fecha/Hora de reserva
+    Empresa, transporte
+    Lugar, fecha/hora salida-llegada
+    Asientos reservados en VIP, Normal y económico
+    Monto de reservacíon
+"""
+def FiltroReserva1():
+    ventanaX=tk.Toplevel()
+    ancho_pantalla= 400
+    alto_pantalla= 200
+    #Porción de código para centrar la ventana a la pantalla 
+    x_ventana=ventanaX.winfo_screenwidth() // 2 - ancho_pantalla // 2
+    y_ventana=ventanaX.winfo_screenheight() // 2 - alto_pantalla // 2
+    posicion=str(ancho_pantalla)+"x"+str(alto_pantalla)+"+"+str(x_ventana)+"+"+str(y_ventana)
+    ventanaX.geometry(posicion)
+    ventanaX.resizable(0,1)
+    
+    def buscarInfoReserva():
+        dato=str(filtro1.get())
+        f=open("Reservas.txt", "r")
+        info=f.readlines()
+        f.close()
+        if info==[]:
+            mensaje=mb.showinfo(title="Atención", message="No hay reservas registrados")
+            return administrador()
+        else:
+            resultadosReserva=tk.Toplevel()
+            resultadosReserva.title("Ver reservas")
+            ancho_pantalla= 700
+            alto_pantalla= 270
+            #Porción de código para centrar la ventana a la pantalla 
+            x_ventana=resultadosReserva.winfo_screenwidth() // 2 - ancho_pantalla // 2
+            y_ventana=resultadosReserva.winfo_screenheight() // 2 - alto_pantalla // 2
+            posicion=str(ancho_pantalla)+"x"+str(alto_pantalla)+"+"+str(x_ventana)+"+"+str(y_ventana)
+            resultadosReserva.geometry(posicion)
+            resultadosReserva.resizable(0,1)
+            ListaReservas=tk.Listbox(resultadosReserva, width=150)
+            ListaReservas.config(selectforeground="white",selectbackground="blue", selectborderwidth=3, font=("Sans Serif", 10))
+            barraY=tk.Scrollbar(resultadosReserva, command=ListaReservas.yview)
+            barraY.place(x=683, y=0, relheight=0.55)
+            ListaReservas.config(yscrollcommand=barraY)
+            barraX=tk.Scrollbar(resultadosReserva, command=ListaReservas.xview, orient=tk.HORIZONTAL)
+            barraX.place(x=0, y=217, relwidth=0.6)
+            ListaReservas.config(xscrollcommand=barraX)
+            ListaReservas.insert(0, " Id reserva | Nombre del cliente | Nº Viaje  | Fecha/hora reserva | Empresa | Transporte | Lugar Salida  | Fecha-Hora Salida | Lugar Llegada  | Fecha-Hora Llegada | Asientos VIP - Normales - Económicos| Monto total")
+            def SeEncuentra(linea, palabra):
+                largoPalabra=contarString(palabra)
+                return buscarAux(palabra, linea, largoPalabra, contarString(linea))
+            def contarString(texto):
+                res=0
+                while texto!="":
+                    res+=1
+                    texto=texto[1:]
+                return res
+            def buscarAux(palabra, linea, largoPalabra, i):
+                if i<largoPalabra:
+                    return False
+                else:
+                    while palabra!=linea[:largoPalabra]:
+                        return buscarAux(palabra, linea[1:], largoPalabra, i-1)
+                    return True
+            n=1
+            i=1
+            while info!=[]:
+                if SeEncuentra(info[0], dato):
+                    ListaReservas.insert(n, str(i)+") "+info[0]+"____")
+                    info=info[1:]
+                    i+=1
+                    n+=1
+                else:
+                    info=info[1:]
+            ListaReservas.insert(n, "Total de coincidencias:"+str(i-1))
+            ListaReservas.pack()
+            resultadosReserva.mainloop()
+    FiltroElegido=tk.Label(ventanaX, text="Fecha de salida", font=("Helvetica", 12), width=20, height=2).place(x=0, y=50)
+    DiaSalida=tk.Spinbox(ventanaX, from_=1, to=31, relief="raise", font=("Sans Serif", 12), width=2, wrap=True)
+    DiaSalida.place(x=170, y=64)
+    DiaSalida["state"] = "readonly"
+    MesSalida=tk.Spinbox(ventanaX, from_=1, to=12, relief="raise", font=("Sans Serif", 12), width=2, wrap=True)
+    MesSalida.place(x=210, y=64)
+    MesSalida["state"] = "readonly"
+    AñoSalida=tk.Spinbox(ventanaX, from_=2021, to=2030, relief="raise", font=("Sans Serif", 12), width=5, wrap=True)
+    AñoSalida.place(x=250, y=64)
+    AñoSalida["state"] = "readonly"
+    boton2=tk.Button(ventanaX, text="Buscar", width=8, height=1,font=("Helvetica", 12), command=buscarInfoReserva).place(x=155, y=100)
+    ventanaX.mainloop()
+#------------------------------------------------------------------------------------------------------------------------------------------------------            
+def FiltroReserva2():
+    ventanaX=tk.Toplevel()
+    ancho_pantalla= 400
+    alto_pantalla= 200
+    #Porción de código para centrar la ventana a la pantalla 
+    x_ventana=ventanaX.winfo_screenwidth() // 2 - ancho_pantalla // 2
+    y_ventana=ventanaX.winfo_screenheight() // 2 - alto_pantalla // 2
+    posicion=str(ancho_pantalla)+"x"+str(alto_pantalla)+"+"+str(x_ventana)+"+"+str(y_ventana)
+    ventanaX.geometry(posicion)
+    ventanaX.resizable(0,1)
+    
+    def buscarInfoReserva():
+        dato=str(filtro1.get())
+        f=open("Reservas.txt", "r")
+        info=f.readlines()
+        f.close()
+        if info==[]:
+            mensaje=mb.showinfo(title="Atención", message="No hay reservas registrados")
+            return administrador()
+        else:
+            resultadosReserva=tk.Toplevel()
+            resultadosReserva.title("Ver reservas")
+            ancho_pantalla= 700
+            alto_pantalla= 270
+            #Porción de código para centrar la ventana a la pantalla 
+            x_ventana=resultadosReserva.winfo_screenwidth() // 2 - ancho_pantalla // 2
+            y_ventana=resultadosReserva.winfo_screenheight() // 2 - alto_pantalla // 2
+            posicion=str(ancho_pantalla)+"x"+str(alto_pantalla)+"+"+str(x_ventana)+"+"+str(y_ventana)
+            resultadosReserva.geometry(posicion)
+            resultadosReserva.resizable(0,1)
+            ListaReservas=tk.Listbox(resultadosReserva, width=150)
+            ListaReservas.config(selectforeground="white",selectbackground="blue", selectborderwidth=3, font=("Sans Serif", 10))
+            barraY=tk.Scrollbar(resultadosReserva, command=ListaReservas.yview)
+            barraY.place(x=683, y=0, relheight=0.55)
+            ListaReservas.config(yscrollcommand=barraY)
+            barraX=tk.Scrollbar(resultadosReserva, command=ListaReservas.xview, orient=tk.HORIZONTAL)
+            barraX.place(x=0, y=217, relwidth=0.6)
+            ListaReservas.config(xscrollcommand=barraX)
+            ListaReservas.insert(0, " Id reserva | Nombre del cliente | Nº Viaje  | Fecha/hora reserva | Empresa | Transporte | Lugar Salida  | Fecha-Hora Salida | Lugar Llegada  | Fecha-Hora Llegada | Asientos VIP - Normales - Económicos| Monto total")
+            def SeEncuentra(linea, palabra):
+                largoPalabra=contarString(palabra)
+                return buscarAux(palabra, linea, largoPalabra, contarString(linea))
+            def contarString(texto):
+                res=0
+                while texto!="":
+                    res+=1
+                    texto=texto[1:]
+                return res
+            def buscarAux(palabra, linea, largoPalabra, i):
+                if i<largoPalabra:
+                    return False
+                else:
+                    while palabra!=linea[:largoPalabra]:
+                        return buscarAux(palabra, linea[1:], largoPalabra, i-1)
+                    return True
+            n=1
+            i=1
+            while info!=[]:
+                if SeEncuentra(info[0], dato):
+                    ListaReservas.insert(n, str(i)+") "+info[0]+"____")
+                    info=info[1:]
+                    i+=1
+                    n+=1
+                else:
+                    info=info[1:]
+            ListaReservas.insert(n, "Total de coincidencias:"+str(i-1))
+            ListaReservas.pack()
+            resultadosReserva.mainloop()
+    FiltroElegido=tk.Label(ventanaX, text="Fecha de llegada", font=("Helvetica", 12), width=20, height=2).place(x=0, y=50)
+    DiaSalida=tk.Spinbox(ventanaX, from_=1, to=31, relief="raise", font=("Sans Serif", 12), width=2, wrap=True)
+    DiaSalida.place(x=170, y=64)
+    DiaSalida["state"] = "readonly"
+    MesSalida=tk.Spinbox(ventanaX, from_=1, to=12, relief="raise", font=("Sans Serif", 12), width=2, wrap=True)
+    MesSalida.place(x=210, y=64)
+    MesSalida["state"] = "readonly"
+    AñoSalida=tk.Spinbox(ventanaX, from_=2021, to=2030, relief="raise", font=("Sans Serif", 12), width=5, wrap=True)
+    AñoSalida.place(x=250, y=64)
+    AñoSalida["state"] = "readonly"
+    boton2=tk.Button(ventanaX, text="Buscar", width=8, height=1,font=("Helvetica", 12), command=buscarInfoReserva).place(x=155, y=100)
+    ventanaX.mainloop()
+#------------------------------------------------------------------------------------------------------------------------------------------------------
+def FiltroReserva3():
+    ventanaX=tk.Toplevel()
+    ancho_pantalla= 400
+    alto_pantalla= 200
+    #Porción de código para centrar la ventana a la pantalla 
+    x_ventana=ventanaX.winfo_screenwidth() // 2 - ancho_pantalla // 2
+    y_ventana=ventanaX.winfo_screenheight() // 2 - alto_pantalla // 2
+    posicion=str(ancho_pantalla)+"x"+str(alto_pantalla)+"+"+str(x_ventana)+"+"+str(y_ventana)
+    ventanaX.geometry(posicion)
+    ventanaX.resizable(0,1)
+    
+    def buscarInfoReserva():
+        dato=str(filtro1.get())
+        f=open("Reservas.txt", "r")
+        info=f.readlines()
+        f.close()
+        if info==[]:
+            mensaje=mb.showinfo(title="Atención", message="No hay reservas registrados")
+            return administrador()
+        else:
+            resultadosReserva=tk.Toplevel()
+            resultadosReserva.title("Ver reservas")
+            ancho_pantalla= 700
+            alto_pantalla= 270
+            #Porción de código para centrar la ventana a la pantalla 
+            x_ventana=resultadosReserva.winfo_screenwidth() // 2 - ancho_pantalla // 2
+            y_ventana=resultadosReserva.winfo_screenheight() // 2 - alto_pantalla // 2
+            posicion=str(ancho_pantalla)+"x"+str(alto_pantalla)+"+"+str(x_ventana)+"+"+str(y_ventana)
+            resultadosReserva.geometry(posicion)
+            resultadosReserva.resizable(0,1)
+            ListaReservas=tk.Listbox(resultadosReserva, width=150)
+            ListaReservas.config(selectforeground="white",selectbackground="blue", selectborderwidth=3, font=("Sans Serif", 10))
+            barraY=tk.Scrollbar(resultadosReserva, command=ListaReservas.yview)
+            barraY.place(x=683, y=0, relheight=0.55)
+            ListaReservas.config(yscrollcommand=barraY)
+            barraX=tk.Scrollbar(resultadosReserva, command=ListaReservas.xview, orient=tk.HORIZONTAL)
+            barraX.place(x=0, y=217, relwidth=0.6)
+            ListaReservas.config(xscrollcommand=barraX)
+            ListaReservas.insert(0, " Id reserva | Nombre del cliente | Nº Viaje  | Fecha/hora reserva | Empresa | Transporte | Lugar Salida  | Fecha-Hora Salida | Lugar Llegada  | Fecha-Hora Llegada | Asientos VIP - Normales - Económicos| Monto total")
+            def SeEncuentra(linea, palabra):
+                largoPalabra=contarString(palabra)
+                return buscarAux(palabra, linea, largoPalabra, contarString(linea))
+            def contarString(texto):
+                res=0
+                while texto!="":
+                    res+=1
+                    texto=texto[1:]
+                return res
+            def buscarAux(palabra, linea, largoPalabra, i):
+                if i<largoPalabra:
+                    return False
+                else:
+                    while palabra!=linea[:largoPalabra]:
+                        return buscarAux(palabra, linea[1:], largoPalabra, i-1)
+                    return True
+            n=1
+            i=1
+            while info!=[]:
+                if SeEncuentra(info[0], dato):
+                    ListaReservas.insert(n, str(i)+") "+info[0]+"____")
+                    info=info[1:]
+                    i+=1
+                    n+=1
+                else:
+                    info=info[1:]
+            ListaReservas.insert(n, "Total de coincidencias:"+str(i-1))
+            ListaReservas.pack()
+            resultadosReserva.mainloop()
+    FiltroElegido=tk.Label(ventanaX, text="Fecha de Reservación", font=("Helvetica", 12), width=20, height=2).place(x=0, y=50)
+    DiaSalida=tk.Spinbox(ventanaX, from_=1, to=31, relief="raise", font=("Sans Serif", 12), width=2, wrap=True)
+    DiaSalida.place(x=170, y=64)
+    DiaSalida["state"] = "readonly"
+    MesSalida=tk.Spinbox(ventanaX, from_=1, to=12, relief="raise", font=("Sans Serif", 12), width=2, wrap=True)
+    MesSalida.place(x=210, y=64)
+    MesSalida["state"] = "readonly"
+    AñoSalida=tk.Spinbox(ventanaX, from_=2021, to=2030, relief="raise", font=("Sans Serif", 12), width=5, wrap=True)
+    AñoSalida.place(x=250, y=64)
+    AñoSalida["state"] = "readonly"
+    boton2=tk.Button(ventanaX, text="Buscar", width=8, height=1,font=("Helvetica", 12), command=buscarInfoReserva).place(x=155, y=100)
+    ventanaX.mainloop()
+#------------------------------------------------------------------------------------------------------------------------------------------------------
+def FiltroReserva4():
+    ventanaX=tk.Toplevel()
+    ancho_pantalla= 400
+    alto_pantalla= 200
+    #Porción de código para centrar la ventana a la pantalla 
+    x_ventana=ventanaX.winfo_screenwidth() // 2 - ancho_pantalla // 2
+    y_ventana=ventanaX.winfo_screenheight() // 2 - alto_pantalla // 2
+    posicion=str(ancho_pantalla)+"x"+str(alto_pantalla)+"+"+str(x_ventana)+"+"+str(y_ventana)
+    ventanaX.geometry(posicion)
+    ventanaX.resizable(0,1)
+    
+    def buscarInfoReserva():
+        dato=str(filtro1.get())
+        f=open("Reservas.txt", "r")
+        info=f.readlines()
+        f.close()
+        if info==[]:
+            mensaje=mb.showinfo(title="Atención", message="No hay reservas registrados")
+            return administrador()
+        else:
+            resultadosReserva=tk.Toplevel()
+            resultadosReserva.title("Ver reservas")
+            ancho_pantalla= 700
+            alto_pantalla= 270
+            #Porción de código para centrar la ventana a la pantalla 
+            x_ventana=resultadosReserva.winfo_screenwidth() // 2 - ancho_pantalla // 2
+            y_ventana=resultadosReserva.winfo_screenheight() // 2 - alto_pantalla // 2
+            posicion=str(ancho_pantalla)+"x"+str(alto_pantalla)+"+"+str(x_ventana)+"+"+str(y_ventana)
+            resultadosReserva.geometry(posicion)
+            resultadosReserva.resizable(0,1)
+            ListaReservas=tk.Listbox(resultadosReserva, width=150)
+            ListaReservas.config(selectforeground="white",selectbackground="blue", selectborderwidth=3, font=("Sans Serif", 10))
+            barraY=tk.Scrollbar(resultadosReserva, command=ListaReservas.yview)
+            barraY.place(x=683, y=0, relheight=0.55)
+            ListaReservas.config(yscrollcommand=barraY)
+            barraX=tk.Scrollbar(resultadosReserva, command=ListaReservas.xview, orient=tk.HORIZONTAL)
+            barraX.place(x=0, y=217, relwidth=0.6)
+            ListaReservas.config(xscrollcommand=barraX)
+            ListaReservas.insert(0, " Id reserva | Nombre del cliente | Nº Viaje  | Fecha/hora reserva | Empresa | Transporte | Lugar Salida  | Fecha-Hora Salida | Lugar Llegada  | Fecha-Hora Llegada | Asientos VIP - Normales - Económicos| Monto total")
+            def SeEncuentra(linea, palabra):
+                largoPalabra=contarString(palabra)
+                return buscarAux(palabra, linea, largoPalabra, contarString(linea))
+            def contarString(texto):
+                res=0
+                while texto!="":
+                    res+=1
+                    texto=texto[1:]
+                return res
+            def buscarAux(palabra, linea, largoPalabra, i):
+                if i<largoPalabra:
+                    return False
+                else:
+                    while palabra!=linea[:largoPalabra]:
+                        return buscarAux(palabra, linea[1:], largoPalabra, i-1)
+                    return True
+            n=1
+            i=1
+            while info!=[]:
+                if SeEncuentra(info[0], dato):
+                    ListaReservas.insert(n, str(i)+") "+info[0]+"____")
+                    info=info[1:]
+                    i+=1
+                    n+=1
+                else:
+                    info=info[1:]
+            ListaReservas.insert(n, "Total de coincidencias:"+str(i-1))
+            ListaReservas.pack()
+            resultadosReserva.mainloop()
+    FiltroElegido=tk.Label(ventanaX, text="Lugar de Salida", font=("Helvetica", 12), width=20, height=2).place(x=0, y=50)
+    Lugarsalida=ttk.Combobox(ventanaX)
+    Lugarsalida.place(x=170, y=64)
+    Lugarsalida["values"]=("San José", "Alajuela","Cartago","Heredia", "Guanacaste", "Puntarenas", "Limón")
+    Lugarsalida.current(0)
+    ventanaX.mainloop()
+#------------------------------------------------------------------------------------------------------------------------------------------------------
+def FiltroReserva5():
+    ventanaX=tk.Toplevel()
+    ancho_pantalla= 400
+    alto_pantalla= 200
+    #Porción de código para centrar la ventana a la pantalla 
+    x_ventana=ventanaX.winfo_screenwidth() // 2 - ancho_pantalla // 2
+    y_ventana=ventanaX.winfo_screenheight() // 2 - alto_pantalla // 2
+    posicion=str(ancho_pantalla)+"x"+str(alto_pantalla)+"+"+str(x_ventana)+"+"+str(y_ventana)
+    ventanaX.geometry(posicion)
+    ventanaX.resizable(0,1)
+    
+    def buscarInfoReserva():
+        dato=str(filtro1.get())
+        f=open("Reservas.txt", "r")
+        info=f.readlines()
+        f.close()
+        if info==[]:
+            mensaje=mb.showinfo(title="Atención", message="No hay reservas registrados")
+            return administrador()
+        else:
+            resultadosReserva=tk.Toplevel()
+            resultadosReserva.title("Ver reservas")
+            ancho_pantalla= 700
+            alto_pantalla= 270
+            #Porción de código para centrar la ventana a la pantalla 
+            x_ventana=resultadosReserva.winfo_screenwidth() // 2 - ancho_pantalla // 2
+            y_ventana=resultadosReserva.winfo_screenheight() // 2 - alto_pantalla // 2
+            posicion=str(ancho_pantalla)+"x"+str(alto_pantalla)+"+"+str(x_ventana)+"+"+str(y_ventana)
+            resultadosReserva.geometry(posicion)
+            resultadosReserva.resizable(0,1)
+            ListaReservas=tk.Listbox(resultadosReserva, width=150)
+            ListaReservas.config(selectforeground="white",selectbackground="blue", selectborderwidth=3, font=("Sans Serif", 10))
+            barraY=tk.Scrollbar(resultadosReserva, command=ListaReservas.yview)
+            barraY.place(x=683, y=0, relheight=0.55)
+            ListaReservas.config(yscrollcommand=barraY)
+            barraX=tk.Scrollbar(resultadosReserva, command=ListaReservas.xview, orient=tk.HORIZONTAL)
+            barraX.place(x=0, y=217, relwidth=0.6)
+            ListaReservas.config(xscrollcommand=barraX)
+            ListaReservas.insert(0, " Id reserva | Nombre del cliente | Nº Viaje  | Fecha/hora reserva | Empresa | Transporte | Lugar Salida  | Fecha-Hora Salida | Lugar Llegada  | Fecha-Hora Llegada | Asientos VIP - Normales - Económicos| Monto total")
+            def SeEncuentra(linea, palabra):
+                largoPalabra=contarString(palabra)
+                return buscarAux(palabra, linea, largoPalabra, contarString(linea))
+            def contarString(texto):
+                res=0
+                while texto!="":
+                    res+=1
+                    texto=texto[1:]
+                return res
+            def buscarAux(palabra, linea, largoPalabra, i):
+                if i<largoPalabra:
+                    return False
+                else:
+                    while palabra!=linea[:largoPalabra]:
+                        return buscarAux(palabra, linea[1:], largoPalabra, i-1)
+                    return True
+            n=1
+            i=1
+            while info!=[]:
+                if SeEncuentra(info[0], dato):
+                    ListaReservas.insert(n, str(i)+") "+info[0]+"____")
+                    info=info[1:]
+                    i+=1
+                    n+=1
+                else:
+                    info=info[1:]
+            ListaReservas.insert(n, "Total de coincidencias:"+str(i-1))
+            ListaReservas.pack()
+            resultadosReserva.mainloop()
+    FiltroElegido=tk.Label(ventanaX, text="Lugar de Llegada", font=("Helvetica", 12), width=20, height=2).place(x=0, y=50)
+    Lugarsalida=ttk.Combobox(ventanaX)
+    Lugarsalida.place(x=170, y=64)
+    Lugarsalida["values"]=("San José", "Alajuela","Cartago","Heredia", "Guanacaste", "Puntarenas", "Limón")
+    Lugarsalida.current(0)
+    ventanaX.mainloop()
+#-------------------------------------------------------------------------------------------------------------------------------------
+def HistorialReservas():
+    filtrosParaReserva= tk.Toplevel()
+    #Porción de código para centrar la ventana a la pantalla 
+    width= filtrosParaReserva.winfo_screenwidth()  
+    height= filtrosParaReserva.winfo_screenheight() 
+    filtrosParaReserva.geometry("%dx%d" % (width, height))
+    filtrosParaReserva.resizable(0,1)
+    filtrosParaReserva.title("BestTraveller: Gestión de viajes")
+    filtrosParaReserva.iconbitmap("img.ico")
+    imagen=tk.PhotoImage(file="f.png")
+    fondo=tk.Label(filtrosParaReserva, image=imagen).place(x=0, y=0)
+
+    label = tk.Label(filtrosParaReserva, text="Menú de filtros", font=("Helvetica", 20, "italic", "bold"), bg="#6fafd8" ,relief="sunken").pack()
+    fechaSalida=tk.Button(filtrosParaReserva, text="Fecha de salida", font=("Helvetica",14), bg="#6ee2ff", width="23",height="1",relief="groove", cursor="hand2", command=FiltroReserva1).place(x=170, y=200)
+    fechaLlegada=tk.Button(filtrosParaReserva, text="Fecha de llegada", font=("Helvetica",14), bg="#6ee2ff", width="23",height="1",relief="groove", cursor="hand2", command=FiltroReserva2).place(x=935, y=200)
+    fechaReserva=tk.Button(filtrosParaReserva, text="Fecha de reserva", font=("Helvetica",14), bg="#6ee2ff", width="23",height="1",relief="groove", cursor="hand2", command=FiltroReserva3).place(x=555, y=200)
+    volver=tk.Button(filtrosParaReserva, text="Volver", command=filtrosParaReserva.destroy, font=("Helvetica",14), bg="#6ee2ff", width="23",height="1",relief="groove", cursor="hand2").place(x=555, y=250)
+    LugarSalida=tk.Button(filtrosParaReserva, text="Lugar de salida", font=("Helvetica",14), bg="#6ee2ff", width="23",height="1",relief="groove", cursor="hand2", command=FiltroReserva4).place(x=170, y=250)
+    LugarLlegada=tk.Button(filtrosParaReserva, text="Lugar de llegada", font=("Helvetica",14), bg="#6ee2ff", width="23",height="1",relief="groove", cursor="hand2", command=FiltroReserva5).place(x=935, y=250)
+    
+    filtrosParaReserva.mainloop()
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+"""
 Estadísticas
 Esta función dará al administrador 2 opciones de estadísticas: de viajes y de empresas
 Entradas:
@@ -1863,7 +2297,6 @@ def Estadisticas():
                         transportes=transportes[1:]
                     else:
                         transportes=transportes[1:]
-                print("este",cantTransportes)
                 f=open("Viajes.txt", "r")
                 viajes=f.readlines()
                 f.close()
@@ -1949,7 +2382,6 @@ def Estadisticas():
                 def crearReporteEmpresa(): #Función para agregar el reporte de la empresa
                     f=open(str(Cedulaempresa)+".txt", "w")
                     f.write("Cédula Empresa: "+str(Cedulaempresa)+"\n"+"Nombre: "+str(Nombre)+"\n"+"Transportes registrados: "+str(x-1)+"\n"+str(m)+"\n"+"Viajes registrados: "+str(i-1)+"\n"+str(a))
-                    print("Cédula Empresa: "+str(Cedulaempresa)+"\n"+"Nombre: "+str(Nombre)+"\n"+"Transportes registrados: "+str(x-1)+"\n"+str(m)+"\n"+"Viajes registrados: "+str(i-1)+"\n"+str(a))
                     f.close()
                     ya=mb.showinfo(title="información", message="El reporte ha sido creado")
                     mostrarEstadEmpresa.destroy()
@@ -2025,7 +2457,7 @@ def administrador():
     Empresa=tk.Button(admin, text="Gestión de empresas", font=("Helvetica",14), bg="#6ee2ff", width="23",height="1",relief="groove", cursor="hand2", command=Empresas).place(x=170, y=200)
     Transp=tk.Button(admin, text="Gestión de transporte", font=("Helvetica",14), bg="#6ee2ff", width="23",height="1",relief="groove", cursor="hand2", command=Transportes).place(x=555, y=200)
     Viaje=tk.Button(admin, text="Gestión de viajes", font=("Helvetica",14), bg="#6ee2ff", width="23",height="1",relief="groove", cursor="hand2", command=Viajes).place(x=935, y=200)
-    Historial=tk.Button(admin, text="Historial de reservas", font=("Helvetica",14), bg="#6ee2ff", width="23",height="1",relief="groove", cursor="hand2").place(x=170, y=250)
+    Historial=tk.Button(admin, text="Historial de reservas", font=("Helvetica",14), bg="#6ee2ff", width="23",height="1",relief="groove", cursor="hand2", command=HistorialReservas).place(x=170, y=250)
     Estadist=tk.Button(admin, text="Estadísticas", font=("Helvetica",14), bg="#6ee2ff", width="23",height="1",relief="groove", cursor="hand2", command=Estadisticas).place(x=555, y=250)
     avanzado=tk.Button(admin, text="Funciones avanzadas", font=("Helvetica",14), bg="#6ee2ff", width="23",height="1",relief="groove", cursor="hand2", command=FuncAvanzadas).place(x=935, y=250)
     Volver=tk.Button(admin, text="Volver", command=admin.destroy, font=("Helvetica",14), bg="#6ee2ff", width="23",height="1",relief="groove", cursor="hand2").place(x=555, y=300)
@@ -2034,7 +2466,7 @@ def administrador():
     admin.mainloop()
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 import time
-def formatear():
+def formatear(): #Permite eliminar todo registro en la base de datos
     pregunta=mb.askyesno(title="Atención", message="Este proceso no se puede deshacer.\n¿Desea continuar? ")
     if(pregunta==True):
         mensaje=mb.showinfo(message="Formateando")
@@ -2063,6 +2495,90 @@ def formatear():
         return FuncAvanzadas()
 #---------------------------------------------------------------------------------------------------------------
 #---------------------------------------------------------------------------------------------------------------
+def cambioContraseña():
+    CambContraseña= tk.Toplevel()
+    CambContraseña.title("Confirmar usuario")
+     
+    ancho_pantalla= 400
+    alto_pantalla= 120
+    #Porción de código para centrar la ventana a la pantalla 
+    x_ventana=CambContraseña.winfo_screenwidth() // 2 - ancho_pantalla // 2
+    y_ventana=CambContraseña.winfo_screenheight() // 2 - alto_pantalla // 2
+    posicion=str(ancho_pantalla)+"x"+str(alto_pantalla)+"+"+str(x_ventana)+"+"+str(y_ventana)
+    
+    CambContraseña.geometry(posicion)
+    CambContraseña.resizable(0,1)
+    CambContraseña.iconbitmap("img.ico")
+    CambContraseña.config(bg="#c4a660")
+    
+    def validarEntrada(): #Validación de la contaseña
+        entrada=contra.get()
+        f=open("contraseña.txt", "r")
+        codigo=f.read()
+        f.close()
+        while entrada!=codigo:
+            error=mb.showerror(title="Error en la contraseña", message="La contraseña es inválida.")
+            CambContraseña.destroy()
+            return cambioContraseña()
+        permiso=mb.showinfo(title="Info", message="Acceso concedido")
+        CambContraseña.destroy()
+        return cambiarContraseña()
+      
+    label=tk.Label(CambContraseña, text="Digite su contraseña", font=("Sans serif", 16, "italic"), bg="#c4a660" ,relief="sunken").pack()
+    contra=tk.Entry(CambContraseña, font="Helvetica 12", show="*")
+    contra.pack()
+    valid=tk.Button(CambContraseña, text="Validar contraseña", font=("Helvetica",14), bg="#6ee2ff", width="16",height="1",relief="groove", command=validarEntrada, cursor="hand2").pack()
+    CambContraseña.mainloop()
+def cambiarContraseña():
+    nuevaContraseña=tk.Toplevel()
+    nuevaContraseña.title("Confirmar usuario")
+     
+    ancho_pantalla= 400
+    alto_pantalla= 120
+    #Porción de código para centrar la ventana a la pantalla 
+    x_ventana=nuevaContraseña.winfo_screenwidth() // 2 - ancho_pantalla // 2
+    y_ventana=nuevaContraseña.winfo_screenheight() // 2 - alto_pantalla // 2
+    posicion=str(ancho_pantalla)+"x"+str(alto_pantalla)+"+"+str(x_ventana)+"+"+str(y_ventana)
+    
+    nuevaContraseña.geometry(posicion)
+    nuevaContraseña.resizable(0,1)
+    nuevaContraseña.iconbitmap("img.ico")
+    nuevaContraseña.config(bg="#c4a660")
+    
+    def validarNuevaContraseña(): #Validación de la contaseña
+        entrada=contra.get()
+        f=open("contraseña.txt", "r")
+        codigo=f.read()
+        f.close()
+        if entrada==codigo:
+            error=mb.showerror(title="Error en la contraseña", message="La contraseña no puede ser igual a la anterior.")
+            nuevaContraseña.destroy()
+            return cambiarContraseña()
+        if contarString(entrada)<8:
+            error=mb.showerror(title="Error en la contraseña", message="La contraseña debe tener como mínimo 8 caracteres")
+            nuevaContraseña.destroy()
+            return cambiarContraseña()
+        else:
+            f=open("contraseña.txt", "w")
+            f.write(entrada)
+            f.close()
+            permiso=mb.showinfo(title="Info", message="La contraseña ha sido cambiada")
+            nuevaContraseña.destroy()
+            return administrador()
+    def contarString(texto):
+        res=0
+        while texto!="":
+            res+=1
+            texto=texto[1:]
+        return res
+      
+    label=tk.Label(nuevaContraseña, text="Digite su nueva contraseña", font=("Sans serif", 16, "italic"), bg="#c4a660" ,relief="sunken").pack()
+    contra=tk.Entry(nuevaContraseña, font="Helvetica 12")
+    contra.pack()
+    valid=tk.Button(nuevaContraseña, text="Validar contraseña", font=("Helvetica",14), bg="#6ee2ff", width="16",height="1",relief="groove", command=validarNuevaContraseña, cursor="hand2").pack()
+    nuevaContraseña.mainloop()
+#---------------------------------------------------------------------------------------------------------------
+#---------------------------------------------------------------------------------------------------------------
 
 def FuncAvanzadas():
     pantallaAvanzado= tk.Toplevel()
@@ -2081,7 +2597,7 @@ def FuncAvanzadas():
                         font=("Times New Roman", 12, "italic"), bg="#c4a660").place(x=600, y=200)
 
     label = tk.Label(pantallaAvanzado, text="Funciones avanzadas", font=("Helvetica", 20, "italic", "bold"), bg="#6fafd8" ,relief="sunken").pack()
-    CambioContra=tk.Button(pantallaAvanzado, text="Cambiar Contraseña", font=("Helvetica",14), bg="#6ee2ff", width="23",height="1",relief="groove", cursor="hand2").place(x=170, y=200)
+    CambioContra=tk.Button(pantallaAvanzado, text="Cambiar Contraseña", font=("Helvetica",14), bg="#6ee2ff", width="23",height="1",relief="groove", cursor="hand2", command=cambioContraseña).place(x=170, y=200)
     infoPrograma=tk.Button(pantallaAvanzado, text="Acerca de", font=("Helvetica",14), bg="#6ee2ff", width="23",height="1",relief="groove", cursor="hand2", command=acercaDe).place(x=170, y=250)
     formato=tk.Button(pantallaAvanzado, text="Formatear", font=("Helvetica",14), bg="#6ee2ff", width="23",height="1",relief="groove", cursor="hand2", command=formatear).place(x=170, y=300)
     volver=tk.Button(pantallaAvanzado, text="Volver", font=("Helvetica",14), bg="#6ee2ff", width="23",height="1",relief="groove", cursor="hand2", command=pantallaAvanzado.destroy).place(x=170, y=350)
@@ -2567,6 +3083,132 @@ def ReservarViaje():
     Reservas.mainloop()
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+"""
+CancelarReserva
+Esta función permite al usuario cancelar una reservacion registrada previamente
+Entradas:
+    El usuario dará el identificador de la reserva
+Salida:
+    La reserva será eliminada del archivo 'Reservas.txt'
+Restricciones:
+    El identificador de reserva debe de existir
+"""
+def CancelarReserva():
+        borrarReserva= tk.Tk()
+        borrarReserva.title("Cancelar Reservas")
+             
+        ancho_pantalla= 400
+        alto_pantalla= 120
+        #Porción de código para centrar la ventana a la pantalla 
+        x_ventana=borrarReserva.winfo_screenwidth() // 2 - ancho_pantalla // 2
+        y_ventana=borrarReserva.winfo_screenheight() // 2 - alto_pantalla // 2
+        posicion=str(ancho_pantalla)+"x"+str(alto_pantalla)+"+"+str(x_ventana)+"+"+str(y_ventana)
+            
+        borrarReserva.geometry(posicion)
+        borrarReserva.resizable(0,1)
+        borrarReserva.iconbitmap("img.ico")
+            
+        """
+        buscarPalabra
+        E: un archivo y una palabra para buscarla en el archivo
+        S: Si la palabra se encuentra en el archivo, retornará la línea en la cual está ubicada
+        """
+        def buscarPalabra(archivo,palabra):
+            archivo=open(archivo, "r")
+            contexto= archivo.readlines()
+            archivo.close()
+            Datos=contarObjetos(contexto)
+            largoPalabra=contarString(palabra)
+            return buscarPalabraAux(palabra, contexto, Datos, largoPalabra)
+        def contarObjetos(lista): 
+            n=0
+            while lista!=[]:
+                n+=1
+                lista=lista[1:]
+            return n
+        def contarString(texto):
+            res=0
+            while texto!="":
+                res+=1
+                texto=texto[1:]
+            return res
+        def buscarPalabraAux(palabra, contexto, Datos, largoPalabra):
+            if Datos==0:
+                return "Sin resultados"
+            else:
+                return buscarPalabraAux2(palabra, contexto, contexto[0], Datos, largoPalabra, contarString(contexto[0]), contexto[0])
+        def buscarPalabraAux2(palabra, contexto, texto, Datos, largoPalabra, i, res):
+            if i<largoPalabra:
+                return buscarPalabraAux(palabra, contexto[1:], Datos-1, largoPalabra)
+            else:
+                while palabra!=texto[:largoPalabra]:
+                    return buscarPalabraAux2(palabra, contexto, texto[1:], Datos, largoPalabra, i-1, res)
+                return res
+        """
+        BorrarLinea
+        Dada una palabra clave, borra una linea de un archivo en la cual se encuentra dicha palabra:
+        """
+        def borrarLinea():
+            identif=empresa.get()
+            lineaAborrar=buscarPalabra("Reservas.txt", identif)
+            if lineaAborrar=="Sin resultados":
+                info=mb.showerror(title="Error en entrada", message="No se encontraron coincidencias")
+                borrarReserva.destroy()
+                return CancelarReserva()
+            else:
+                f = open("Reservas.txt","r")
+                lineas = f.readlines()
+                f.close()
+                f = open("Reservas.txt","w")
+                while lineas!=[]:
+                    if lineas[0]!=lineaAborrar:
+                        f.write(lineas[0])
+                        lineas=lineas[1:]
+                    else:
+                        lineas=lineas[1:]
+                f.close()
+                info=mb.showinfo(title="Estado", message="Su reservación ha sido cancelada")
+                borrarReserva.destroy()
+                return None
+        def SeEncuentra(archivo, palabra):
+            archivo=open(archivo, "r")
+            contexto= archivo.readlines()
+            archivo.close()
+            Datos=contarObjetos(contexto)
+            largoPalabra=contarString(palabra)
+            return buscarAux(palabra, contexto, Datos, largoPalabra)
+        def contarObjetos(lista): 
+            n=0
+            while lista!=[]:
+                n+=1
+                lista=lista[1:]
+            return n
+        def contarString(texto):
+            res=0
+            while texto!="":
+                res+=1
+                texto=texto[1:]
+            return res
+        def buscarAux(palabra, contexto, Datos, largoPalabra):
+            if Datos==0:
+                return False
+            else:
+                return buscarAux2(palabra, contexto, contexto[0], Datos, largoPalabra, contarString(contexto[0]), contexto[0])
+        def buscarAux2(palabra, contexto, texto, Datos, largoPalabra, i, res):
+            if i<largoPalabra:
+                return buscarAux(palabra, contexto[1:], Datos-1, largoPalabra)
+            else:
+                while palabra!=texto[:largoPalabra]:
+                    return buscarAux2(palabra, contexto, texto[1:], Datos, largoPalabra, i-1, res)
+                return True
+                    
+        label=tk.Label(borrarReserva, text="Digite el identificador de su reserva", font=("Sans serif", 14)).pack()
+        empresa=tk.Entry(borrarReserva, font="Helvetica 12")
+        empresa.pack()
+        borrar=tk.Button(borrarReserva, text="Borrar", font=("Helvetica",14), bg="#6ee2ff", width="16",height="1",relief="groove", command=borrarLinea, cursor="hand2").pack()
+        borrarReserva.mainloop()
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 "Pantalla del usuario"
 def usuario():
     ventanaPrincipal.destroy()
@@ -2585,7 +3227,7 @@ def usuario():
     label = tk.Label(user, text="Una aplicación hecha para su comfort", font=("Helvetica", 16, "bold"), bg="#6fafd8" ,relief="sunken").pack()
     consulta=tk.Button(user, text="Consulta de viajes", font=("Helvetica",14), bg="#6ee2ff", width="23",height="1",relief="groove", cursor="hand2", command=consultaViajes).place(x=170, y=200)
     Reserva=tk.Button(user, text="Reservar Viaje", font=("Helvetica",14), bg="#6ee2ff", width="23",height="1",relief="groove", cursor="hand2", command=ReservarViaje).place(x=555, y=200)
-    CancelReserva=tk.Button(user, text="Cancelar Reserva", font=("Helvetica",14), bg="#6ee2ff", width="23",height="1",relief="groove", cursor="hand2").place(x=935, y=200)
+    CancelReserva=tk.Button(user, text="Cancelar Reserva", font=("Helvetica",14), bg="#6ee2ff", width="23",height="1",relief="groove", cursor="hand2", command=CancelarReserva).place(x=935, y=200)
     Salir=tk.Button(user, text="Salir", command=user.destroy, font=("Helvetica",14), bg="#6ee2ff", width="23",height="1",relief="groove", cursor="hand2").place(x=555, y=250)
     EasterEgg=label = tk.Label(user, text="Una colaboración de", font=("Monotype Corsiva", 16, "italic"), bg="#c4a660" ,relief="sunken").place(x=599, y=400)
     
