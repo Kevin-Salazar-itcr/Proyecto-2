@@ -2244,8 +2244,214 @@ def Estadisticas():
     Seleccione.iconbitmap("img.ico")
     imagen=tk.PhotoImage(file="f.png")
     def EstadisticaViaje():
-        pass
+        Seleccione.destroy()
+        f=open("Viajes.txt", "r")
+        info=f.readlines()
+        f.close()
+        if info==[]:
+            mensaje=mb.showinfo(title="Atención", message="No hay viajes registrados")
+            return administrador()
+        else:
+            SelecViaje=tk.Toplevel()
+            ancho_pantalla= 400
+            alto_pantalla= 400
+            #Porción de código para centrar la ventana a la pantalla 
+            x_ventana=SelecViaje.winfo_screenwidth() // 2 - ancho_pantalla // 2
+            y_ventana=SelecViaje.winfo_screenheight() // 2 - alto_pantalla // 2
+            posicion=str(ancho_pantalla)+"x"+str(alto_pantalla)+"+"+str(x_ventana)+"+"+str(y_ventana)
+            SelecViaje.geometry(posicion)
+            SelecViaje.title("Ver viajes")
+            SelecViaje.iconbitmap("img.ico")
+            SelecViaje.config(bg="grey")
+            SelecViaje.resizable(0,1)
+            
+            def RecopilarEstadisticaViaje():
+                def recopilarDatos(String): #Cada que la función se encuentre con un " | ", recopilará lo que esté antes de éste y lo almacena en una lista
+                    if isinstance(String, str):
+                        if String=="":
+                            return []
+                        else:
+                            res=[]
+                            sub=""
+                            while String!="":
+                                if String[0]!="|" and String[0]!="-" and String[0]!=",":
+                                    sub+=String[0]
+                                    String=String[1:]
+                                else:
+                                   res+=[sub]
+                                   sub=""
+                                   String=String[1:]
+                            return res+[sub]
+                num=int(viaje.get())
+                Datos=ListaViajes.get(num)
+                numViaje=Datos[3:7]
+                RestoDeDatos=recopilarDatos(Datos[8:-4])
+                lugSalida=RestoDeDatos[0]+", "+RestoDeDatos[1]
+                FHSalida=RestoDeDatos[2]+", "+RestoDeDatos[3]
+                lugLlegada=RestoDeDatos[4]+", "+RestoDeDatos[5]
+                FHLlegada=RestoDeDatos[6]+", "+RestoDeDatos[7]
+                Emp=RestoDeDatos[8]
+                Trp=RestoDeDatos[9]
+                montoVIP=RestoDeDatos[10]
+                montoNormal=RestoDeDatos[11]
+                montoEconom=RestoDeDatos[12]
+                f=open("Asientos.txt", "r")
+                asientos=f.readlines()
+                f.close()
+                cantAsientos=[]
+                def recopilarDatos(String): #Cada que la función se encuentre con un " | ", recopilará lo que esté antes de éste y lo almacena en una lista
+                    if isinstance(String, str):
+                        if String=="":
+                            return []
+                        else:
+                            res=[]
+                            sub=""
+                            while String!="":
+                                if String[0]!="|" and String[0]!="-":
+                                    sub+=String[0]
+                                    String=String[1:]
+                                else:
+                                    res+=[sub]
+                                    sub=""
+                                    String=String[1:]
+                            return res+[sub]
+                
+                def SeEncuentra(linea, palabra):
+                    largoPalabra=contarString(palabra)
+                    return buscarAux(palabra, linea, largoPalabra, contarString(linea))
+                def contarString(texto):
+                    res=0
+                    while texto!="":
+                        res+=1
+                        texto=texto[1:]
+                    return res
+                def buscarAux(palabra, linea, largoPalabra, i):
+                    if i<largoPalabra:
+                        return False
+                    else:
+                        while palabra!=linea[:largoPalabra]:
+                            return buscarAux(palabra, linea[1:], largoPalabra, i-1)
+                        return True
+                while asientos!=[]:
+                    if SeEncuentra(asientos[0], Trp):
+                        cantAsientos+=recopilarDatos(asientos[0][7:])
+                        asientos=asientos[1:]
+                    else:
+                        asientos=asientos[1:]
+                VIPdisponibles=cantAsientos[0]
+                NMdisponibles=cantAsientos[1]
+                ECdisponibles=cantAsientos[2]
+                def listaInversa(lista):
+                    if lista==[]:
+                        return 0
+                    else:
+                        res=[]
+                        while lista!=[]:
+                            res+=[lista[-1]]
+                            lista=lista[:-1]
+                        return res            
+                f=open("Reservas.txt", "r")
+                asientosReservados=f.readlines()
+                f.close()
+                cantReservas=[]
+                while asientosReservados!=[]:
+                    if SeEncuentra(asientosReservados[0], numViaje):
+                        cantReservas+=[listaInversa(recopilarDatos(asientosReservados[0]))[0:4]]
+                        asientosReservados=asientosReservados[1:]
+                    else:
+                        asientosReservados=asientosReservados[1:]
+                VIPReservados=0
+                NMReservados=0
+                ECReservados=0
+                montoTotal=0
+                while cantReservas!=[]:
+                    montoTotal+=int(cantReservas[0][0])
+                    ECReservados+=int(cantReservas[0][1])
+                    NMReservados+=int(cantReservas[0][2])
+                    VIPReservados+=int(cantReservas[0][3])
+                    cantReservas=cantReservas[1:]
+                return MostrarEstadisticaViaje(numViaje, lugSalida, FHSalida, lugLlegada, FHLlegada, Emp, Trp, montoVIP, montoNormal, montoEconom, VIPdisponibles, NMdisponibles, ECdisponibles, ECReservados, NMReservados, VIPReservados, montoTotal)
+
+            def MostrarEstadisticaViaje(numViaje, lugSalida, FHSalida, lugLlegada, FHLlegada, Emp, Trp, montoVIP, montoNormal, montoEconom, VIPdisponibles, NMdisponibles, ECdisponibles, ECReservados, NMReservados, VIPReservados, montoTotal):
+                SelecViaje.destroy()
+                mostrarEstadViaje=tk.Toplevel()
+                #Porción de código para centrar la ventana a la pantalla
+                width= mostrarEstadViaje.winfo_screenwidth()  
+                height= mostrarEstadViaje.winfo_screenheight() 
+                mostrarEstadViaje.geometry("%dx%d" % (width, height))
+                mostrarEstadViaje.resizable(0,1)
+                mostrarEstadViaje.title("Estadísiticas de viaje")
+                mostrarEstadViaje.iconbitmap("img.ico")
+                label1=tk.Label(mostrarEstadViaje, text="Nº de viaje", font=("Helvetica", 14)).pack()
+                numeroviaje=tk.Label(mostrarEstadViaje, font="Helvetica 12", relief="sunken", width= 10, text=str(numViaje)).pack(pady=2)
+                label2=tk.Label(mostrarEstadViaje, font=("Helvetica", 14), text="Lugar de salida"). place(x=60, y=70)
+                lugarsalida=tk.Label(mostrarEstadViaje, font="Helvetica 12", relief="sunken", width= 50, text=str(lugSalida)).place(x=210, y=72)
+                label3=tk.Label(mostrarEstadViaje, font=("Helvetica", 14), text="Lugar de llegada"). place(x=60, y=110)
+                lugarllegada=tk.Label(mostrarEstadViaje, font="Helvetica 12", relief="sunken", width= 50, text=str(lugLlegada)).place(x=210, y=112)
+                label4=tk.Label(mostrarEstadViaje, font=("Helvetica", 14), text="Fecha de salida"). place(x=60, y=150)
+                Fechasalida=tk.Label(mostrarEstadViaje, font="Helvetica 12", relief="sunken", width= 19, text=str(FHSalida)).place(x=210, y=152)
+                label5=tk.Label(mostrarEstadViaje, font=("Helvetica", 14), text="Fecha de llegada"). place(x=60, y=190)
+                Fechallegada=tk.Label(mostrarEstadViaje, font="Helvetica 12", relief="sunken", width= 19, text=str(FHLlegada)).place(x=210, y=192)
+                label6=tk.Label(mostrarEstadViaje, font=("Helvetica", 14), text="Empresa"). place(x=60, y=230)
+                empresa=tk.Label(mostrarEstadViaje, font="Helvetica 12", relief="sunken", width= 19, text=str(Emp)).place(x=210, y=232)
+                label7=tk.Label(mostrarEstadViaje, font=("Helvetica", 14), text="Transporte"). place(x=60, y=270)
+                transporte=tk.Label(mostrarEstadViaje, font="Helvetica 12", relief="sunken", width= 19, text=str(Trp)).place(x=210, y=272)
+                label8=tk.Label(mostrarEstadViaje, font=("Helvetica", 14), text="Monto por clase VIP"). place(x=800, y=70)
+                montoporVIP=tk.Label(mostrarEstadViaje, font="Helvetica 12", relief="sunken", width= 19, text=str(montoVIP)).place(x=1090, y=72)
+                label9=tk.Label(mostrarEstadViaje, font=("Helvetica", 14), text="Monto por clase Normal"). place(x=800, y=110)
+                montoporNM=tk.Label(mostrarEstadViaje, font="Helvetica 12", relief="sunken", width= 19, text=str(montoNormal)).place(x=1090, y=112)
+                label10=tk.Label(mostrarEstadViaje, font=("Helvetica", 14), text="Monto por clase Económica"). place(x=800, y=150)
+                montoporEC=tk.Label(mostrarEstadViaje, font="Helvetica 12", relief="sunken", width= 19, text=str(montoEconom)).place(x=1090, y=152)
+                label11=tk.Label(mostrarEstadViaje, font=("Helvetica", 14), text="Asientos VIP reservados"). place(x=800, y=190)
+                VIPreserv=tk.Label(mostrarEstadViaje, font="Helvetica 12", relief="sunken", width= 19, text=str(VIPReservados)).place(x=1090, y=192)
+                label12=tk.Label(mostrarEstadViaje, font=("Helvetica", 14), text="Asientos Normales reservados"). place(x=800, y=230)
+                NMreserv=tk.Label(mostrarEstadViaje, font="Helvetica 12", relief="sunken", width= 19, text=str(NMReservados)).place(x=1090, y=232)
+                label13=tk.Label(mostrarEstadViaje, font=("Helvetica", 14), text="Asientos Económicos reservados"). place(x=800, y=270)
+                ECreserv=tk.Label(mostrarEstadViaje, font="Helvetica 12", relief="sunken", width= 19, text=str(ECReservados)).place(x=1090, y=272)
+                label14=tk.Label(mostrarEstadViaje, font=("Helvetica", 14), text="Asientos VIP disponibles"). place(x=425, y=310)
+                VIPdisp=tk.Label(mostrarEstadViaje, font="Helvetica 12", relief="sunken", width= 19, text=str(VIPdisponibles)).place(x=715, y=312)
+                label15=tk.Label(mostrarEstadViaje, font=("Helvetica", 14), text="Asientos Normales disponibles"). place(x=425, y=350)
+                NMdisp=tk.Label(mostrarEstadViaje, font="Helvetica 12", relief="sunken", width= 19, text=str(NMdisponibles)).place(x=715, y=352)
+                label16=tk.Label(mostrarEstadViaje, font=("Helvetica", 14), text="Asientos Económicos disponibles"). place(x=425, y=390)
+                ECdisp=tk.Label(mostrarEstadViaje, font="Helvetica 12", relief="sunken", width= 19, text=str(ECdisponibles)).place(x=715, y=392)
+                label17=tk.Label(mostrarEstadViaje, font=("Helvetica", 14), text="Monto total recaudado"). place(x=425, y=430)
+                monto=tk.Label(mostrarEstadViaje, font="Helvetica 12", relief="sunken", width= 19, text=str(montoTotal)).place(x=715, y=432)
+                def crearReporteViaje(): #Función para agregar el reporte de la empresa
+                    f=open(str(numViaje)+".txt", "w")
+                    f.write("N° Viaje: "+str(numViaje)+"\n"+"lugarSalida: "+str(lugSalida)+"\n"+"Fecha/Hora Salida: "+str(FHSalida)+"\n"+"Fecha/Hora Llegada: "+str(FHLlegada)+"\n"+"Empresa: "+str(Emp)+"\n"+"Transporte: "+str(Trp)+"\n"+"Monto por clase VIP: "+str(montoVIP)+"\n"+"Monto por clase Normal: "+str(montoNormal)+"\n"+"Monto por clase Económica: "+str(montoEconom)+"\n"+"Asientos VIP reservados/disponibles: "+str(VIPReservados)+"/"+str(VIPdisponibles)+"\n"+"Asientos Normales reservados/disponibles: "+str(NMReservados)+"/"+str(NMdisponibles)+"\n"+"Asientos económicos reservados/disponibles: "+str(ECReservados)+"/"+str(ECdisponibles)+"\n"+"Monto total recaudado: "+str(montoTotal)+"\n")
+                    f.close()
+                    ya=mb.showinfo(title="información", message="El reporte ha sido creado")
+                    mostrarEstadViaje.destroy()
+                    return administrador()
+                AgregarModif=tk.Button(mostrarEstadViaje, text="Crear reporte", font=("Sans Serif", 12), width=15, height=2, bg="grey", relief="groove", cursor="hand2", command=crearReporteViaje).place(x=620, y=550)
+                mostrarEstadViaje.mainloop()
+
+            ListaViajes=tk.Listbox(SelecViaje, width=150)
+            ListaViajes.config(selectforeground="white",selectbackground="blue", selectborderwidth=3, font=("Sans Serif", 10))
+            barraY=tk.Scrollbar(SelecViaje, command=ListaViajes.yview)
+            barraY.place(x=683, y=0, relheight=0.55)
+            ListaViajes.config(yscrollcommand=barraY)
+            barraX=tk.Scrollbar(SelecViaje, command=ListaViajes.xview, orient=tk.HORIZONTAL)
+            barraX.place(x=0, y=217, relwidth=0.6)
+            ListaViajes.config(xscrollcommand=barraX)
+            ListaViajes.insert(0, " Nº Viaje  |  Lugar Salida  | Fecha-Hora Salida | Lugar Llegada  | Fecha-Hora Llegada | Empresa  | Transporte |Montos VIP - Normales - Económicos   |")
+            n=1
+            i=1
+            while info!=[]:
+                ListaViajes.insert(n, str(i)+") "+info[0]+"____")
+                info=info[1:]
+                n+=1
+                i+=1
+            ListaViajes.pack()
+            label=tk.Label(SelecViaje, text="Viaje #", font=("Sans Serif", 12), bg="grey", width=15, height=2).pack(pady=2)
+            dato=tk.IntVar()
+            viaje=tk.Entry(SelecViaje, font="Helvetica 12", textvariable=dato)
+            viaje.pack(pady=2)
+            seleccionar=tk.Button(SelecViaje, text="Seleccionar", font=("Helvetica",14), bg="#6ee2ff", width="16",height="1",relief="groove", command=RecopilarEstadisticaViaje, cursor="hand2").pack(pady=2)
+            SelecViaje.mainloop()
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------
     def EstadisticaEmpresa():
+        Seleccione.destroy()
         f=open("Empresas.txt", "r")
         info=f.readlines()
         f.close()
@@ -2433,7 +2639,7 @@ def Estadisticas():
         
     fondo=tk.Label(Seleccione, image=imagen).place(x=0, y=0)
     label=tk.Label(Seleccione, text="Seleccione una de las opciones", bg="#6ee2ff", font=("Sans serif", 14)).pack(pady=4)
-    viaje=tk.Button(Seleccione, cursor="hand2", text="Viajes", font=("Sans Serif", 14), width=10, bg="#c4a660").pack(pady=4)
+    viaje=tk.Button(Seleccione, cursor="hand2", text="Viajes", font=("Sans Serif", 14), width=10, bg="#c4a660",command=EstadisticaViaje).pack(pady=4)
     emp=tk.Button(Seleccione, cursor="hand2", text="Empresas", font=("Sans Serif", 14), width=10, bg="#c4a660", command=EstadisticaEmpresa).pack(pady=4)
     Seleccione.mainloop()
             
@@ -3149,13 +3355,113 @@ def CancelarReserva():
         Dada una palabra clave, borra una linea de un archivo en la cual se encuentra dicha palabra:
         """
         def borrarLinea():
-            identif=empresa.get()
+            def buscarPalabra(archivo,palabra):
+                archivo=open(archivo, "r")
+                contexto= archivo.readlines()
+                archivo.close()
+                Datos=contarObjetos(contexto)
+                largoPalabra=contarString(palabra)
+                return buscarPalabraAux(palabra, contexto, Datos, largoPalabra)
+            def contarObjetos(lista): 
+                n=0
+                while lista!=[]:
+                    n+=1
+                    lista=lista[1:]
+                return n
+            def contarString(texto):
+                res=0
+                while texto!="":
+                    res+=1
+                    texto=texto[1:]
+                return res
+            def buscarPalabraAux(palabra, contexto, Datos, largoPalabra):
+                if Datos==0:
+                    return "Sin resultados"
+                else:
+                    return buscarPalabraAux2(palabra, contexto, contexto[0], Datos, largoPalabra, contarString(contexto[0]), contexto[0])
+            def buscarPalabraAux2(palabra, contexto, texto, Datos, largoPalabra, i, res):
+                if i<largoPalabra:
+                    return buscarPalabraAux(palabra, contexto[1:], Datos-1, largoPalabra)
+                else:
+                    while palabra!=texto[:largoPalabra]:
+                        return buscarPalabraAux2(palabra, contexto, texto[1:], Datos, largoPalabra, i-1, res)
+                    return res
+            identif=idReserva.get()
             lineaAborrar=buscarPalabra("Reservas.txt", identif)
             if lineaAborrar=="Sin resultados":
                 info=mb.showerror(title="Error en entrada", message="No se encontraron coincidencias")
                 borrarReserva.destroy()
                 return CancelarReserva()
             else:
+                def recopilarDatos(String): #Cada que la función se encuentre con un " | ", recopilará lo que esté antes de éste y lo almacena en una lista
+                    if isinstance(String, str):
+                        if String=="":
+                            return []
+                        else:
+                            res=[]
+                            sub=""
+                            while String!="":
+                                if String[0]!="|" and String[0]!="-":
+                                    sub+=String[0]
+                                    String=String[1:]
+                                else:
+                                    res+=[sub]
+                                    sub=""
+                                    String=String[1:]
+                            return res+[sub]
+                def buscarPalabra(archivo,palabra):
+                    archivo=open(archivo, "r")
+                    contexto= archivo.readlines()
+                    archivo.close()
+                    Datos=contarObjetos(contexto)
+                    largoPalabra=contarString(palabra)
+                    return buscarPalabraAux(palabra, contexto, Datos, largoPalabra)
+                def contarObjetos(lista): 
+                    n=0
+                    while lista!=[]:
+                        n+=1
+                        lista=lista[1:]
+                    return n
+                def contarString(texto):
+                    res=0
+                    while texto!="":
+                        res+=1
+                        texto=texto[1:]
+                    return res
+                def buscarPalabraAux(palabra, contexto, Datos, largoPalabra):
+                    if Datos==0:
+                        return "Sin resultados"
+                    else:
+                        return buscarPalabraAux2(palabra, contexto, contexto[0], Datos, largoPalabra, contarString(contexto[0]), contexto[0])
+                def buscarPalabraAux2(palabra, contexto, texto, Datos, largoPalabra, i, res):
+                    if i<largoPalabra:
+                        return buscarPalabraAux(palabra, contexto[1:], Datos-1, largoPalabra)
+                    else:
+                        while palabra!=texto[:largoPalabra]:
+                            return buscarPalabraAux2(palabra, contexto, texto[1:], Datos, largoPalabra, i-1, res)
+                        return res
+                extraccion=recopilarDatos(lineaAborrar)
+                devolverVIP=extraccion[-4]
+                devolverNM=extraccion[-3]
+                devolverEC=extraccion[-2]
+                transporte=extraccion[4]
+                devolverAsientos=buscarPalabra("Asientos.txt", transporte)
+                devolverAsientos2=recopilarDatos(devolverAsientos)
+                VIPdevuelto=str(int(devolverVIP)+int(devolverAsientos2[1]))
+                NMdevuelto=str(int(devolverNM)+int(devolverAsientos2[2]))
+                ECdevuelto=str(int(devolverEC)+int(devolverAsientos2[3]))
+                f=open("Asientos.txt", "r")
+                lineas=f.readlines()
+                f.close()
+                f=open("Asientos.txt", "w")
+                while lineas!=[]: #Aquí se devolverán los asientos que fueron reservados
+                    if lineas[0]!=devolverAsientos:
+                        f.write(lineas[0])
+                        lineas=lineas[1:]
+                    else:
+                        f.write(devolverAsientos2[0]+"|"+VIPdevuelto+"|"+NMdevuelto+"|"+ECdevuelto+"|"+devolverAsientos2[4])
+                        lineas=lineas[1:]
+                f.close()
                 f = open("Reservas.txt","r")
                 lineas = f.readlines()
                 f.close()
@@ -3203,8 +3509,8 @@ def CancelarReserva():
                 return True
                     
         label=tk.Label(borrarReserva, text="Digite el identificador de su reserva", font=("Sans serif", 14)).pack()
-        empresa=tk.Entry(borrarReserva, font="Helvetica 12")
-        empresa.pack()
+        idReserva=tk.Entry(borrarReserva, font="Helvetica 12")
+        idReserva.pack()
         borrar=tk.Button(borrarReserva, text="Borrar", font=("Helvetica",14), bg="#6ee2ff", width="16",height="1",relief="groove", command=borrarLinea, cursor="hand2").pack()
         borrarReserva.mainloop()
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------
