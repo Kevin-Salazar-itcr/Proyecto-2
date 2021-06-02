@@ -2294,9 +2294,9 @@ def programa():
                                         sub+=String[0]
                                         String=String[1:]
                                     else:
-                                       res+=[sub]
-                                       sub=""
-                                       String=String[1:]
+                                        res+=[sub]
+                                        sub=""
+                                        String=String[1:]
                                 return res+[sub]
                     num=int(viaje.get())
                     Datos=ListaViajes.get(num)
@@ -2330,8 +2330,7 @@ def programa():
                                         res+=[sub]
                                         sub=""
                                         String=String[1:]
-                                return res+[sub]
-                    
+                                return res+[sub]                    
                     def SeEncuentra(linea, palabra):
                         largoPalabra=contarString(palabra)
                         return buscarAux(palabra, linea, largoPalabra, contarString(linea))
@@ -2371,24 +2370,18 @@ def programa():
                     f.close()
                     cantReservas=[]
                     while asientosReservados!=[]:
-                        if SeEncuentra(asientosReservados[0], numViaje):
+                        if SeEncuentra(asientosReservados[0], Trp):
                             cantReservas+=[listaInversa(recopilarDatos(asientosReservados[0]))[0:4]]
                             asientosReservados=asientosReservados[1:]
                         else:
                             asientosReservados=asientosReservados[1:]
-                    VIPReservados=0
-                    NMReservados=0
-                    ECReservados=0
                     montoTotal=0
                     while cantReservas!=[]:
                         montoTotal+=int(cantReservas[0][0])
-                        ECReservados+=int(cantReservas[0][1])
-                        NMReservados+=int(cantReservas[0][2])
-                        VIPReservados+=int(cantReservas[0][3])
                         cantReservas=cantReservas[1:]
-                    return MostrarEstadisticaViaje(numViaje, lugSalida, FHSalida, lugLlegada, FHLlegada, Emp, Trp, montoVIP, montoNormal, montoEconom, VIPdisponibles, NMdisponibles, ECdisponibles, ECReservados, NMReservados, VIPReservados, montoTotal)
+                    return MostrarEstadisticaViaje(numViaje, lugSalida, FHSalida, lugLlegada, FHLlegada, Emp, Trp, montoVIP, montoNormal, montoEconom, VIPdisponibles, NMdisponibles, ECdisponibles, montoTotal)
 
-                def MostrarEstadisticaViaje(numViaje, lugSalida, FHSalida, lugLlegada, FHLlegada, Emp, Trp, montoVIP, montoNormal, montoEconom, VIPdisponibles, NMdisponibles, ECdisponibles, ECReservados, NMReservados, VIPReservados, montoTotal):
+                def MostrarEstadisticaViaje(numViaje, lugSalida, FHSalida, lugLlegada, FHLlegada, Emp, Trp, montoVIP, montoNormal, montoEconom, VIPdisponibles, NMdisponibles, ECdisponibles, montoTotal):
                     SelecViaje.destroy()
                     mostrarEstadViaje=tk.Toplevel()
                     #Porción de código para centrar la ventana a la pantalla
@@ -2418,28 +2411,155 @@ def programa():
                     montoporNM=tk.Label(mostrarEstadViaje, font="Helvetica 12", relief="sunken", width= 19, text=str(montoNormal)).place(x=1090, y=112)
                     label10=tk.Label(mostrarEstadViaje, font=("Helvetica", 14), text="Monto por clase Económica"). place(x=800, y=150)
                     montoporEC=tk.Label(mostrarEstadViaje, font="Helvetica 12", relief="sunken", width= 19, text=str(montoEconom)).place(x=1090, y=152)
-                    label11=tk.Label(mostrarEstadViaje, font=("Helvetica", 14), text="Asientos VIP reservados"). place(x=800, y=190)
-                    VIPreserv=tk.Label(mostrarEstadViaje, font="Helvetica 12", relief="sunken", width= 19, text=str(VIPReservados)).place(x=1090, y=192)
-                    label12=tk.Label(mostrarEstadViaje, font=("Helvetica", 14), text="Asientos Normales reservados"). place(x=800, y=230)
-                    NMreserv=tk.Label(mostrarEstadViaje, font="Helvetica 12", relief="sunken", width= 19, text=str(NMReservados)).place(x=1090, y=232)
-                    label13=tk.Label(mostrarEstadViaje, font=("Helvetica", 14), text="Asientos Económicos reservados"). place(x=800, y=270)
-                    ECreserv=tk.Label(mostrarEstadViaje, font="Helvetica 12", relief="sunken", width= 19, text=str(ECReservados)).place(x=1090, y=272)
-                    label14=tk.Label(mostrarEstadViaje, font=("Helvetica", 14), text="Asientos VIP disponibles"). place(x=425, y=310)
-                    VIPdisp=tk.Label(mostrarEstadViaje, font="Helvetica 12", relief="sunken", width= 19, text=str(VIPdisponibles)).place(x=715, y=312)
-                    label15=tk.Label(mostrarEstadViaje, font=("Helvetica", 14), text="Asientos Normales disponibles"). place(x=425, y=350)
-                    NMdisp=tk.Label(mostrarEstadViaje, font="Helvetica 12", relief="sunken", width= 19, text=str(NMdisponibles)).place(x=715, y=352)
-                    label16=tk.Label(mostrarEstadViaje, font=("Helvetica", 14), text="Asientos Económicos disponibles"). place(x=425, y=390)
-                    ECdisp=tk.Label(mostrarEstadViaje, font="Helvetica 12", relief="sunken", width= 19, text=str(ECdisponibles)).place(x=715, y=392)
-                    label17=tk.Label(mostrarEstadViaje, font=("Helvetica", 14), text="Monto total recaudado"). place(x=425, y=430)
-                    monto=tk.Label(mostrarEstadViaje, font="Helvetica 12", relief="sunken", width= 19, text=str(montoTotal)).place(x=715, y=432)
+                    label17=tk.Label(mostrarEstadViaje, font=("Helvetica", 14), text="Monto total recaudado"). place(x=800, y=194)
+                    monto=tk.Label(mostrarEstadViaje, font="Helvetica 12", relief="sunken", width= 19, text=str(montoTotal)).place(x=1090, y=192)
+                    label11=tk.Label(mostrarEstadViaje, text="Mapa de Asientos del transporte", font=("Helvetica", 12)).place(x=570, y=310)
+                    label6=tk.Label(mostrarEstadViaje, text="Identificadores del mapa", font=("Helvetica 12")).place(x=600, y=250)
+                    label7=tk.Label(mostrarEstadViaje, text="reservado", font=("Helvetica", 10, "bold"), bg="grey", fg="white").place(x=500, y=280)
+                    label8=tk.Label(mostrarEstadViaje, text="     VIP    ", font=("Helvetica", 10, "bold"), bg="#bdbdbd").place(x=580, y=280)
+                    label9=tk.Label(mostrarEstadViaje, text="  Normal  ", font=("Helvetica", 10, "bold"), bg="light green").place(x=660, y=280)
+                    label10=tk.Label(mostrarEstadViaje, text="Económico", font=("Helvetica", 10, "bold"), bg="blue", fg="white").place(x=740, y=280)
+                    VIP="#bdbdbd"
+                    NM="light green"
+                    EC="blue"
+                    reserv="gray"
+                    def recopilarDatos(String): 
+                        if isinstance(String, str):
+                            if String=="":
+                                return []
+                            else:
+                                res=[]
+                                sub=""
+                                while String!="":
+                                    if String[0]!="|" and String[0]!="-" and String[0]!=",":
+                                        sub+=String[0]
+                                        String=String[1:]
+                                    else:
+                                        res+=[sub]
+                                        sub=""
+                                        String=String[1:]
+                                return res+[sub]
+                    try:
+                        f=open(str(Trp)+"Reservas.txt", "r")
+                        reservados=recopilarDatos(f.read())
+                        f.close()
+                    except:
+                        reservados=[]
+                    def buscarPalabra(archivo,palabra):
+                        archivo=open(archivo, "r")
+                        contexto= archivo.readlines()
+                        archivo.close()
+                        Datos=contarObjetos(contexto)
+                        largoPalabra=contarString(palabra)
+                        return buscarPalabraAux(palabra, contexto, Datos, largoPalabra)
+                    def contarObjetos(lista): 
+                        n=0
+                        while lista!=[]:
+                            n+=1
+                            lista=lista[1:]
+                        return n
+                    def contarString(texto):
+                        res=0
+                        while texto!="":
+                            res+=1
+                            texto=texto[1:]
+                        return res
+                    def buscarPalabraAux(palabra, contexto, Datos, largoPalabra):
+                        if Datos==0:
+                            return "Sin resultados"
+                        else:
+                            return buscarPalabraAux2(palabra, contexto, contexto[0], Datos, largoPalabra, contarString(contexto[0]), contexto[0])
+                    def buscarPalabraAux2(palabra, contexto, texto, Datos, largoPalabra, i, res):
+                        if i<largoPalabra:
+                            return buscarPalabraAux(palabra, contexto[1:], Datos-1, largoPalabra)
+                        else:
+                            while palabra!=texto[:largoPalabra]:
+                                return buscarPalabraAux2(palabra, contexto, texto[1:], Datos, largoPalabra, i-1, res)
+                            return res
+                    mensaje=recopilarDatos(buscarPalabra("Asientos.txt", Trp))
+                    disponiblesVIP=int(mensaje[1])
+                    disponiblesNM=int(mensaje[2])
+                    disponiblesEC=int(mensaje[3])
+                    AsientosPorFila=int(mensaje[4])
+                    X=1200
+                    Y=355
+                    filas=AsientosPorFila
+                    i=0
+                    contadorVIPres=0
+                    contadorNMres=0
+                    contadorECres=0
+                    vipdisp=0
+                    nmdisp=0
+                    ecdisp=0
+                    label12=tk.Label(mostrarEstadViaje, bg="#bdbdbd", height=14, width=181).place(x=35, y=345)
+                    while disponiblesVIP>0:
+                        if AsientosPorFila==0:
+                            AsientosPorFila=filas
+                            X-=45
+                            Y=355
+                        else:
+                            if "A"+str(i) in reservados:
+                                label=tk.Label(mostrarEstadViaje, text="A"+str(i), relief="groove", bg=reserv, fg="white").place(x=X, y=Y)
+                                contadorVIPres+=1
+                                Y+=30
+                                i+=1
+                                disponiblesVIP-=1
+                                AsientosPorFila-=1
+                            else:
+                                label=tk.Label(mostrarEstadViaje, text="A"+str(i), relief="groove", bg=VIP).place(x=X, y=Y)
+                                vipdisp+=1
+                                Y+=30
+                                i+=1
+                                disponiblesVIP-=1
+                                AsientosPorFila-=1
+                    while disponiblesNM>0:
+                        if AsientosPorFila==0:
+                            AsientosPorFila=filas
+                            X-=45
+                            Y=355
+                        else:
+                            if "A"+str(i) in reservados:
+                                label=tk.Label(mostrarEstadViaje, text="A"+str(i), relief="groove", bg=reserv, fg="white").place(x=X, y=Y)
+                                contadorNMres+=1
+                                Y+=30
+                                i+=1
+                                disponiblesNM-=1
+                                AsientosPorFila-=1
+                            else:
+                                label=tk.Label(mostrarEstadViaje, text="A"+str(i), relief="groove", bg=NM).place(x=X, y=Y)
+                                nmdisp+=1
+                                Y+=30
+                                i+=1
+                                disponiblesNM-=1
+                                AsientosPorFila-=1
+                    while disponiblesEC>0:
+                        if AsientosPorFila==0:
+                            AsientosPorFila=filas
+                            X-=45
+                            Y=355
+                        else:
+                            if "A"+str(i) in reservados:
+                                label=tk.Label(mostrarEstadViaje, text="A"+str(i), relief="groove", bg=reserv, fg="white").place(x=X, y=Y)
+                                contadorECres+=1
+                                Y+=30
+                                i+=1
+                                disponiblesEC-=1
+                                AsientosPorFila-=1
+                            else:
+                                label=tk.Label(mostrarEstadViaje, text="A"+str(i), relief="groove", bg=EC,  fg="white").place(x=X, y=Y)
+                                ecdisp+=1
+                                Y+=30
+                                i+=1
+                                disponiblesEC-=1
+                                AsientosPorFila-=1
                     def crearReporteViaje(): #Función para agregar el reporte de la empresa
                         f=open(str(numViaje)+".txt", "w")
-                        f.write("N° Viaje: "+str(numViaje)+"\n"+"lugarSalida: "+str(lugSalida)+"\n"+"Fecha/Hora Salida: "+str(FHSalida)+"\n"+"Fecha/Hora Llegada: "+str(FHLlegada)+"\n"+"Empresa: "+str(Emp)+"\n"+"Transporte: "+str(Trp)+"\n"+"Monto por clase VIP: "+str(montoVIP)+"\n"+"Monto por clase Normal: "+str(montoNormal)+"\n"+"Monto por clase Económica: "+str(montoEconom)+"\n"+"Asientos VIP reservados/disponibles: "+str(VIPReservados)+"/"+str(VIPdisponibles)+"\n"+"Asientos Normales reservados/disponibles: "+str(NMReservados)+"/"+str(NMdisponibles)+"\n"+"Asientos económicos reservados/disponibles: "+str(ECReservados)+"/"+str(ECdisponibles)+"\n"+"Monto total recaudado: "+str(montoTotal)+"\n")
+                        f.write("N° Viaje: "+str(numViaje)+"\n"+"lugarSalida: "+str(lugSalida)+"\n"+"Fecha/Hora Salida: "+str(FHSalida)+"\n"+"Fecha/Hora Llegada: "+str(FHLlegada)+"\n"+"Empresa: "+str(Emp)+"\n"+"Transporte: "+str(Trp)+"\n"+"Monto por clase VIP: "+str(montoVIP)+"\n"+"Monto por clase Normal: "+str(montoNormal)+"\n"+"Monto por clase Económica: "+str(montoEconom)+"\n"+"Asientos VIP reservados/disponibles: "+str(contadorVIPres)+"/"+str(vipdisp)+"\n"+"Asientos Normales reservados/disponibles: "+str(contadorNMres)+"/"+str(nmdisp)+"\n"+"Asientos económicos reservados/disponibles: "+str(contadorECres)+"/"+str(ecdisp)+"\n"+"Monto total recaudado: "+str(montoTotal)+"\n")
                         f.close()
                         ya=mb.showinfo(title="información", message="El reporte ha sido creado")
                         mostrarEstadViaje.destroy()
                         return administrador()
-                    AgregarModif=tk.Button(mostrarEstadViaje, text="Crear reporte", font=("Sans Serif", 12), width=15, height=2, bg="grey", relief="groove", cursor="hand2", command=crearReporteViaje).place(x=620, y=550)
+                    AgregarModif=tk.Button(mostrarEstadViaje, text="Crear reporte", font=("Sans Serif", 12), width=15, height=2, bg="grey", relief="groove", cursor="hand2", command=crearReporteViaje).place(x=620, y=580)
                     mostrarEstadViaje.mainloop()
 
                 ListaViajes=tk.Listbox(SelecViaje, width=150)
@@ -2464,7 +2584,8 @@ def programa():
                 viaje=tk.Entry(SelecViaje, font="Helvetica 12", textvariable=dato)
                 viaje.pack(pady=2)
                 seleccionar=tk.Button(SelecViaje, text="Seleccionar", font=("Helvetica",14), bg="#6ee2ff", width="16",height="1",relief="groove", command=RecopilarEstadisticaViaje, cursor="hand2").pack(pady=2)
-                SelecViaje.mainloop()
+                SelecViaje.mainloop()    
+
     #----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         def EstadisticaEmpresa():
             Seleccione.destroy()
@@ -2843,8 +2964,8 @@ def programa():
         fondoAdmin=tk.Label(pantallaAvanzado, image=imagenAdmin).place(x=0, y=0)
         def acercaDe():
             label2=tk.Label(pantallaAvanzado,
-                            text="BestTraveller es una aplicación desarrollada para\nla gestión de viajes y reservaciones. \n A través de esta, podrá gestionar:\n -Empresas\n -Viajes\n -Transportes \n -Generar estadísticas\n -Entre otras cosas\nEl programa posee una sencilla interfaz fácil de manipular,\nademás de poseer ciertas características que la vuelven\n en una herramienta confiable y segura.\n¡Gracias por usar BestTraveller!",
-                            font=("Times New Roman", 12, "italic"), bg="#c4a660").place(x=600, y=200)
+                            text="BestTraveller-Gestor de viajes\nVersion 2.0\nCreador:\nKEVIN SALAZAR VALLES\nBestTraveller es una aplicación desarrollada para\nla gestión de viajes y reservaciones. \n A través de esta, podrá gestionar:\n -Empresas\n -Viajes\n -Transportes \n -Generar estadísticas\n -Entre otras cosas\nEl programa posee una sencilla interfaz fácil de manipular,\nademás de poseer ciertas características que la vuelven\n en una herramienta confiable y segura.\n¡Gracias por usar BestTraveller!\n@2020-2021 Kuzu Prod.\nTodos los derechos reservados",
+                            font=("Helvetica", 12, "italic"), bg="#c4a660").place(x=600, y=100)
 
         label = tk.Label(pantallaAvanzado, text="Funciones avanzadas", font=("Helvetica", 20, "italic", "bold"), bg="#6fafd8" ,relief="sunken").pack()
         CambioContra=tk.Button(pantallaAvanzado, text="Cambiar Contraseña", font=("Helvetica",14), bg="#6ee2ff", width="23",height="1",relief="groove", cursor="hand2", command=cambioContraseña).place(x=170, y=200)
@@ -3253,7 +3374,7 @@ def programa():
         fondo=tk.Label(filtrosParaViajes, image=imagen).place(x=0, y=0)
         def volver():
             filtrosParaViajes.destroy()
-            return usuario()
+            return None
         label = tk.Label(filtrosParaViajes, text="Menú de filtros", font=("Helvetica", 20, "italic", "bold"), bg="#6fafd8" ,relief="sunken").pack()
         empresa=tk.Button(filtrosParaViajes, text="Empresa", font=("Helvetica",14), bg="#6ee2ff", width="23",height="1",relief="groove", cursor="hand2", command=Filtro1).place(x=170, y=200)
         lugarSalida=tk.Button(filtrosParaViajes, text="Lugar de salida", font=("Helvetica",14), bg="#6ee2ff", width="23",height="1",relief="groove", cursor="hand2", command=Filtro2).place(x=555, y=200)
@@ -3295,7 +3416,8 @@ def programa():
         f.close()
         if info==[]:
             mensaje=mb.showinfo(title="Atención", message="No hay viajes registrados")
-            return Viajes()
+            return None
+        
         else:
             Reservas= tk.Toplevel()
             #Porción de código para centrar la ventana a la pantalla 
@@ -3326,13 +3448,293 @@ def programa():
                 i+=1
                 n+=1
             ListaViajes.pack()
+            def ReservarAsientos():
+                def recopilarDatos(String): 
+                    if isinstance(String, str):
+                        if String=="":
+                            return []
+                        else:
+                            res=[]
+                            sub=""
+                            while String!="":
+                                if String[0]!="|" and String[0]!="-" and String[0]!=",":
+                                    sub+=String[0]
+                                    String=String[1:]
+                                else:
+                                    res+=[sub]
+                                    sub=""
+                                    String=String[1:]
+                            return res+[sub]
+                def buscarPalabra(archivo,palabra):
+                    archivo=open(archivo, "r")
+                    contexto= archivo.readlines()
+                    archivo.close()
+                    Datos=contarObjetos(contexto)
+                    largoPalabra=contarString(palabra)
+                    return buscarPalabraAux(palabra, contexto, Datos, largoPalabra)
+                def contarObjetos(lista): 
+                    n=0
+                    while lista!=[]:
+                        n+=1
+                        lista=lista[1:]
+                    return n
+                def contarString(texto):
+                    res=0
+                    while texto!="":
+                        res+=1
+                        texto=texto[1:]
+                    return res
+                def buscarPalabraAux(palabra, contexto, Datos, largoPalabra):
+                    if Datos==0:
+                        return "Sin resultados"
+                    else:
+                        return buscarPalabraAux2(palabra, contexto, contexto[0], Datos, largoPalabra, contarString(contexto[0]), contexto[0])
+                def buscarPalabraAux2(palabra, contexto, texto, Datos, largoPalabra, i, res):
+                    if i<largoPalabra:
+                        return buscarPalabraAux(palabra, contexto[1:], Datos-1, largoPalabra)
+                    else:
+                        while palabra!=texto[:largoPalabra]:
+                            return buscarPalabraAux2(palabra, contexto, texto[1:], Datos, largoPalabra, i-1, res)
+                        return res
+                num=SelecViaje.get()
+                viaje=ListaViajes.get(num)[3:-4]
+                datos=recopilarDatos(viaje)
+                NoViaje=datos[0]
+                lugSalida=datos[1]+", "+datos[2]
+                FHSalida=datos[3]+", "+datos[4]
+                lugLlegada=datos[5]+", "+datos[6]
+                FHLlegada=datos[7]+", "+datos[8]
+                EMP=datos[9]
+                TRP=datos[10]
+                montoPorVIP=datos[11]
+                montoPorNM=datos[12]
+                montoPorEC=datos[13]
+                mensaje=recopilarDatos(buscarPalabra("Asientos.txt", TRP))
+                disponiblesVIP=mensaje[1]
+                disponiblesNM=mensaje[2]
+                disponiblesEC=mensaje[3]
+                AsientosPorFila=mensaje[4]
+                Reservas.destroy()
+                return ReservarAsientos2(NoViaje, lugSalida, FHSalida, lugLlegada, FHLlegada, EMP, TRP, int(montoPorVIP), int(montoPorNM), int(montoPorEC), int(disponiblesVIP), int(disponiblesNM), int(disponiblesEC), int(AsientosPorFila))
+            def ReservarAsientos2(NoViaje, lugSalida, FHSalida, lugLlegada, FHLlegada, EMP, TRP, montoPorVIP, montoPorNM, montoPorEC, disponiblesVIP, disponiblesNM, disponiblesEC, AsientosPorFila):
+                ventanaReservas=tk.Tk()
+                #Porción de código para centrar la ventana a la pantalla 
+                width= ventanaReservas.winfo_screenwidth()  
+                height= ventanaReservas.winfo_screenheight() 
+                ventanaReservas.geometry("%dx%d" % (width, height))
+                ventanaReservas.resizable(0,1)
+                ventanaReservas.title("Reservación de asientos")
+                ventanaReservas.iconbitmap("img.ico")
+                label0=tk.Label(ventanaReservas, bg="#bdbdbd", height=4, width=181).place(x=35, y=40)
+                label1=tk.Label(ventanaReservas, text="Su número de reserva", font=("Helvetica 12"), bg="#bdbdbd").place(x=40, y=60)
+                from random import randint as R
+                idReserva=R(1000, 9999)
+                label2=tk.Label(ventanaReservas, text=idReserva, font=("Helvetica 12"), width=15, relief="sunken").place(x=200, y=60)
+                label3=tk.Label(ventanaReservas, text="Nombre del cliente", font=("Helvetica 12"), bg="#bdbdbd").place(x=360, y=60)
+                nombre=tk.Entry(ventanaReservas, font=("Helvetica 12"), width=15)
+                nombre.place(x=520, y=60)
+                label4=tk.Label(ventanaReservas, text="Viaje seleccionado", font=("Helvetica 12"), bg="#bdbdbd").place(x=680, y=60)
+                label5=tk.Label(ventanaReservas, text=NoViaje, font=("Helvetica 12"), relief="sunken", width=15).place(x=840, y=60)
+                from datetime import datetime as D
+                fechaActual=str(D.now())[:-10]
+                label=tk.Label(ventanaReservas, text="Fecha de reserva", font=("Helvetica 12"), width=15, bg="#bdbdbd").place(x=1000, y=60)
+                label=tk.Label(ventanaReservas, text=fechaActual, font=("Helvetica 12"), relief="sunken", width=15).place(x=1160, y=60)
+                label6=tk.Label(ventanaReservas, text="Identificadores del mapa", font=("Helvetica 12")).place(x=100, y=110)
+                label7=tk.Label(ventanaReservas, text="reservado", font=("Helvetica", 10, "bold"), bg="grey", fg="white").place(x=40, y=150)
+                label8=tk.Label(ventanaReservas, text="     VIP    ", font=("Helvetica", 10, "bold"), bg="#bdbdbd").place(x=120, y=150)
+                label9=tk.Label(ventanaReservas, text="  Normal  ", font=("Helvetica", 10, "bold"), bg="light green").place(x=200, y=150)
+                label10=tk.Label(ventanaReservas, text="Económico", font=("Helvetica", 10, "bold"), bg="blue", fg="white").place(x=280, y=150)
+                #..........................................Parte del mapeo de asientos...........................................#
+                label11=tk.Label(ventanaReservas, text="Mapa de Asientos del transporte", font=("Helvetica", 12)).place(x=570, y=150)
+                VIP="#bdbdbd"
+                NM="light green"
+                EC="blue"
+                reserv="gray"
+                def recopilarDatos(String): 
+                    if isinstance(String, str):
+                        if String=="":
+                            return []
+                        else:
+                            res=[]
+                            sub=""
+                            while String!="":
+                                if String[0]!="|" and String[0]!="-" and String[0]!=",":
+                                    sub+=String[0]
+                                    String=String[1:]
+                                else:
+                                    res+=[sub]
+                                    sub=""
+                                    String=String[1:]
+                            return res+[sub]
+                try:
+                    f=open(str(TRP)+"Reservas.txt", "r")
+                    reservados=recopilarDatos(f.read())
+                    f.close()
+                except:
+                    reservados=[]
+                X=1200
+                Y=210
+                filas=AsientosPorFila
+                i=0
+                contadorVIP=[]
+                contadorNM=[]
+                contadorEC=[]
+                label12=tk.Label(ventanaReservas, bg="#bdbdbd", height=14, width=181).place(x=35, y=200)
+                while disponiblesVIP>0:
+                    if AsientosPorFila==0:
+                        AsientosPorFila=filas
+                        X-=45
+                        Y=210
+                    else:
+                        if "A"+str(i) in reservados:
+                            label=tk.Label(ventanaReservas, text="A"+str(i), relief="groove", bg=reserv, fg="white").place(x=X, y=Y)
+                            contadorVIP+=["A"+str(i)]
+                            Y+=30
+                            i+=1
+                            disponiblesVIP-=1
+                            AsientosPorFila-=1
+                        else:
+                            label=tk.Label(ventanaReservas, text="A"+str(i), relief="groove", bg=VIP).place(x=X, y=Y)
+                            contadorVIP+=["A"+str(i)]
+                            Y+=30
+                            i+=1
+                            disponiblesVIP-=1
+                            AsientosPorFila-=1
+                while disponiblesNM>0:
+                    if AsientosPorFila==0:
+                        AsientosPorFila=filas
+                        X-=45
+                        Y=210
+                    else:
+                        if "A"+str(i) in reservados:
+                            label=tk.Label(ventanaReservas, text="A"+str(i), relief="groove", bg=reserv, fg="white").place(x=X, y=Y)
+                            contadorNM+=["A"+str(i)]
+                            Y+=30
+                            i+=1
+                            disponiblesNM-=1
+                            AsientosPorFila-=1
+                        else:
+                            label=tk.Label(ventanaReservas, text="A"+str(i), relief="groove", bg=NM).place(x=X, y=Y)
+                            contadorNM+=["A"+str(i)]
+                            Y+=30
+                            i+=1
+                            disponiblesNM-=1
+                            AsientosPorFila-=1
+                while disponiblesEC>0:
+                    if AsientosPorFila==0:
+                        AsientosPorFila=filas
+                        X-=45
+                        Y=210
+                    else:
+                        if "A"+str(i) in reservados:
+                            label=tk.Label(ventanaReservas, text="A"+str(i), relief="groove", bg=reserv, fg="white").place(x=X, y=Y)
+                            contadorEC+=["A"+str(i)]
+                            Y+=30
+                            i+=1
+                            disponiblesEC-=1
+                            AsientosPorFila-=1
+                        else:
+                            label=tk.Label(ventanaReservas, text="A"+str(i), relief="groove", bg=EC,  fg="white").place(x=X, y=Y)
+                            contadorEC+=["A"+str(i)]
+                            Y+=30
+                            i+=1
+                            disponiblesEC-=1
+                            AsientosPorFila-=1
+                def generarReserva():
+                    asientosAreservar=recopilarDatos(listaAsientos.get())
+                    def generarLaFacturaFinal():
+                        Neim=nombre.get()
+                        mb.showinfo(title="Factura", message="ID Reserva: "+str(idReserva)+"\n"+"Nombre: "+str(Neim)+"\n"+"Fecha de reservación: "+str(fechaActual)+"\n"+"Empresa: "+str(EMP)+"\n"+"Transporte: "+str(TRP)+"\n"+"Lugar Salida: "+str(lugSalida)+"\n"+"Fecha/Hora Salida: "+str(FHSalida)+"\n"+"Lugar Llegada: "+str(lugLlegada)+"\n"+"Fecha/Hora Llegada: "+str(FHLlegada)+"\n"+"Asientos reservados en VIP|Normal|Económico: "+str(losVIPReservados)+"|"+str(losNMReservados)+"|"+str(losECReservados)+"\n"+"ID de los asientos: "+str(listaParaReservar)+"\n"+"Monto Total: "+str(montoTotal))
+                        f=open("Reservas.txt", "a")
+                        f.write(str(idReserva)+"|"+str(Neim)+"|"+str(fechaActual)+"|"+str(EMP)+"|"+str(TRP)+"|"+str(lugSalida)+"|"+str(FHSalida)+"|"+str(lugLlegada)+"|"+str(FHLlegada)+"|"+str(losVIPReservados)+"-"+str(losNMReservados)+"-"+str(losECReservados)+"|"+str(listaParaReservar)+"|"+str(montoTotal)+"\n")
+                        f.close()
+                        def buscarPalabra(archivo,palabra):
+                            archivo=open(archivo, "r")
+                            contexto= archivo.readlines()
+                            archivo.close()
+                            Datos=contarObjetos(contexto)
+                            largoPalabra=contarString(palabra)
+                            return buscarPalabraAux(palabra, contexto, Datos, largoPalabra)
+                        def contarObjetos(lista): 
+                            n=0
+                            while lista!=[]:
+                                n+=1
+                                lista=lista[1:]
+                            return n
+                        def contarString(texto):
+                            res=0
+                            while texto!="":
+                                res+=1
+                                texto=texto[1:]
+                            return res
+                        def buscarPalabraAux(palabra, contexto, Datos, largoPalabra):
+                            if Datos==0:
+                                return "Sin resultados"
+                            else:
+                                return buscarPalabraAux2(palabra, contexto, contexto[0], Datos, largoPalabra, contarString(contexto[0]), contexto[0])
+                        def buscarPalabraAux2(palabra, contexto, texto, Datos, largoPalabra, i, res):
+                            if i<largoPalabra:
+                                return buscarPalabraAux(palabra, contexto[1:], Datos-1, largoPalabra)
+                            else:
+                                while palabra!=texto[:largoPalabra]:
+                                    return buscarPalabraAux2(palabra, contexto, texto[1:], Datos, largoPalabra, i-1, res)
+                                return res
+                        ventanaReservas.destroy()
+                        return None
+                    try:
+                        f=open(str(TRP)+"Reservas.txt", "r")
+                        a=f.read()
+                        f.close()#Bloque de pruebas
+                    except:
+                        f=open(str(TRP)+"Reservas.txt", "w")
+                        f.write(str(TRP)+"|")
+                        f.close()
+                    lista_de_reservados=[]
+                    for asiento in asientosAreservar:
+                        if asiento in reservados:
+                            labelX=tk.Label(ventanaReservas, text="    El  asiento "+asiento+" está reservado"    , fg="red", font="Helvetica 11").place(x=600, y=510)
+                            return None
+                        else:
+                            labelX=tk.Label(ventanaReservas, text="                                                              ", fg="red", font="Helvetica 11").place(x=600, y=510)
+                            lista_de_reservados+=[asiento]
+                    f=open(str(TRP)+"Reservas.txt", "a")
+                    losVIPReservados=0
+                    losNMReservados=0
+                    losECReservados=0
+                    listaParaReservar=lista_de_reservados
+                    for obj in lista_de_reservados:
+                        
+                        if obj in contadorVIP:
+                            losVIPReservados+=1
+                            f.write(str(obj)+"|")
+                        if obj in contadorNM:
+                            losNMReservados+=1
+                            f.write(str(obj)+"|")
+                        if obj in contadorEC:
+                            losECReservados+=1
+                            f.write(str(obj)+"|")
+                    f.close()
+                    if losVIPReservados+losNMReservados+losECReservados==0:
+                        labelX=tk.Label(ventanaReservas, text="Tiene que reservar al menos un asiento", fg="red", font="Helvetica 11").place(x=600, y=510)
+                        return None
+                    else:
+                        labelX=tk.Label(ventanaReservas, text="                                                               ", fg="red", font="Helvetica 11").place(x=600, y=510)
+                    montoTotal=montoPorVIP*losVIPReservados+montoPorNM*losNMReservados+montoPorEC*losECReservados
+                    generador=mb.showinfo(title="Atención", message="Generando su factura...")
+                    return generarLaFacturaFinal()
+                labelx=tk.Label(ventanaReservas, text="Seleccione los asientos a reservar (separados por comas)", font="Helvetica 12").place(x=490, y=440)
+                listaAsientos=tk.Entry(ventanaReservas, font="Helvetica 12", width=20, relief="sunken")
+                listaAsientos.place(x=605, y=485)
+                boton=tk.Button(ventanaReservas, text="Generar reserva", font="Helvetica 12", width=17, height=2, bg="#bdbdbd", command=generarReserva).place(x=616,y=550)
+                ventanaReservas.mainloop()
             Viaje=tk.Label(Reservas, text="Viaje #", font=("Sans Serif", 12), width=15, height=2).pack(pady=2)
             dato=tk.IntVar()
             SelecViaje=tk.Entry(Reservas, font="Helvetica 12", textvariable=dato)
             SelecViaje.pack(pady=2)
-            seleccionar=tk.Button(Reservas, text="Seleccionar", font=("Helvetica",14), bg="#6ee2ff", width="16", relief="groove", command=None, cursor="hand2").pack(pady=2)
+            seleccionar=tk.Button(Reservas, text="Seleccionar", font=("Helvetica",14), bg="#6ee2ff", width="16", relief="groove", command=ReservarAsientos, cursor="hand2").pack(pady=2)
                 
-        Reservas.mainloop()
+            Reservas.mainloop()
+
     #----------------------------------------------------------------------------------------------------------------------------------------------------------------------
     #----------------------------------------------------------------------------------------------------------------------------------------------------------------------
     """
@@ -3455,6 +3857,22 @@ def programa():
                                         sub=""
                                         String=String[1:]
                                 return res+[sub]
+                    def recopilarDatos2(String): 
+                        if isinstance(String, str):
+                            if String=="":
+                                return []
+                            else:
+                                res=[]
+                                sub=""
+                                while String!="":
+                                    if String[0]!="|" and String[0]!="-" and String[0]!="'" and String[0]!="[" and String[0]!="]" and String[0]!=",":
+                                        sub+=String[0]
+                                        String=String[1:]
+                                    else:
+                                        res+=[sub]
+                                        sub=""
+                                        String=String[1:]
+                                return res+[sub]
                     def buscarPalabra(archivo,palabra):
                         archivo=open(archivo, "r")
                         contexto= archivo.readlines()
@@ -3487,27 +3905,19 @@ def programa():
                                 return buscarPalabraAux2(palabra, contexto, texto[1:], Datos, largoPalabra, i-1, res)
                             return res
                     extraccion=recopilarDatos(lineaAborrar)
-                    devolverVIP=extraccion[-4]
-                    devolverNM=extraccion[-3]
-                    devolverEC=extraccion[-2]
-                    transporte=extraccion[4]
-                    devolverAsientos=buscarPalabra("Asientos.txt", transporte)
-                    devolverAsientos2=recopilarDatos(devolverAsientos)
-                    VIPdevuelto=str(int(devolverVIP)+int(devolverAsientos2[1]))
-                    NMdevuelto=str(int(devolverNM)+int(devolverAsientos2[2]))
-                    ECdevuelto=str(int(devolverEC)+int(devolverAsientos2[3]))
-                    f=open("Asientos.txt", "r")
-                    lineas=f.readlines()
-                    f.close()
-                    f=open("Asientos.txt", "w")
-                    while lineas!=[]: #Aquí se devolverán los asientos que fueron reservados
-                        if lineas[0]!=devolverAsientos:
-                            f.write(lineas[0])
-                            lineas=lineas[1:]
+                    elTransporte=extraccion[6]
+                    losIDAsientos=recopilarDatos2(extraccion[-2])
+                    devolverAsientos=recopilarDatos(buscarPalabra(str(elTransporte)+"Reservas.txt", elTransporte))[1:]
+                    datosAdevolver=str(elTransporte)+"|"
+                    for ID in devolverAsientos:
+                        if ID not in losIDAsientos:
+                            datosAdevolver+=ID+"|"
                         else:
-                            f.write(devolverAsientos2[0]+"|"+VIPdevuelto+"|"+NMdevuelto+"|"+ECdevuelto+"|"+devolverAsientos2[4])
-                            lineas=lineas[1:]
+                            continue
+                    f=open(str(elTransporte)+"Reservas.txt", "w")
+                    f.write(datosAdevolver)
                     f.close()
+        
                     f = open("Reservas.txt","r")
                     lineas = f.readlines()
                     f.close()
