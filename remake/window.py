@@ -57,8 +57,8 @@ class InlineGroup:
         return label
 
 class ContenedorFlexible:
-    def __init__(self, master, orientacion='fila', maxHeight=0, color="#f0f0f0", use_grid=False, manager=None, bordered=True):
-        self.frame = tk.Frame(master, bd=2 if bordered else 0, relief="solid" if bordered else "flat", bg=color)
+    def __init__(self, master, orientacion='fila', maxHeight=0, bg="#ffffff", use_grid=False, manager=None, bordered=True):
+        self.frame = tk.Frame(master, bd=2 if bordered else 0, relief="solid" if bordered else "flat", bg=bg)
         self.orientacion = orientacion
         self.use_grid = use_grid
         self.hijos = []
@@ -73,8 +73,8 @@ class ContenedorFlexible:
                 self.frame.config(height=maxHeight)
                 self.frame.pack_propagate(False)
 
-    def addFrame(self, orientacion="fila", maxHeight=0, color="#f0f0f0", use_grid=False, bordered=True):
-        nuevo = ContenedorFlexible(self.frame, orientacion, maxHeight, color, use_grid, manager=self.widget_manager, bordered=bordered)
+    def addFrame(self, orientacion="fila", maxHeight=0, bg="#ffffff", use_grid=False, bordered=True):
+        nuevo = ContenedorFlexible(self.frame, orientacion, maxHeight, bg, use_grid, manager=self.widget_manager, bordered=bordered)
         self.hijos.append(nuevo)
         return nuevo
 
@@ -201,7 +201,7 @@ class Ventana:
         self.scroll_y.pack(side="right", fill="y")
 
         self.widget_manager = WidgetManager()
-        self.raiz = ContenedorFlexible(self.root_frame, orientacion='fila', color="#ffffff", manager=self.widget_manager)
+        self.raiz = ContenedorFlexible(self.root_frame, orientacion='fila', bg="#ffffff", manager=self.widget_manager)
 
     def _expand_root_frame(self, event):
         self.canvas.itemconfig(self.canvas_window_id, width=self.canvas.winfo_width())
@@ -226,8 +226,8 @@ class Ventana:
     def hide(self):
         self.window.withdraw()
 
-    def addFrame(self, orientacion="fila", maxHeight=0, color="#f0f0f0", use_grid=False, bordered=False):
-        return self.raiz.addFrame(orientacion, maxHeight=maxHeight, color=color, use_grid=use_grid, bordered=bordered)
+    def addFrame(self, orientacion="fila", maxHeight=0, color="#ffffff", use_grid=False, bordered=False):
+        return self.raiz.addFrame(orientacion, maxHeight=maxHeight, bg=color, use_grid=use_grid, bordered=bordered)
 
     def get(self, widget_id):
         return self.widget_manager.get(widget_id)
