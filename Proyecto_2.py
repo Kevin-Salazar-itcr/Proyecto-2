@@ -22,14 +22,12 @@ def programa():
         posicion=str(ancho_contraseña)+"x"+str(alto_contraseña)+"+"+str(x_ventana)+"+"+str(y_ventana)
         contraseña.geometry(posicion)
         contraseña.resizable(0,1)
-        contraseña.iconbitmap("img.ico")
+
         
         def validar(): #Validación de la contaseña
             usuario=user.get()
             entrada=contra.get()
-            f=open("contraseña.txt", "r")
-            codigo=f.read()
-            f.close()
+            codigo = "hola"
             if usuario!="Admin":
                 error=tk.Label(contraseña, text="Este usuario no existe.", font="Helvetica 10", fg="red").place(x=100, y=155)
             else:
@@ -79,7 +77,7 @@ def programa():
             nuevaEmpresa=tk.Toplevel()
             nuevaEmpresa.geometry("450x600")
             nuevaEmpresa.title("Incluir Empresa")
-            nuevaEmpresa.iconbitmap("img.ico")
+
             nuevaEmpresa.resizable(0,1)
             Cedula=tk.Label(nuevaEmpresa,text="Cédula Jurídica", font=("Sans Serif", 12), width=25, height=2). place(x=0, y=50)
             cedula=tk.IntVar()
@@ -185,7 +183,7 @@ def programa():
                 
             borrarempresa.geometry(posicion)
             borrarempresa.resizable(0,1)
-            borrarempresa.iconbitmap("img.ico")
+
                 
             """
             buscarPalabra
@@ -317,7 +315,7 @@ def programa():
                 posicion=str(ancho_pantalla)+"x"+str(alto_pantalla)+"+"+str(x_ventana)+"+"+str(y_ventana)
                 modifEmpresa.geometry(posicion)
                 modifEmpresa.title("Ver Empresas")
-                modifEmpresa.iconbitmap("img.ico")
+
                 modifEmpresa.config(bg="grey")
                 modifEmpresa.resizable(0,1)
                 def modifCamposEmpresa():
@@ -339,7 +337,7 @@ def programa():
                     posicion=str(ancho_pantalla)+"x"+str(alto_pantalla)+"+"+str(x_ventana)+"+"+str(y_ventana)
                     modifEmpresa2.geometry(posicion)
                     modifEmpresa2.title("Modificar Empresa")
-                    modifEmpresa2.iconbitmap("img.ico")
+
                     modifEmpresa2.resizable(0,1)
                     
                     Cedula=tk.Label(modifEmpresa2,text="Cédula Jurídica", font=("Sans Serif", 12), width=25, height=2). place(x=0, y=50)
@@ -483,7 +481,7 @@ def programa():
                 posicion=str(ancho_pantalla)+"x"+str(alto_pantalla)+"+"+str(x_ventana)+"+"+str(y_ventana)
                 verEmpresas.geometry(posicion)
                 verEmpresas.title("Ver Empresas")
-                verEmpresas.iconbitmap("img.ico")
+
                 verEmpresas.config(bg="grey")
                 verEmpresas.resizable(0,1)
                 ListaEmpresas=tk.Listbox(verEmpresas, width=150)
@@ -507,9 +505,6 @@ def programa():
         #-------------------------------------------------------------------------------------------------------------------------------------------------------------------
         #-------------------------------------------------------------------------------------------------------------------------------------------------------------------
         GestionEmpresa.title("BestTraveller: Gestión de viajes")
-        GestionEmpresa.iconbitmap("img.ico")
-        imagen=tk.PhotoImage(file="f.png")
-        fondo=tk.Label(GestionEmpresa, image=imagen).place(x=0, y=0)
         def volver():
             GestionEmpresa.destroy()
             return administrador()
@@ -562,7 +557,7 @@ def programa():
                 
             nuevoTransporte.geometry(posicion)
             nuevoTransporte.title("Incluir Transporte")
-            nuevoTransporte.iconbitmap("img.ico")
+
             nuevoTransporte.resizable(0,1)
             Placa=tk.Label(nuevoTransporte, text="N° de matrícula", font=("Sans Serif", 12), width=25, height=2). place(x=0, y=50)
             placa=tk.IntVar()
@@ -710,7 +705,7 @@ def programa():
                 
             borrartransporte.geometry(posicion)
             borrartransporte.resizable(0,1)
-            borrartransporte.iconbitmap("img.ico")
+
             """
             buscarPalabra
             E: un archivo y una palabra para buscarla en el archivo
@@ -850,7 +845,7 @@ def programa():
                 posicion=str(ancho_pantalla)+"x"+str(alto_pantalla)+"+"+str(x_ventana)+"+"+str(y_ventana)
                 modifTransporte.geometry(posicion)
                 modifTransporte.title("Ver Transportes")
-                modifTransporte.iconbitmap("img.ico")
+
                 modifTransporte.config(bg="grey")
                 modifTransporte.resizable(0,1)
                 def modifCamposTransporte():
@@ -877,7 +872,7 @@ def programa():
                     posicion=str(ancho_pantalla)+"x"+str(alto_pantalla)+"+"+str(x_ventana)+"+"+str(y_ventana)
                     modifTransporte2.geometry(posicion)
                     modifTransporte2.title("Modificar transporte")
-                    modifTransporte2.iconbitmap("img.ico")
+
                     modifTransporte2.resizable(0,1)
 
                     Placa=tk.Label(modifTransporte2, text="N° de matrícula", font=("Sans Serif", 12), width=25, height=2). place(x=0, y=50)
@@ -1067,7 +1062,7 @@ def programa():
                 posicion=str(ancho_pantalla)+"x"+str(alto_pantalla)+"+"+str(x_ventana)+"+"+str(y_ventana)
                 verTransportes.geometry(posicion)
                 verTransportes.title("Ver Empresas")
-                verTransportes.iconbitmap("img.ico")
+
                 verTransportes.config(bg="grey")
                 verTransportes.resizable(0,1)
                 ListaTransportes=tk.Listbox(verTransportes, width=150)
@@ -1091,9 +1086,6 @@ def programa():
         #-------------------------------------------------------------------------------------------------------------------------------------------------------------------
         #-------------------------------------------------------------------------------------------------------------------------------------------------------------------
         GestionTransporte.title("BestTraveller: Gestión de viajes")
-        GestionTransporte.iconbitmap("img.ico")
-        imagen=tk.PhotoImage(file="f.png")
-        fondo=tk.Label(GestionTransporte, image=imagen).place(x=0, y=0)
         def volver():
             GestionTransporte.destroy()
             return administrador()
@@ -1146,7 +1138,7 @@ def programa():
                 
             nuevoViaje.geometry(posicion)
             nuevoViaje.title("Incluir viaje")
-            nuevoViaje.iconbitmap("img.ico")
+
             nuevoViaje.resizable(0,1)
             numViaje=tk.Label(nuevoViaje, text="N° de viaje", font=("Sans Serif", 12), width=25, height=2). place(x=0, y=20)
             numViaje=tk.Entry(nuevoViaje, width=14, relief="sunken")
@@ -1349,7 +1341,7 @@ def programa():
                 
             borrarviaje.geometry(posicion)
             borrarviaje.resizable(0,1)
-            borrarviaje.iconbitmap("img.ico")
+
             """
             buscarPalabra
             E: un archivo y una palabra para buscarla en el archivo
@@ -1476,7 +1468,7 @@ def programa():
                 posicion=str(ancho_pantalla)+"x"+str(alto_pantalla)+"+"+str(x_ventana)+"+"+str(y_ventana)
                 modifViaje.geometry(posicion)
                 modifViaje.title("Ver Viajes")
-                modifViaje.iconbitmap("img.ico")
+
                 modifViaje.config(bg="grey")
                 modifViaje.resizable(0,1)
                 def modifCamposViaje():
@@ -1501,7 +1493,7 @@ def programa():
                     posicion=str(ancho_pantalla)+"x"+str(alto_pantalla)+"+"+str(x_ventana)+"+"+str(y_ventana)
                     modifViaje2.geometry(posicion)
                     modifViaje2.title("Modificar Viaje")
-                    modifViaje2.iconbitmap("img.ico")
+
                     modifViaje2.resizable(0,1)
                     Viaje=tk.Label(modifViaje2, text="N° de viaje", font=("Sans Serif", 12), width=25, height=2). place(x=0, y=20)
                     NumViaje=tk.Entry(modifViaje2, width=14, relief="sunken")
@@ -1749,7 +1741,7 @@ def programa():
                 posicion=str(ancho_pantalla)+"x"+str(alto_pantalla)+"+"+str(x_ventana)+"+"+str(y_ventana)
                 verViajes.geometry(posicion)
                 verViajes.title("Ver Viajes")
-                verViajes.iconbitmap("img.ico")
+
                 verViajes.config(bg="grey")
                 verViajes.resizable(0,1)
                 ListaViajes=tk.Listbox(verViajes, width=150)
@@ -1773,9 +1765,6 @@ def programa():
         #-------------------------------------------------------------------------------------------------------------------------------------------------------------------
         #-------------------------------------------------------------------------------------------------------------------------------------------------------------------
         GestionViaje.title("BestTraveller: Gestión de viajes")
-        GestionViaje.iconbitmap("img.ico")
-        imagen=tk.PhotoImage(file="f.png")
-        fondo=tk.Label(GestionViaje, image=imagen).place(x=0, y=0)
         def volver():
             GestionViaje.destroy()
             return administrador()
@@ -1819,7 +1808,7 @@ def programa():
         ventanaX.resizable(0,1)
         
         def buscarInfoReserva():
-            dato=str(filtro1.get())
+            dato=str("si")
             f=open("Reservas.txt", "r")
             info=f.readlines()
             f.close()
@@ -1900,7 +1889,7 @@ def programa():
         ventanaX.resizable(0,1)
         
         def buscarInfoReserva():
-            dato=str(filtro1.get())
+            dato=str("si")
             f=open("Reservas.txt", "r")
             info=f.readlines()
             f.close()
@@ -1981,7 +1970,7 @@ def programa():
         ventanaX.resizable(0,1)
         
         def buscarInfoReserva():
-            dato=str(filtro1.get())
+            dato=str("si")
             f=open("Reservas.txt", "r")
             info=f.readlines()
             f.close()
@@ -2062,7 +2051,7 @@ def programa():
         ventanaX.resizable(0,1)
         
         def buscarInfoReserva():
-            dato=str(filtro1.get())
+            dato=str("si")
             f=open("Reservas.txt", "r")
             info=f.readlines()
             f.close()
@@ -2137,7 +2126,7 @@ def programa():
         ventanaX.resizable(0,1)
         
         def buscarInfoReserva():
-            dato=str(filtro1.get())
+            dato=str("si")
             f=open("Reservas.txt", "r")
             info=f.readlines()
             f.close()
@@ -2208,9 +2197,6 @@ def programa():
         filtrosParaReserva.geometry("%dx%d" % (width, height))
         filtrosParaReserva.resizable(0,1)
         filtrosParaReserva.title("BestTraveller: Gestión de viajes")
-        filtrosParaReserva.iconbitmap("img.ico")
-        imagen=tk.PhotoImage(file="f.png")
-        fondo=tk.Label(filtrosParaReserva, image=imagen).place(x=0, y=0)
         def volver():
             filtrosParaReserva.destroy()
             return administrador()
@@ -2257,8 +2243,6 @@ def programa():
         y_ventana=Seleccione.winfo_screenheight() // 2 - alto_pantalla // 2
         posicion=str(ancho_pantalla)+"x"+str(alto_pantalla)+"+"+str(x_ventana)+"+"+str(y_ventana)
         Seleccione.geometry(posicion)
-        Seleccione.iconbitmap("img.ico")
-        imagen=tk.PhotoImage(file="f.png")
         def EstadisticaViaje():
             Seleccione.destroy()
             f=open("Viajes.txt", "r")
@@ -2277,7 +2261,6 @@ def programa():
                 posicion=str(ancho_pantalla)+"x"+str(alto_pantalla)+"+"+str(x_ventana)+"+"+str(y_ventana)
                 SelecViaje.geometry(posicion)
                 SelecViaje.title("Ver viajes")
-                SelecViaje.iconbitmap("img.ico")
                 SelecViaje.config(bg="grey")
                 SelecViaje.resizable(0,1)
                 
@@ -2390,7 +2373,7 @@ def programa():
                     mostrarEstadViaje.geometry("%dx%d" % (width, height))
                     mostrarEstadViaje.resizable(0,1)
                     mostrarEstadViaje.title("Estadísiticas de viaje")
-                    mostrarEstadViaje.iconbitmap("img.ico")
+
                     label1=tk.Label(mostrarEstadViaje, text="Nº de viaje", font=("Helvetica", 14)).pack()
                     numeroviaje=tk.Label(mostrarEstadViaje, font="Helvetica 12", relief="sunken", width= 10, text=str(numViaje)).pack(pady=2)
                     label2=tk.Label(mostrarEstadViaje, font=("Helvetica", 14), text="Lugar de salida"). place(x=60, y=70)
@@ -2605,7 +2588,7 @@ def programa():
                 posicion=str(ancho_pantalla)+"x"+str(alto_pantalla)+"+"+str(x_ventana)+"+"+str(y_ventana)
                 SelecEmpresa.geometry(posicion)
                 SelecEmpresa.title("Ver Empresas")
-                SelecEmpresa.iconbitmap("img.ico")
+
                 SelecEmpresa.config(bg="grey")
                 SelecEmpresa.resizable(0,1)
                 def RecopilarEstadisticaEmpresa():
@@ -2678,7 +2661,7 @@ def programa():
                     posicion=str(ancho_pantalla)+"x"+str(alto_pantalla)+"+"+str(x_ventana)+"+"+str(y_ventana)
                     mostrarEstadEmpresa.geometry(posicion)
                     mostrarEstadEmpresa.title("Estadísiticas de la Empresa")
-                    mostrarEstadEmpresa.iconbitmap("img.ico")
+
                     mostrarEstadEmpresa.resizable(0,1)
                     Cedula=tk.Label(mostrarEstadEmpresa,text="Cédula Jurídica", font=("Sans Serif", 12), width=25, height=2). place(x=0, y=50)
                     datoCedula=tk.Label(mostrarEstadEmpresa, text=str(Cedulaempresa),width=14, relief="sunken").place(x=200, y=64)
@@ -2774,7 +2757,6 @@ def programa():
                 seleccionar=tk.Button(SelecEmpresa, text="Seleccionar", font=("Helvetica",14), bg="#6ee2ff", width="16",height="1",relief="groove", command=RecopilarEstadisticaEmpresa, cursor="hand2").pack(pady=2)
                 SelecEmpresa.mainloop()
             
-        fondo=tk.Label(Seleccione, image=imagen).place(x=0, y=0)
         label=tk.Label(Seleccione, text="Seleccione una de las opciones", bg="#6ee2ff", font=("Sans serif", 14)).pack(pady=4)
         viaje=tk.Button(Seleccione, cursor="hand2", text="Viajes", font=("Sans Serif", 14), width=10, bg="#c4a660",command=EstadisticaViaje).pack(pady=4)
         emp=tk.Button(Seleccione, cursor="hand2", text="Empresas", font=("Sans Serif", 14), width=10, bg="#c4a660", command=EstadisticaEmpresa).pack(pady=4)
@@ -2792,9 +2774,6 @@ def programa():
         admin.geometry("%dx%d" % (width, height))
         admin.resizable(0,1)
         admin.title("BestTraveller: Gestión de viajes")
-        admin.iconbitmap("img.ico")
-        imagenAdmin=tk.PhotoImage(file="f.png")
-        fondoAdmin=tk.Label(admin, image=imagenAdmin).place(x=0, y=0)
         def f1():
             admin.destroy()
             return Empresas()
@@ -2871,7 +2850,7 @@ def programa():
         
         CambContraseña.geometry(posicion)
         CambContraseña.resizable(0,1)
-        CambContraseña.iconbitmap("img.ico")
+
         
         def validarEntrada(): #Validación de la contaseña
             entrada=contra.get()
@@ -2910,13 +2889,11 @@ def programa():
         
         nuevaContraseña.geometry(posicion)
         nuevaContraseña.resizable(0,1)
-        nuevaContraseña.iconbitmap("img.ico")
+
         
         def validarNuevaContraseña(): #Validación de la contaseña
             entrada=contra.get()
-            f=open("contraseña.txt", "r")
-            codigo=f.read()
-            f.close()
+            codigo ="12345678"
             if entrada==codigo:
                 error=mb.showerror(title="Error en la contraseña", message="La contraseña no puede ser igual a la anterior.")
                 nuevaContraseña.destroy()
@@ -2959,9 +2936,6 @@ def programa():
         pantallaAvanzado.geometry("%dx%d" % (width, height))
         pantallaAvanzado.resizable(0,1)
         pantallaAvanzado.title("BestTraveller: Gestión de viajes")
-        pantallaAvanzado.iconbitmap("img.ico")
-        imagenAdmin=tk.PhotoImage(file="f.png")
-        fondoAdmin=tk.Label(pantallaAvanzado, image=imagenAdmin).place(x=0, y=0)
         def acercaDe():
             label2=tk.Label(pantallaAvanzado,
                             text="BestTraveller-Gestor de viajes\nVersion 2.0\nCreador:\nKEVIN SALAZAR VALLES\nBestTraveller es una aplicación desarrollada para\nla gestión de viajes y reservaciones. \n A través de esta, podrá gestionar:\n -Empresas\n -Viajes\n -Transportes \n -Generar estadísticas\n -Entre otras cosas\nEl programa posee una sencilla interfaz fácil de manipular,\nademás de poseer ciertas características que la vuelven\n en una herramienta confiable y segura.\n¡Gracias por usar BestTraveller!\n@2020-2021 Kuzu Prod.\nTodos los derechos reservados",
@@ -2997,13 +2971,13 @@ def programa():
         ventanaX.resizable(0,1)
         
         def buscarInfoViaje():
-            dato=str(filtro1.get())
+            dato=str("si")
             f=open("Viajes.txt", "r")
             info=f.readlines()
             f.close()
             if info==[]:
                 mensaje=mb.showinfo(title="Atención", message="No hay viajes registrados")
-                return user()
+                return None
             else:
                 resultadosViajes=tk.Toplevel()
                 resultadosViajes.title("Ver viajes")
@@ -3070,13 +3044,13 @@ def programa():
         ventanaX.geometry(posicion)
         ventanaX.resizable(0,1)
         def buscarInfoViaje():
-            dato=str(filtro1.get())
+            dato=str("si")
             f=open("Viajes.txt", "r")
             info=f.readlines()
             f.close()
             if info==[]:
                 mensaje=mb.showinfo(title="Atención", message="No hay viajes registrados")
-                return user()
+                return None
             else:
                 resultadosViajes=tk.Toplevel()
                 resultadosViajes.title("Ver viajes")
@@ -3148,7 +3122,7 @@ def programa():
             f.close()
             if info==[]:
                 mensaje=mb.showinfo(title="Atención", message="No hay viajes registrados")
-                return user()
+                return None
             else:
                 resultadosViajes=tk.Toplevel()
                 resultadosViajes.title("Ver viajes")
@@ -3221,13 +3195,13 @@ def programa():
         ventanaX.geometry(posicion)
         ventanaX.resizable(0,1)
         def buscarInfoViaje():
-            dato=str(filtro1.get())
+            dato=str("si")
             f=open("Viajes.txt", "r")
             info=f.readlines()
             f.close()
             if info==[]:
                 mensaje=mb.showinfo(title="Atención", message="No hay viajes registrados")
-                return user()
+                return None
             else:
                 resultadosViajes=tk.Toplevel()
                 resultadosViajes.title("Ver viajes")
@@ -3299,7 +3273,7 @@ def programa():
             f.close()
             if info==[]:
                 mensaje=mb.showinfo(title="Atención", message="No hay viajes registrados")
-                return user()
+                return None
             else:
                 resultadosViajes=tk.Toplevel()
                 resultadosViajes.title("Ver viajes")
@@ -3369,9 +3343,6 @@ def programa():
         filtrosParaViajes.geometry("%dx%d" % (width, height))
         filtrosParaViajes.resizable(0,1)
         filtrosParaViajes.title("BestTraveller: Gestión de viajes")
-        filtrosParaViajes.iconbitmap("img.ico")
-        imagen=tk.PhotoImage(file="f.png")
-        fondo=tk.Label(filtrosParaViajes, image=imagen).place(x=0, y=0)
         def volver():
             filtrosParaViajes.destroy()
             return None
@@ -3426,9 +3397,6 @@ def programa():
             Reservas.geometry("%dx%d" % (width, height))
             Reservas.resizable(0,1)
             Reservas.title("BestTraveller: Gestión de viajes")
-            Reservas.iconbitmap("img.ico")
-            imagenUser=tk.PhotoImage(file="f.png")
-            fondoUser=tk.Label(Reservas, image=imagenUser).place(x=0, y=0)
             label = tk.Label(Reservas, text="Bienvenido al sistema de reservas de BestTraveller", font=("Helvetica", 20, "italic", "bold"), bg="#6fafd8" ,relief="sunken").pack()
             label2 = tk.Label(Reservas, text="A continuación se le mostrará la lista de viajes registrados en el sistema.", font=("Helvetica", 16, "bold"), bg="#6fafd8" ,relief="sunken").pack(pady=10)
             ListaViajes=tk.Listbox(Reservas, width=150)
@@ -3524,7 +3492,7 @@ def programa():
                 ventanaReservas.geometry("%dx%d" % (width, height))
                 ventanaReservas.resizable(0,1)
                 ventanaReservas.title("Reservación de asientos")
-                ventanaReservas.iconbitmap("img.ico")
+
                 label0=tk.Label(ventanaReservas, bg="#bdbdbd", height=4, width=181).place(x=35, y=40)
                 label1=tk.Label(ventanaReservas, text="Su número de reserva", font=("Helvetica 12"), bg="#bdbdbd").place(x=40, y=60)
                 from random import randint as R
@@ -3760,7 +3728,7 @@ def programa():
                 
             borrarReserva.geometry(posicion)
             borrarReserva.resizable(0,1)
-            borrarReserva.iconbitmap("img.ico")
+
                 
             """
             buscarPalabra
@@ -3980,9 +3948,6 @@ def programa():
         user.geometry("%dx%d" % (width, height))
         user.resizable(0,1)
         user.title("BestTraveller: Gestión de viajes")
-        user.iconbitmap("img.ico")
-        imagenUser=tk.PhotoImage(file="f.png")
-        fondoUser=tk.Label(user, image=imagenUser).place(x=0, y=0)
         def salir():
             mb.showinfo(message="Hasta la próxima")
             user.destroy()
@@ -4011,9 +3976,6 @@ def programa():
     ventanaPrincipal.geometry("%dx%d" % (width, height))
     ventanaPrincipal.resizable(0,1)
     ventanaPrincipal.title("BestTraveller: Gestión de viajes")
-    ventanaPrincipal.iconbitmap("img.ico")
-    imagen=tk.PhotoImage(file="f.png")
-    fondo=tk.Label(ventanaPrincipal, image=imagen).place(x=0, y=0)
     def irAusuario():
         ventanaPrincipal.destroy()
         return usuario()
