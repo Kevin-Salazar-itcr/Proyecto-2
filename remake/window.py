@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from PIL import Image, ImageTk
-z
+
 class WidgetManager:
     def __init__(self):
         self.widgets = {}
@@ -27,23 +27,37 @@ class InlineGroup:
             self.frame.pack(anchor="w", fill="x")
 
     def addButton(self, text, command, id=None, **kwargs):
+        kwargs.setdefault("bg", self.frame["bg"])
         btn = tk.Button(self.frame, text=text, command=command, **kwargs)
         expand = "width" not in kwargs
         btn.pack(side="left", padx=5, expand=expand, fill="both" if expand else None)
         self.widget_manager.register(id, btn)
         return btn
 
-    def addLabel(self, text, jerarquia=4, id=None, **kwargs):
-        size = {1: 24, 2: 18, 3: 14, 4: 12}.get(jerarquia, 12)
-        kwargs.setdefault("font", ("Helvetica", size))
+    def addLabel(self, text=None, image_path=None, max_height=None, jerarquia=4, id=None, **kwargs):
+        kwargs.setdefault("bg", self.frame["bg"])
+        if image_path:
+            img = Image.open(image_path)
+            if max_height:
+                ratio = max_height / img.height
+                new_width = int(img.width * ratio)
+                img = img.resize((new_width, max_height), Image.LANCZOS)
+            photo = ImageTk.PhotoImage(img)
+            label = tk.Label(self.frame, image=photo, **kwargs)
+            label.image = photo
+            self.imagenes.append(photo)
+        else:
+            size = {1: 24, 2: 18, 3: 14, 4: 12}.get(jerarquia, 12)
+            kwargs.setdefault("font", ("Helvetica", size))
+            label = tk.Label(self.frame, text=text, **kwargs)
+
         expand = "width" not in kwargs
-        label = tk.Label(self.frame, text=text, **kwargs)
         label.pack(side="left", padx=5, expand=expand, fill="both" if expand else None)
         self.widget_manager.register(id, label)
         return label
 
 class ContenedorFlexible:
-    def __init__(self, master, orientacion='fila', minheight=0, minwidth=0, color="#f0f0f0", use_grid=False, manager=None, bordered=True):
+    def __init__(self, master, orientacion='fila', maxHeight=0, color="#f0f0f0", use_grid=False, manager=None, bordered=True):
         self.frame = tk.Frame(master, bd=2 if bordered else 0, relief="solid" if bordered else "flat", bg=color)
         self.orientacion = orientacion
         self.use_grid = use_grid
@@ -54,20 +68,13 @@ class ContenedorFlexible:
         self.grid_col = 0
 
         if not use_grid:
-            if orientacion == 'fila':
-                self.frame.pack(fill='both', expand=True, pady=4, padx=4)
-                if minheight > 0:
-                    self.frame.config(height=minheight)
-                    self.frame.pack_propagate(False)
-            elif orientacion == 'columna':
-                self.frame.pack(side='left', fill='both', expand=True, pady=4, padx=4)
-                if minwidth > 0:
-                    self.frame.config(width=minwidth)
-                    self.frame.pack_propagate(False)
+            self.frame.pack(side='left' if orientacion == "columna" else None, fill='both', expand=True, pady=4, padx=4)
+            if maxHeight > 0:
+                self.frame.config(height=maxHeight)
+                self.frame.pack_propagate(False)
 
-    def addFrame(self, fila=False, columna=False, minheight=0, minwidth=0, color="#f0f0f0", use_grid=False, bordered=True):
-        orientacion = 'fila' if fila else 'columna'
-        nuevo = ContenedorFlexible(self.frame, orientacion, minheight, minwidth, color, use_grid, manager=self.widget_manager, bordered=bordered)
+    def addFrame(self, orientacion="fila", maxHeight=0, color="#f0f0f0", use_grid=False, bordered=True):
+        nuevo = ContenedorFlexible(self.frame, orientacion, maxHeight, color, use_grid, manager=self.widget_manager, bordered=bordered)
         self.hijos.append(nuevo)
         return nuevo
 
@@ -83,44 +90,47 @@ class ContenedorFlexible:
             widget.pack(pady=3)
 
     def addLabel(self, text=None, image_path=None, width=None, height=None, jerarquia=None, bg=None, id=None, **kwargs):
+        kwargs.setdefault("bg", bg or self.frame["bg"])
         if image_path:
             img = Image.open(image_path)
             if width and height:
                 img = img.resize((width, height), Image.LANCZOS)
             photo = ImageTk.PhotoImage(img)
-            label = tk.Label(self.frame, image=photo, bg=bg or self.frame["bg"], **kwargs)
+            label = tk.Label(self.frame, image=photo, **kwargs)
             label.image = photo
             self.imagenes.append(photo)
         else:
             size = {1: 24, 2: 18, 3: 14, 4: 12}.get(jerarquia, 12)
             kwargs.setdefault("font", ("Helvetica", size))
-            kwargs.setdefault("bg", self.frame["bg"])  # ← color de fondo heredado del frame
             label = tk.Label(self.frame, text=text, **kwargs)
 
         self._place_widget(label)
         self.widget_manager.register(id, label)
         return label
 
-
     def addInput(self, width=30, id=None, **kwargs):
+        kwargs.setdefault("bg", self.frame["bg"])
         entry = tk.Entry(self.frame, width=width, **kwargs)
         self._place_widget(entry)
         self.widget_manager.register(id, entry)
         return entry
 
     def addText(self, width=30, height=5, id=None, **kwargs):
+        kwargs.setdefault("bg", self.frame["bg"])
         txt = tk.Text(self.frame, width=width, height=height, **kwargs)
         self._place_widget(txt)
         self.widget_manager.register(id, txt)
         return txt
 
     def addCombobox(self, values, width=30, id=None, **kwargs):
+        kwargs.setdefault("background", self.frame["bg"])
         combo = ttk.Combobox(self.frame, values=values, width=width, **kwargs)
         self._place_widget(combo)
         self.widget_manager.register(id, combo)
         return combo
 
     def addListbox(self, items, height=5, id=None, **kwargs):
+        kwargs.setdefault("bg", self.frame["bg"])
         listbox = tk.Listbox(self.frame, height=height, **kwargs)
         for item in items:
             listbox.insert(tk.END, item)
@@ -129,6 +139,7 @@ class ContenedorFlexible:
         return listbox
 
     def addCheckbutton(self, text, id=None, **kwargs):
+        kwargs.setdefault("bg", self.frame["bg"])
         var = tk.BooleanVar()
         chk = tk.Checkbutton(self.frame, text=text, variable=var, **kwargs)
         self._place_widget(chk)
@@ -136,23 +147,27 @@ class ContenedorFlexible:
         return var
 
     def addRadiobutton(self, text, variable, value, **kwargs):
+        kwargs.setdefault("bg", self.frame["bg"])
         rbtn = tk.Radiobutton(self.frame, text=text, variable=variable, value=value, **kwargs)
         self._place_widget(rbtn)
         return rbtn
 
     def addScale(self, from_=0, to=100, orient=tk.HORIZONTAL, id=None, **kwargs):
+        kwargs.setdefault("bg", self.frame["bg"])
         scale = tk.Scale(self.frame, from_=from_, to=to, orient=orient, **kwargs)
         self._place_widget(scale)
         self.widget_manager.register(id, scale)
         return scale
 
     def addSpinbox(self, from_=0, to=10, width=5, id=None, **kwargs):
+        kwargs.setdefault("bg", self.frame["bg"])
         spin = tk.Spinbox(self.frame, from_=from_, to=to, width=width, **kwargs)
         self._place_widget(spin)
         self.widget_manager.register(id, spin)
         return spin
 
     def addButton(self, text, command, id=None, **kwargs):
+        kwargs.setdefault("bg", self.frame["bg"])
         btn = tk.Button(self.frame, text=text, command=command, **kwargs)
         self._place_widget(btn)
         self.widget_manager.register(id, btn)
@@ -173,15 +188,12 @@ class Ventana:
         self.canvas = tk.Canvas(self.window, bg="#ffffff")
         self.scroll_y = tk.Scrollbar(self.window, orient="vertical", command=self.canvas.yview)
         self.root_frame = tk.Frame(self.canvas, bg="#ffffff")
-
         self.canvas_window_id = self.canvas.create_window((0, 0), window=self.root_frame, anchor="nw")
 
         self.root_frame.bind("<Configure>", self._expand_root_frame)
-
         self.canvas.bind_all("<MouseWheel>", self._on_mousewheel)
         self.canvas.bind_all("<Button-4>", self._on_mousewheel)
         self.canvas.bind_all("<Button-5>", self._on_mousewheel)
-
         self.canvas.bind("<Configure>", lambda e: self.canvas.itemconfig(self.canvas_window_id, width=e.width))
 
         self.canvas.configure(yscrollcommand=self.scroll_y.set)
@@ -214,8 +226,8 @@ class Ventana:
     def hide(self):
         self.window.withdraw()
 
-    def addFrame(self, fila=False, columna=False, minheight=0, minwidth=0, color="#f0f0f0", use_grid=False, bordered=False):
-        return self.raiz.addFrame(fila=fila, columna=columna, minheight=minheight, minwidth=minwidth, color=color, use_grid=use_grid, bordered=bordered)
+    def addFrame(self, orientacion="fila", maxHeight=0, color="#f0f0f0", use_grid=False, bordered=False):
+        return self.raiz.addFrame(orientacion, maxHeight=maxHeight, color=color, use_grid=use_grid, bordered=bordered)
 
     def get(self, widget_id):
         return self.widget_manager.get(widget_id)
